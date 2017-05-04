@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".dongdong.AWord2">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.handmark.pulltorefresh.library.PullToRefreshListView
+            xmlns:ptr="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/aword2_prl"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            ptr:ptrDrawable="@mipmap/update_xlist"
+            ptr:ptrHeaderTextColor="#a2a2a2">
+        </com.handmark.pulltorefresh.library.PullToRefreshListView>
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:id="@+id/tools3"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#0000aff0"
+            android:gravity="top"
+            android:orientation="horizontal" >
+            <LinearLayout
+                android:layout_marginLeft="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:id="@+id/word2_fanhui"
+                android:clickable="true"
+                android:layout_gravity="center_vertical"
+            >
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/back_white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_gravity="center_vertical"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+        </LinearLayout>
+            <TextView
+                android:id="@+id/aword2_name"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="match_parent"
+                android:text="中国"
+                android:textSize="20sp"
+                android:textColor="#fff"
+                android:gravity="center"/>
+            <LinearLayout
+                android:layout_marginRight="5dp"
+                android:id="@+id/word2_pop"
+                android:layout_gravity="right"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/titlearrow"/>
+            <ImageView
+                android:id="@+id/danchun"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@mipmap/trip_chusnsu"/>
+        </LinearLayout>
+        </LinearLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

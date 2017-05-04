@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="45dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="5dp">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+        <TextView
+            android:id="@+id/tvtext"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:textSize="14sp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center" />
+            <ImageView
+                android:id="@+id/qiandaomark"
+                android:visibility="invisible"
+                android:layout_gravity="bottom|center"
+                android:layout_width="20dp"
+                android:layout_height="15dp"
+                android:src="@drawable/calendar2"/>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvtext2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:gravity="center" />
+        <ImageView
+            android:visibility="invisible"
+            android:id="@+id/festivalmark"
+            android:layout_gravity="center"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:src="@drawable/button_bg4"/>
+    </LinearLayout>
+</LinearLayout>

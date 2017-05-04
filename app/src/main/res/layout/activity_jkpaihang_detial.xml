@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".dongdong.JKPaihangDetial">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#00aff0"
+        android:orientation="horizontal" >
+        <LinearLayout
+            android:layout_marginLeft="5dp"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:id="@+id/paihangD_fanhui"
+            android:clickable="true"
+            android:layout_gravity="center_vertical"
+            >
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/back_white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text=""
+                android:textColor="#fff"
+                android:gravity="center"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/paihangD_title"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            android:gravity="center"/>
+    </LinearLayout>
+    <ListView
+        android:background="#fff"
+        android:scrollbars="none"
+        android:id="@+id/paihangD_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
+    <TextView
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textSize="16sp"
+        android:background="#e2e2e2"
+        android:layout_marginTop="20dp"
+        android:id="@+id/paihangD_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".dongdong.JKYuansuDetail"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#00aff0"
+        android:orientation="horizontal" >
+        <LinearLayout
+            android:layout_marginLeft="5dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:id="@+id/yuansuD_fanhui"
+            android:clickable="true"
+            android:layout_gravity="center_vertical"
+            >
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/back_white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text=""
+                android:textColor="#fff"
+                android:gravity="center"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/yuansu_names"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="match_parent"
+            android:textColor="#fff"
+            android:gravity="center" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="" />
+
+    </LinearLayout>
+
+    <com.example.administrator.vegetarians824.myView.UserDefineScrollView
+        android:fadingEdge="none"
+        android:focusable="false"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/yuansu_detial_scroll"
+        >
+        <LinearLayout
+            android:id="@+id/myscro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        </LinearLayout>
+    </com.example.administrator.vegetarians824.myView.UserDefineScrollView>
+    </LinearLayout>
+</LinearLayout>

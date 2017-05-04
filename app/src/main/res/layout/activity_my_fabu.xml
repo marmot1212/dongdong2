@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context="com.example.administrator.vegetarians824.mine.MyFabu">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#00aff0">
+        <LinearLayout
+            android:layout_marginLeft="5dp"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:id="@+id/my_fabu_fanhui"
+            android:clickable="true"
+            >
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/back_white" />
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="我的发布"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            android:gravity="center"/>
+    </FrameLayout>
+    <com.astuetz.PagerSlidingTabStrip
+        app:pstsDividerColor="#fff"
+        app:pstsTabPaddingLeftRight="10dp"
+        android:background="#fff"
+        app:pstsIndicatorColor="#00aff0"
+        app:pstsIndicatorHeight="3dp"
+        android:layout_width="match_parent"
+        app:pstsShouldExpand="true"
+        android:layout_height="50dp"
+        android:id="@+id/pst01">
+    </com.astuetz.PagerSlidingTabStrip>
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/my_fabu_vp"
+        >
+
+    </android.support.v4.view.ViewPager>
+</LinearLayout>

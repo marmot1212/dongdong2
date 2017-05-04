@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.administrator.vegetarians824.dongdong.JKlsdetial">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#00aff0">
+        <LinearLayout
+            android:layout_marginLeft="5dp"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:id="@+id/lsdetial_fanhui"
+            android:clickable="true"
+            >
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/back_white" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/lingshi_web_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="16sp"
+            android:textColor="#fff"
+            />
+    </FrameLayout>
+    <WebView
+        android:id="@+id/ls_web"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layerType="hardware">
+    </WebView>
+</LinearLayout>

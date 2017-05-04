@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:orientation="horizontal"
+    android:weightSum="2">
+    <AutoCompleteTextView
+        android:completionThreshold="1"
+        android:imeOptions="actionSearch"
+        android:maxLength="10"
+        android:singleLine="true"
+        android:inputType="text"
+        android:id="@+id/fabu_food_et1"
+        android:layout_weight="1"
+        android:textColorHint="#c2c2c2"
+        android:textSize="16sp"
+        android:textColor="#2c2c2c"
+        android:layout_marginLeft="10dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@null"
+        android:hint="名称"/>
+    <EditText
+        android:id="@+id/fabu_food_et2"
+        android:layout_weight="1"
+        android:textColorHint="#c2c2c2"
+        android:textSize="16sp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@null"
+        android:hint="数量"/>
+    <LinearLayout
+        android:id="@+id/fabu_food_del"
+        android:layout_width="40dp"
+        android:layout_height="40dp">
+        <ImageView
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="center"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/delete"/>
+    </LinearLayout>
+</LinearLayout>
+</LinearLayout>

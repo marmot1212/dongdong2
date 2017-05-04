@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.administrator.vegetarians824.mine.UpdateArea">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#00aff0">
+        <LinearLayout
+            android:layout_marginLeft="5dp"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:id="@+id/edit6_fanhui"
+            android:clickable="true"
+            >
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/back_white" />
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="地区"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            android:gravity="center"/>
+    </FrameLayout>
+    <ListView
+        android:id="@+id/province"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
+</LinearLayout>

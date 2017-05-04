@@ -1,0 +1,98 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include
+        layout="@layout/selector_custom_actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_actionbar_height"/>
+
+    <FrameLayout
+        android:id="@+id/selector_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="0dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="0dp"
+            android:background="#f2f2f2">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/image_recycerview"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="40dp"
+                tools:listitem="@layout/recyclerview_image_item"/>
+
+            <xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller
+                android:id="@+id/recyclerview_fast_scroller"
+                android:layout_width="@dimen/recyclerview_fast_scroller_width"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="30dp"/>
+
+            <RelativeLayout
+                android:id="@+id/selector_footer"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true"
+                android:background="#ccffffff"
+                android:clickable="true">
+
+                <Button
+                    android:id="@+id/selector_image_folder_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:background="@null"
+                    android:drawablePadding="5dp"
+                    android:drawableRight="@drawable/folder_select_indicator"
+                    android:ellipsize="middle"
+                    android:gravity="center_vertical"
+                    android:maxWidth="200dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:singleLine="true"
+                    android:text="@string/selector_folder_all"
+                    android:textColor="#a2a2a2"
+                    android:textSize="16sp"/>
+
+                <Button
+                    android:id="@+id/selector_image_preview_button"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/selector_preview"/>
+                <Button
+                    android:id="@+id/selector_button_confirm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/action_btn"
+                    android:minHeight="1dp"
+                    android:minWidth="1dp"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingTop="5dp"
+                    android:text="@string/selector_action_done"
+                    android:textColor="@color/default_text_color"
+                    android:textSize="14sp"/>
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </FrameLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".dongdong.JKshuguoPH">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#00aff0"
+        android:orientation="horizontal" >
+        <LinearLayout
+            android:layout_marginLeft="5dp"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:id="@+id/paihang_fanhui"
+            android:clickable="true"
+            android:layout_gravity="center_vertical"
+            >
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/back_white" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text=""
+                android:textColor="#fff"
+                android:gravity="center"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:text="排行榜"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            android:gravity="center"/>
+    </LinearLayout>
+    <ListView
+        android:background="#fff"
+        android:id="@+id/paihang_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+    </ListView>
+</LinearLayout>

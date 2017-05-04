@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+    <Button
+        android:background="#fff"
+        android:layout_marginLeft="5dp"
+        android:layout_width="55dp"
+        android:layout_height="30dp"
+        android:text="餐厅"
+        android:backgroundTint="#fff"
+        android:textSize="14sp"
+        android:textColor="#f00"
+        />
+    <TextView
+        android:layout_marginLeft="5dp"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:id="@+id/lunbo01_text"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+</LinearLayout>
+</LinearLayout>

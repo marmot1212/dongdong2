@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".dongdong.HuodongDiqu">
+    <LinearLayout
+        android:id="@+id/tools2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#00aff0"
+        android:orientation="horizontal" >
+        <LinearLayout
+            android:layout_marginLeft="5dp"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:id="@+id/diqu_fanhui"
+            android:clickable="true"
+            android:layout_gravity="center_vertical"
+            >
+            <ImageView
+                android:id="@+id/jiucuo_tubaio"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/back_white" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/diqu_province"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+    </LinearLayout>
+    <ListView
+        android:background="#fff"
+        android:id="@+id/diqu_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tools2"
+        >
+    </ListView>
+</RelativeLayout>

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#00aff0">
+        <LinearLayout
+            android:id="@+id/city_select_lin_back"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp" >
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/back_white" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="180dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:background="@drawable/button_bg3"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_marginTop="1dp"
+                android:layout_marginBottom="1dp"
+                android:layout_marginLeft="1dp"
+                android:gravity="center"
+                android:text="国内"
+                android:textColor="#00aff0"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/guoji_jump"
+                android:layout_marginTop="1dp"
+                android:layout_marginRight="1dp"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/button_bg"
+                android:gravity="center"
+                android:text="国际"
+                android:textColor="#fff"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <com.example.administrator.vegetarians824.myView.UserDefineScrollView
+        android:id="@+id/cityselect_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:orientation="vertical" >
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#50000000" />
+
+                <LinearLayout
+                    android:id="@+id/city_select_lin_currentcity"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="#ffffff"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="当前定位："
+                        android:textColor="#90000000"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/city_select_tv_currentcity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="当前城市"
+                        android:textColor="#000000"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="#50000000" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="热门地区"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+
+            <GridView
+                android:id="@+id/city_select_gridview"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:cacheColorHint="#00000000"
+                android:horizontalSpacing="15dp"
+                android:listSelector="#00000000"
+                android:numColumns="3"
+                android:scrollbars="none"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:verticalSpacing="10dp" >
+            </GridView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:text="全部地区"
+                android:textColor="#000000"
+                android:textSize="14sp" />
+
+            <com.example.administrator.vegetarians824.myView.MyExpandableListView
+                android:id="@+id/city_select_expandableListview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:scrollbars="none" >
+            </com.example.administrator.vegetarians824.myView.MyExpandableListView>
+
+            <RelativeLayout
+                android:id="@+id/city_select_rel_hangkong"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="#ffffff"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="香港特别行政区"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/city_select_rel_aomen"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="#ffffff"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="澳门特别行政区"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/city_select_rel_taiwan"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="#ffffff"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="台湾地区"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+            </RelativeLayout>
+        </LinearLayout>
+    </com.example.administrator.vegetarians824.myView.UserDefineScrollView>
+
+</LinearLayout>

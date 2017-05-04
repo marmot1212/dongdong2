@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <FrameLayout
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <TextView
+            android:id="@+id/ysitem_tv1"
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="元素子项"
+            android:textColor="#000"
+            android:textSize="16sp"
+            android:gravity="center"/>
+        <LinearLayout
+            android:layout_gravity="right"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:gravity="center">
+        <ImageView
+            android:id="@+id/expand_more_ima"
+            android:layout_width="20dp"
+            android:layout_height="10dp"
+            android:src="@drawable/barrow_2"/>
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

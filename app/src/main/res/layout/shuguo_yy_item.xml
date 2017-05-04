@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:background="#f8f8f8"
+        android:layout_marginRight="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginBottom="5dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <ImageView
+            android:id="@+id/shuguo_yy_ima"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+        <TextView
+            android:text="热量"
+            android:textSize="14sp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/shuguo_yy_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"/>
+        <TextView
+            android:layout_weight="0"
+            android:text="18"
+            android:textColor="#000"
+            android:textSize="18sp"
+            android:id="@+id/shuguo_yy_num"
+            android:layout_marginRight="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="right|center"
+            android:layout_alignParentRight="true" />
+    </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

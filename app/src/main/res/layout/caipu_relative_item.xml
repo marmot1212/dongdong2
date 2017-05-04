@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:zhy="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#fff">
+    <com.example.administrator.vegetarians824.myView.MyImageView
+        android:id="@+id/relative_item_ima"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:scaleType="fitXY"
+        zhy:borderRadius="3dp"
+        zhy:type="round"/>
+    <TextView
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:id="@+id/relative_item_title"
+        android:textSize="16sp"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:id="@+id/relative_item_content"
+        android:textSize="12sp"
+        android:layout_width="110dp"
+        android:layout_height="wrap_content" />
+    </LinearLayout>
+</LinearLayout>

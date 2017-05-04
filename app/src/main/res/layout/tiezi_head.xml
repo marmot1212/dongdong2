@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.example.administrator.vegetarians824.myView.RoundImageView
+            android:id="@+id/tiezi_head_ima"
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_marginRight="15dp"
+                android:maxLines="2"
+                android:text="标题"
+                android:layout_marginLeft="10dp"
+                android:ellipsize="end"
+                android:textSize="18sp"
+                android:textColor="#000"
+                android:id="@+id/tiezi_head_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            <TextView
+                android:text="用户名"
+                android:id="@+id/tiezi_head_uname"
+                android:textSize="14sp"
+                android:textColor="#a2a2a2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+                <ImageView
+                    android:id="@+id/tiezi_head_lv"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginLeft="5dp"/>
+            </LinearLayout>
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:text="时间"
+                android:layout_marginTop="5dp"
+                android:id="@+id/tiezi_head_time"
+                android:textSize="14sp"
+                android:textColor="#a2a2a2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

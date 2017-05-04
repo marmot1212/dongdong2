@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:zhy="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#fff">
+    <LinearLayout
+        android:id="@+id/canting_item_others"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#efffffff"
+        android:clickable="true"
+        android:gravity="center"
+        android:orientation="vertical" >
+        <ImageView
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:layout_width="60dp"
+            android:layout_height="15dp"
+            android:src="@drawable/ditu_list"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="30dp"
+        android:id="@+id/ditu_list_item_lin"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:orientation="horizontal"
+        >
+        <com.example.administrator.vegetarians824.myView.MyImageView
+            android:id="@+id/canting_item_imageViewp"
+            android:layout_marginTop="15dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_stub"
+            zhy:borderRadius="3dp"
+            zhy:type="round"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:paddingLeft="5dp" >
+            <LinearLayout
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/canting_item_logop"
+                    android:scaleType="fitXY"
+                    android:layout_marginRight="3dp"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp" />
+            <TextView
+                android:id="@+id/canting_item_namep"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:text="素食餐厅"
+                android:textColor="#0b0109"
+                android:textSize="14sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="人均"
+                    android:textSize="12sp"/>
+
+                <TextView
+                    android:id="@+id/canting_item_jiagep"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_weight="1"
+                    android:text="0"
+                    android:textSize="12sp"
+                    android:textColor="#FF011D" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="7dp"
+                    android:background="#000" />
+
+                <TextView
+                    android:id="@+id/canting_item_julip"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:layout_weight="1"
+                    android:text="距您"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/canting_item_neirongp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:layout_weight="2"
+                android:lines="1"
+                android:text="内容"
+                android:textSize="12sp"/>
+        </LinearLayout>
+    </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

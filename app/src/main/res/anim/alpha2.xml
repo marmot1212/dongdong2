@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+fromAlpha透明度从0.2到toAlpha1.0
+停留时间duration为1秒
+-->
+<alpha xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="500"
+    android:fromAlpha="1.0"
+    android:toAlpha="0.5" >
+</alpha>

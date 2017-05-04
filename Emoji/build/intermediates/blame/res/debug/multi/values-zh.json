@@ -1,0 +1,83 @@
+[
+    {
+        "outputFile": "F:\\project2.1\\MyApplication\\Emoji\\build\\intermediates\\res\\merged\\debug\\values-zh\\values-zh.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endColumn": 39,
+                    "endOffset": 90
+                },
+                "from": {
+                    "file": "F:\\project2.1\\MyApplication\\Emoji\\src\\main\\res\\values-zh\\strings.xml",
+                    "position": {
+                        "startLine": 1,
+                        "startColumn": 4,
+                        "startOffset": 16,
+                        "endColumn": 39,
+                        "endOffset": 51
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 3,
+                    "startColumn": 4,
+                    "startOffset": 95,
+                    "endColumn": 44,
+                    "endOffset": 135
+                },
+                "from": {
+                    "file": "F:\\project2.1\\MyApplication\\Emoji\\src\\main\\res\\values-zh\\strings.xml",
+                    "position": {
+                        "startLine": 4,
+                        "startColumn": 4,
+                        "startOffset": 120,
+                        "endColumn": 44,
+                        "endOffset": 160
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 4,
+                    "startColumn": 4,
+                    "startOffset": 140,
+                    "endColumn": 44,
+                    "endOffset": 180
+                },
+                "from": {
+                    "file": "F:\\project2.1\\MyApplication\\Emoji\\src\\main\\res\\values-zh\\strings.xml",
+                    "position": {
+                        "startLine": 3,
+                        "startColumn": 4,
+                        "startOffset": 75,
+                        "endColumn": 44,
+                        "endOffset": 115
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 5,
+                    "startColumn": 4,
+                    "startOffset": 185,
+                    "endColumn": 43,
+                    "endOffset": 224
+                },
+                "from": {
+                    "file": "F:\\project2.1\\MyApplication\\Emoji\\src\\main\\res\\values-zh\\strings.xml",
+                    "position": {
+                        "startLine": 5,
+                        "startColumn": 4,
+                        "startOffset": 165,
+                        "endColumn": 43,
+                        "endOffset": 204
+                    }
+                }
+            }
+        ]
+    }
+]

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:zhy="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="35dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/zuofa_line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/zuofa_step"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:text="1"/>
+            <com.example.administrator.vegetarians824.myView.MyImageView
+                android:scaleType="fitXY"
+                android:id="@+id/zuofa_imag"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                zhy:borderRadius="3dp"
+                zhy:type="round"/>
+        </LinearLayout>
+        <TextView
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="5dp"
+            android:textSize="14sp"
+            android:id="@+id/zuofa_content"
+            android:layout_marginLeft="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>
