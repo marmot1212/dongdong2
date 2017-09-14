@@ -24,7 +24,6 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
     compile files('libs/universal-image-loader-1.9.4.jar')
     compile files('libs/Volley.jar')
     compile files('libs/ksoap2-android-assembly-3.0.0-RC.4-jar-with-dependencies.jar')
@@ -50,21 +49,22 @@ dependencies {
     compile files('libs/jcore-android_v1.1.2.jar')
     compile files('libs/jpush-android_v3.0.5.jar')
     compile project(':easy-bottom-tab')
-    compile 'com.android.support:support-v4:24.2.1'
-    compile 'com.android.support:recyclerview-v7:24.2.1'
-    compile 'com.android.support:multidex:1.0.1'
-    compile 'com.android.support:appcompat-v7:24.2.1'
     compile project(':SlidingMenu')
-    compile 'com.android.support:design:24.2.1'
+    //    根据需要支持去拓展，在jjdxm-ijkplayer中默认加入了armv7a的了
+    compile project(':jjdxm-ijkplayer')
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'com.android.support:multidex:1.0.1'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    //    根据需要支持去拓展，在jjdxm-ijkplayer中默认加入了armv7a的了
     compile 'com.dou361.ijkplayer-armv7a:jjdxm-ijkplayer-armv7a:1.0.0'
     compile 'com.dou361.ijkplayer-armv5:jjdxm-ijkplayer-armv5:1.0.0'
     compile 'com.dou361.ijkplayer-arm64:jjdxm-ijkplayer-arm64:1.0.0'
     compile 'com.dou361.ijkplayer-x86:jjdxm-ijkplayer-x86:1.0.0'
     compile 'com.dou361.ijkplayer-x86_64:jjdxm-ijkplayer-x86_64:1.0.0'
-    compile 'com.android.support:support-annotations:24.2.1'
-    compile project(':jjdxm-ijkplayer')
+    compile 'com.android.support:support-annotations:25.3.1'
     compile 'com.github.wlfcolin:FileDownloader:0.3.1'
+    testCompile 'junit:junit:4.12'
 }
