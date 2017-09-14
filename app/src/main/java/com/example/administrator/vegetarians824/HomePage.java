@@ -28,6 +28,7 @@ import com.example.administrator.vegetarians824.homePage.FourthFragment;
 import com.example.administrator.vegetarians824.homePage.OneFragment;
 import com.example.administrator.vegetarians824.homePage.SecondFragment;
 import com.example.administrator.vegetarians824.homePage.ThirdFragment;
+import com.example.administrator.vegetarians824.homePage.ToolBoxFragment;
 import com.example.administrator.vegetarians824.login.Login;
 import com.example.administrator.vegetarians824.myView.CyclePager;
 import com.example.administrator.vegetarians824.myapplications.BaseApplication;
@@ -92,6 +93,7 @@ public class HomePage extends AppCompatActivity {
                 .addItem(R.mipmap.dibu_res1,R.mipmap.dibu_res2,"素食铺",new OneFragment())
                 .addItem(R.mipmap.dibu_food1,R.mipmap.dibu_food2,"素菜谱",new SecondFragment())
                 //点击不变色变换图案
+                .addItem(R.mipmap.dibu_more1,R.mipmap.dibu_more2,"工具箱",new ToolBoxFragment())
                 .addItem(R.mipmap.dibu_more1,R.mipmap.dibu_more2,"工具箱",new ThirdFragment())
                 .addItem(R.mipmap.dibu_user1,R.mipmap.dibu_user2,"我的",new FourthFragment())
                 //三种模式 该模式点击隐藏字体

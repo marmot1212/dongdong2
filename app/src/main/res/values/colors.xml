@@ -23,4 +23,7 @@
     <color name="bgcolor">#f3f3f3</color>
     <color name="level0">#ff5e5e</color>
     <color name="deepyellow">#51b30c</color>
+    <!--新增加-->
+    <color name="fragment_bg">#EFEFEF</color>
+    <color name="line_color_01">#f2f2f2</color>
 </resources>
