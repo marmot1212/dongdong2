@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="EasyBottomTab">
+        <attr name="itemTextColor" format="color"></attr>
+        <attr name="tabBackGroundColor" format="color"></attr>
+        <!--水纹颜色-->
+        <attr name="rippleColor" format="color"></attr>
+        <!--波纹透明度-->
+        <attr name="rippleAlpha" format="integer"></attr>
+        <!--点击隐藏模式-->
+        <attr name="changeMode" format="enum">
+            <enum name="nochange" value="1"></enum>
+            <enum name="normal" value="0"></enum>
+            <enum name="hide" value="2"></enum>
+        </attr>
+        <!--选中的颜色-->
+        <attr name="selectedColor" format="color"></attr>
+        <!--未选中的颜色-->
+        <attr name="unSelectedColor" format="color"></attr>
+        <!--是否开启水纹效果 默认开启-->
+        <attr name="isRipple" format="boolean"></attr>
+    </declare-styleable>
+</resources>

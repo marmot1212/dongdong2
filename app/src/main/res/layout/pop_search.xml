@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:focusableInTouchMode="true"
+        android:focusable="false">
+        <LinearLayout
+            android:layout_marginLeft="15dp"
+            android:layout_width="match_parent"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_height="40dp"
+            android:focusableInTouchMode="true"
+            android:focusable="false"
+            android:background="@drawable/button_bg_gray2">
+            <ImageView
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:src="@mipmap/findgray"
+                android:layout_gravity="center_vertical"/>
+            <TextView
+                android:id="@+id/caipu_input"
+                android:textSize="14sp"
+                android:gravity="center_vertical"
+                android:textColorHint="#a2a2a2"
+                android:hint="输入食材、菜谱名称"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>

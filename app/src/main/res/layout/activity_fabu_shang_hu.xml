@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.administrator.vegetarians824.fabu.FabuShangHu">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#00aff0">
+        <LinearLayout
+            android:layout_marginLeft="5dp"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:id="@+id/fabu_sh_fanhui"
+            android:clickable="true"
+            >
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/back_white" />
+        </LinearLayout>
+    </FrameLayout>
+    <fragment
+        android:id="@+id/mymaps"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:tag="mysh"
+        android:name="com.example.administrator.vegetarians824.fabu.FragmentShanghu"
+        tools:layout="@layout/fragment_fragment_shanghu">
+    </fragment>
+</LinearLayout>

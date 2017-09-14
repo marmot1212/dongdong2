@@ -1,0 +1,22 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.administrator.vegetarians824.veganpass.MyPreference">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+            <GridView
+               android:layout_margin="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/pregerence_grid"
+                android:horizontalSpacing="8dp"
+                android:verticalSpacing="16dp"
+                android:numColumns="6">
+            </GridView>
+
+
+</LinearLayout>

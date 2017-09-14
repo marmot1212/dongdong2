@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.administrator.vegetarians824.video.CaipuGet">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#00aff0"
+        android:orientation="horizontal" >
+        <TextView
+            android:id="@+id/caipu_get_cancel"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            android:padding="16dp"
+            android:layout_gravity="center_vertical"
+            android:text="取消"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/caipu_get_submit"
+            android:textColor="#fff"
+            android:textSize="16sp"
+            android:padding="16dp"
+            android:layout_gravity="right|center_vertical"
+            android:text="提交"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+    <LinearLayout
+        android:background="#fff"
+        android:layout_width="match_parent"
+        android:layout_height="48dp">
+        <EditText
+            android:id="@+id/caipu_get_et"
+            android:textSize="14sp"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:background="#fff"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="在这里输入菜品名称"/>
+    </LinearLayout>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/caipu_get_listview"
+        android:divider="@null">
+    </ListView>
+</LinearLayout>

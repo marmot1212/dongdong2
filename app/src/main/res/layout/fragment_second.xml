@@ -1,0 +1,28 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.administrator.vegetarians824.homePage.SecondFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        xmlns:ptr="http://schemas.android.com/apk/res-auto"
+        ptr:ptrDrawable="@mipmap/update_xlist"
+        ptr:ptrHeaderTextColor="#a2a2a2"
+        android:background="#fff"
+        android:overScrollMode="never"
+        android:divider="@null"
+        ptr:ptrShowIndicator="false"
+        android:id="@+id/jiankang_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </com.handmark.pulltorefresh.library.PullToRefreshListView>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@android:drawable/ic_media_play"  />
+</FrameLayout>

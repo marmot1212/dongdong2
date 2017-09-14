@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.administrator.vegetarians824.dongdong.JKshuguoDetialMore">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#00aff0"
+        android:orientation="horizontal" >
+        <LinearLayout
+            android:layout_marginLeft="5dp"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:id="@+id/shuguo_caipu_fanhui"
+            android:clickable="true"
+            android:layout_gravity="center_vertical"
+            >
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/back_white" />
+        </LinearLayout>
+        <TextView
+            android:text="相关菜谱"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="#fff"
+            android:gravity="center"
+            />
+    </FrameLayout>
+    <GridView
+        android:background="#fff"
+        android:verticalSpacing="15dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:id="@+id/shuguo_caipu_grid"
+        android:layout_width="match_parent"
+        android:numColumns="2"
+        android:layout_height="match_parent">
+    </GridView>
+</LinearLayout>

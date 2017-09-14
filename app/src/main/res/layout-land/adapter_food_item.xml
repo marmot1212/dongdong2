@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <FrameLayout
+            android:layout_width="64dp"
+            android:layout_height="64dp">
+            <ImageView
+                android:id="@+id/food_item_ima"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            <ImageView
+                android:visibility="invisible"
+                android:id="@+id/food_item_forbid"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/forbid"/>
+        </FrameLayout>
+        <TextView
+            android:id="@+id/food_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            />
+    </LinearLayout>
+</LinearLayout>

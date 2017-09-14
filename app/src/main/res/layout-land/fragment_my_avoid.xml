@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.administrator.vegetarians824.veganpass.MyAvoid">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="320dp"
+            android:layout_height="40dp"
+            android:background="#fff">
+            <EditText
+                android:id="@+id/avoid_et"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:hint="搜索添加"
+                android:textSize="14sp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#fff"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/avoid_cancel"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="180dp"
+            android:text="取消"
+            android:textColor="#f00"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp" />
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <GridLayout
+            android:id="@+id/avoid_grid"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="450dp"
+            android:layout_height="wrap_content"
+            android:columnCount="5">
+        </GridLayout>
+        <ListView
+            android:visibility="invisible"
+        android:divider="@null"
+        android:id="@+id/avoid_listview"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="320dp"
+        android:layout_height="match_parent">
+    </ListView>
+    </FrameLayout>
+</LinearLayout>
