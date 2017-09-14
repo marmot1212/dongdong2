@@ -93,6 +93,7 @@ public class OneFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_one, container, false);
+        ButterKnife.bind(this, v);
         initListener();
 
 
@@ -115,7 +116,7 @@ public class OneFragment extends Fragment {
             initdata();
         }
 
-        ButterKnife.bind(this, v);
+
         return v;
     }
 

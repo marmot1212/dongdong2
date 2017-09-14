@@ -21,12 +21,36 @@ import com.example.administrator.vegetarians824.dongdong.Wenda;
 import com.example.administrator.vegetarians824.myView.CyclePager;
 import com.example.administrator.vegetarians824.veganpass.WelcomePage;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ThirdFragment extends Fragment {
 
-    private LinearLayout module1,module2,module3,module4,module5,module6,module7,module8;
+    @Bind(R.id.home_01)
+    LinearLayout module1;
+    @Bind(R.id.home_02)
+    LinearLayout module2;
+    @Bind(R.id.home_03)
+    LinearLayout module3;
+    @Bind(R.id.home_04)
+    LinearLayout module4;
+    @Bind(R.id.home_05)
+    LinearLayout module5;
+    @Bind(R.id.home_06)
+    LinearLayout module6;
+    @Bind(R.id.home_07)
+    LinearLayout module7;
+    @Bind(R.id.home_08)
+    LinearLayout module8;
+    @Bind(R.id.ditu_xiangqing_viewpager2)
+    ViewPager advPager;
+    @Bind(R.id.ditu_xiangqing_viewGroup2)
+    LinearLayout group;
+    // group 轮播小圆点；advPager ViewPager
+
     public ThirdFragment() {
         // Required empty public constructor
     }
@@ -36,36 +60,32 @@ public class ThirdFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v=inflater.inflate(R.layout.fragment_third, container, false);
-        LinearLayout group = (LinearLayout)v.findViewById(R.id.ditu_xiangqing_viewGroup2);// 展示小圆点
-        ViewPager advPager = (ViewPager)v.findViewById(R.id.ditu_xiangqing_viewpager2);// ViewPager
-        CyclePager cyclePager=new CyclePager(advPager,group,getContext());
+        View v = inflater.inflate(R.layout.fragment_third, container, false);
+        ButterKnife.bind(this, v);
+
+        /**
+         * CyclePager是轮播工具类？？？
+         */
+        CyclePager cyclePager = new CyclePager(advPager, group, getContext());
         cyclePager.init("4");
-        initView(v);
+
+        initListener(v);
         return v;
     }
 
-    public void initView(View v){
-        module1=(LinearLayout)v.findViewById(R.id.home_01);
-        module2=(LinearLayout)v.findViewById(R.id.home_02);
-        module3=(LinearLayout)v.findViewById(R.id.home_03);
-        module4=(LinearLayout)v.findViewById(R.id.home_04);
-        module5=(LinearLayout)v.findViewById(R.id.home_05);
-        module6=(LinearLayout)v.findViewById(R.id.home_06);
-        module7=(LinearLayout)v.findViewById(R.id.home_07);
-        module8=(LinearLayout)v.findViewById(R.id.home_08);
+    public void initListener(View v) {
 
         module1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),WelcomePage.class);
+                Intent intent = new Intent(getActivity(), WelcomePage.class);
                 getActivity().startActivity(intent);
             }
         });
         module2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),JKyuansu.class);
+                Intent intent = new Intent(getActivity(), JKyuansu.class);
                 getActivity().startActivity(intent);
             }
         });
@@ -73,7 +93,7 @@ public class ThirdFragment extends Fragment {
         module3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),JKshuguo.class);
+                Intent intent = new Intent(getActivity(), JKshuguo.class);
                 getActivity().startActivity(intent);
             }
         });
@@ -81,7 +101,7 @@ public class ThirdFragment extends Fragment {
         module4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),Trip.class);
+                Intent intent = new Intent(getActivity(), Trip.class);
                 getActivity().startActivity(intent);
             }
         });
@@ -89,7 +109,7 @@ public class ThirdFragment extends Fragment {
         module5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),Wenda.class);
+                Intent intent = new Intent(getActivity(), Wenda.class);
                 getActivity().startActivity(intent);
             }
         });
@@ -97,7 +117,7 @@ public class ThirdFragment extends Fragment {
         module6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),ArticleList.class);
+                Intent intent = new Intent(getActivity(), ArticleList.class);
                 getActivity().startActivity(intent);
             }
         });
@@ -105,7 +125,7 @@ public class ThirdFragment extends Fragment {
         module7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),MyCalender.class);
+                Intent intent = new Intent(getActivity(), MyCalender.class);
                 getActivity().startActivity(intent);
             }
         });
@@ -113,10 +133,16 @@ public class ThirdFragment extends Fragment {
         module8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getActivity(),JKlingshi.class);
+                Intent intent = new Intent(getActivity(), JKlingshi.class);
                 getActivity().startActivity(intent);
             }
         });
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }
