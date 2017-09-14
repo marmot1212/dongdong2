@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "F:\\project2.1\\MyApplication\\Emoji\\build\\intermediates\\res\\merged\\release\\values-zh\\values-zh.xml",
+        "outputFile": "/Users/scorpion/Documents/project2.5/MyApplication/Emoji/build/intermediates/incremental/mergeReleaseResources/merged.dir/values-zh/values-zh.xml",
         "map": [
             {
                 "to": {
@@ -11,7 +11,7 @@
                     "endOffset": 90
                 },
                 "from": {
-                    "file": "F:\\project2.1\\MyApplication\\Emoji\\src\\main\\res\\values-zh\\strings.xml",
+                    "file": "/Users/scorpion/Documents/project2.5/MyApplication/Emoji/src/main/res/values-zh/strings.xml",
                     "position": {
                         "startLine": 1,
                         "startColumn": 4,
@@ -30,7 +30,7 @@
                     "endOffset": 135
                 },
                 "from": {
-                    "file": "F:\\project2.1\\MyApplication\\Emoji\\src\\main\\res\\values-zh\\strings.xml",
+                    "file": "/Users/scorpion/Documents/project2.5/MyApplication/Emoji/src/main/res/values-zh/strings.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
@@ -49,7 +49,7 @@
                     "endOffset": 180
                 },
                 "from": {
-                    "file": "F:\\project2.1\\MyApplication\\Emoji\\src\\main\\res\\values-zh\\strings.xml",
+                    "file": "/Users/scorpion/Documents/project2.5/MyApplication/Emoji/src/main/res/values-zh/strings.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -68,7 +68,7 @@
                     "endOffset": 224
                 },
                 "from": {
-                    "file": "F:\\project2.1\\MyApplication\\Emoji\\src\\main\\res\\values-zh\\strings.xml",
+                    "file": "/Users/scorpion/Documents/project2.5/MyApplication/Emoji/src/main/res/values-zh/strings.xml",
                     "position": {
                         "startLine": 5,
                         "startColumn": 4,

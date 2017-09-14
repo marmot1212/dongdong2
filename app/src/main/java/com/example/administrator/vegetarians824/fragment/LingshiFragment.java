@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.dongdong.JKlsdetial;
 import com.example.administrator.vegetarians824.dongdong.TieziDetial;
@@ -292,5 +293,17 @@ public class LingshiFragment extends Fragment {
 
             return view;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

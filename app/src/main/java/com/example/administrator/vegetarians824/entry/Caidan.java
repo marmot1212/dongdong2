@@ -12,8 +12,46 @@ public class Caidan {
     public String pic;
     public String username;
     public String type;
+    public String user_head_img;
+    public String viewcount;
+    public String gathercount;
+    private String price;
+
     public Caidan(){
     }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getViewcount() {
+        return viewcount;
+    }
+
+    public void setViewcount(String viewcount) {
+        this.viewcount = viewcount;
+    }
+
+    public String getGathercount() {
+        return gathercount;
+    }
+
+    public void setGathercount(String gathercount) {
+        this.gathercount = gathercount;
+    }
+
+    public String getUser_head_img() {
+        return user_head_img;
+    }
+
+    public void setUser_head_img(String user_head_img) {
+        this.user_head_img = user_head_img;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -77,4 +115,5 @@ public class Caidan {
     public void setPic(String pic) {
         this.pic = pic;
     }
+
 }

@@ -1,10 +1,15 @@
 package com.example.administrator.vegetarians824;
+import android.*;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.animation.Animation;
@@ -20,6 +25,7 @@ import com.baidu.android.pushservice.PushManager;
 import com.example.administrator.vegetarians824.entry.MyLociation;
 import com.example.administrator.vegetarians824.entry.User;
 import com.example.administrator.vegetarians824.myapplications.BaseApplication;
+import com.example.administrator.vegetarians824.util.CheckPermission;
 import com.example.administrator.vegetarians824.util.ConnectionNetUtils;
 import com.example.administrator.vegetarians824.util.StatusBarUtil;
 
@@ -53,13 +59,14 @@ public class WelcomeActivity extends AppCompatActivity {
                 }
             }
         };
+
         initViews();
         gps();
         initDatas();
         initOpers();
         getUser();
         //创建消息推送
-        PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY,"p4FCm8tu8MqD4BLDuHvuwRX4");
+        //PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY,"p4FCm8tu8MqD4BLDuHvuwRX4");
     }
     //创建用户信息，用户如果第一次使用初始化用户信息，不是第一次则SharedPreferences加载存在本地的用户信息
     public void getUser(){
@@ -108,7 +115,7 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                     if(isHaveNet) {
-                        Intent intent = new Intent(WelcomeActivity.this, FirstActivity.class);
+                        Intent intent = new Intent(WelcomeActivity.this, HomePage.class);
                         WelcomeActivity.this.startActivity(intent);
                         WelcomeActivity.this.finish();
                     }
@@ -139,8 +146,12 @@ public class WelcomeActivity extends AppCompatActivity {
         mLocationClient.setLocationOption(mLocationOption);
 
         mLocationOption.setOnceLocation(true);
-        //启动定位
-        mLocationClient.startLocation();
+
+        if(CheckPermission.requestLocaltionPermission(WelcomeActivity.this)){
+            //启动定位
+            mLocationClient.startLocation();
+        }
+
 
     }
 
@@ -257,5 +268,18 @@ public class WelcomeActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 198) {
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                mLocationClient.startLocation();
+            } else {
+                Toast.makeText(getBaseContext(), "请手动获取定位权限", Toast.LENGTH_SHORT).show();
+            }
+            return;
+        }
     }
 }

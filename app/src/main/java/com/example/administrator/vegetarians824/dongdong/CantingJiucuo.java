@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.login.Login;
 import com.example.administrator.vegetarians824.mannager.URLMannager;
@@ -79,5 +80,16 @@ public class CantingJiucuo extends AppCompatActivity {
         spr.putValue("content",content);
         spr.putValue("res_id",id);
         SlingleVolleyRequestQueue.getInstance(CantingJiucuo.this).addToRequestQueue(spr);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

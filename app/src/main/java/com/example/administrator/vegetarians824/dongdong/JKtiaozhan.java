@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.util.SensorManagerHelper;
 import com.example.administrator.vegetarians824.util.StatusBarUtil;
@@ -48,5 +49,17 @@ public class JKtiaozhan extends AppCompatActivity {
                 JKtiaozhan.this.startActivity(intent);
             }
         });
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        yao.setVisibility(View.INVISIBLE);
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

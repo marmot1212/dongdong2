@@ -1,7 +1,10 @@
 package com.example.administrator.vegetarians824;
 
+import android.app.Notification;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -35,6 +38,9 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import cn.jpush.android.api.BasicPushNotificationBuilder;
+import cn.jpush.android.api.JPushInterface;
+
 /*
 *第一次进入的首页
 *
@@ -45,6 +51,13 @@ public class FirstActivity extends AppCompatActivity {
     TextView map,su;
     ImageView touxiang;
     FrameLayout add;
+
+    public static boolean isForeground = false;
+    private MessageReceiver mMessageReceiver;
+    public static final String MESSAGE_RECEIVED_ACTION = "com.example.jpushdemo.MESSAGE_RECEIVED_ACTION";
+    public static final String KEY_TITLE = "title";
+    public static final String KEY_MESSAGE = "message";
+    public static final String KEY_EXTRAS = "extras";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +65,7 @@ public class FirstActivity extends AppCompatActivity {
         StatusBarUtil.setColorDiff(this,0xff00aff0);
         initView();
         versionAch();
+        bindPush();
     }
 
     //初始化视图
@@ -131,10 +145,10 @@ public class FirstActivity extends AppCompatActivity {
         });
 
     }
-
     @Override
     protected void onResume() {
         super.onResume();
+        isForeground = true;
         if(BaseApplication.app.getUser()!=null&&BaseApplication.app.getUser().islogin()) {
             httpRequest();
         }
@@ -160,6 +174,7 @@ public class FirstActivity extends AppCompatActivity {
             }
         });
     }
+
     //版本检验
     public void versionAch(){
         // 获取packagemanager的实例
@@ -174,7 +189,7 @@ public class FirstActivity extends AppCompatActivity {
         //获取当前版本号
         String version = packInfo.versionName;
         //服务器获取最新版本号
-        StringRequest request=new StringRequest("https://isuhuo.com/plainliving/androidapi/Indexs/confirmation_apk/apk_num/"+version, new Response.Listener<String>() {
+        StringRequest request=new StringRequest("http://isuhuo.com/plainliving/androidapi/Indexs/confirmation_apk/apk_num/"+version, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
                 try {
@@ -240,5 +255,81 @@ public class FirstActivity extends AppCompatActivity {
         });
         spr.putValue("uid",BaseApplication.app.getUser().getId());
         SlingleVolleyRequestQueue.getInstance(getBaseContext()).addToRequestQueue(spr);
+    }
+
+
+    public void bindPush(){
+        String rid = JPushInterface.getRegistrationID(getApplicationContext());
+        Log.d("=============regist","aa");
+        if (!rid.isEmpty()) {
+            Log.d("=============registid",rid);
+            setStyleCustom();
+            registerMessageReceiver();
+            sendPhoneId(rid);
+        }
+    }
+
+    private void setStyleCustom() {
+        BasicPushNotificationBuilder builder = new BasicPushNotificationBuilder(getBaseContext());
+        builder.statusBarDrawable = R.mipmap.logo1024;
+        builder.notificationFlags = Notification.FLAG_AUTO_CANCEL;  //设置为点击后自动消失
+        builder.notificationDefaults = Notification.DEFAULT_SOUND;  //设置为铃声（ Notification.DEFAULT_SOUND）或者震动（ Notification.DEFAULT_VIBRATE）
+        JPushInterface.setPushNotificationBuilder(1, builder);
+        //Toast.makeText(getBaseContext(), "Basic Builder - 1", Toast.LENGTH_SHORT).show();
+    }
+
+    public void sendPhoneId(String id){
+        StringPostRequest spr=new StringPostRequest(URLMannager.BindPhone, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                Log.d("==============s",s);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        });
+        spr.putValue("phoneid",id);
+        if(BaseApplication.app.getUser().getId()==null){
+            spr.putValue("uid","");
+        }else {
+            spr.putValue("uid", BaseApplication.app.getUser().getId());
+        }
+
+        SlingleVolleyRequestQueue.getInstance(getBaseContext()).addToRequestQueue(spr);
+    }
+
+    @Override
+    protected void onPause() {
+        isForeground = false;
+        super.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(mMessageReceiver);
+        super.onDestroy();
+    }
+
+    public class MessageReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (MESSAGE_RECEIVED_ACTION.equals(intent.getAction())) {
+                String messge = intent.getStringExtra(KEY_MESSAGE);
+                String extras = intent.getStringExtra(KEY_EXTRAS);
+                StringBuilder showMsg = new StringBuilder();
+                showMsg.append(KEY_MESSAGE + " : " + messge + "\n");
+            }
+        }
+    }
+
+    public void registerMessageReceiver() {
+        mMessageReceiver = new MessageReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
+        filter.addAction(MESSAGE_RECEIVED_ACTION);
+        registerReceiver(mMessageReceiver, filter);
     }
 }

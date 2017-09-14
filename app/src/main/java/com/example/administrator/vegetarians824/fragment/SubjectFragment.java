@@ -16,6 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -108,7 +109,10 @@ public class SubjectFragment extends Fragment {
                 type="7";
                 break;
         }
-        initprl();
+        if(getContext()!=null) {
+            initprl();
+
+        }
         return v;
     }
 
@@ -135,6 +139,7 @@ public class SubjectFragment extends Fragment {
 
                 list=new ArrayList<FabuInfo>();
                 p=0;
+                totalpage=1;
                 prl.setMode(PullToRefreshBase.Mode.BOTH);//同时支持上拉下拉刷新
                 new DataRefresh().execute();
 
@@ -156,34 +161,39 @@ public class SubjectFragment extends Fragment {
     }
 
     public void getdate(){
-        Log.d("=========type",type);
-        StringPostRequest spr=new StringPostRequest("https://www.isuhuo.com/plainLiving/Androidapi/userCenter/"+which, new Response.Listener<String>() {
+        //Log.d("=========type",type);
+        prl.setMode(PullToRefreshBase.Mode.BOTH);
+        StringPostRequest spr=new StringPostRequest("http://www.isuhuo.com/plainLiving/Androidapi/userCenter/"+which, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                Log.d("================s",s);
                 try {
                     JSONObject js1=new JSONObject(s);
                     JSONObject js2=js1.getJSONObject("Result");
                     if(js2.getJSONArray("list").length()==0){
-                        TextView tv=(TextView)getView().findViewById(R.id.noinfo);
-                        if(which.equals("myshare_list")){
-                            tv.setText("您尚未发布");
-                            prl.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
-                        }
-                        else
-                            if(which.equals("my_commentlist")){
+                        if(getView()!=null) {
+                            TextView tv = (TextView) getView().findViewById(R.id.noinfo);
+                            if (which.equals("myshare_list")) {
+                                tv.setText("您尚未发布");
+                                prl.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+                            } else if (which.equals("my_commentlist")) {
                                 tv.setText("您尚未点评");
                                 prl.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
                             }
-                    }
+                            adapter=new FabuInfoAdapter(list,getContext());
+                            prl.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                        }
+
+                    }else {
+
                     if(!js2.isNull("totalpage"))
                     {
                         String st=js2.getString("totalpage");
-                        totalpage=Integer.valueOf(st).intValue();
+                        totalpage=Integer.valueOf(st);
+                    }else {
+                        totalpage=1;
                     }
-                    if(totalpage==1){
-                        prl.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
-                    }
+
                     JSONArray ja=js2.getJSONArray("list");
                     for(int i=0;i<ja.length();i++){
                         JSONObject jo=ja.getJSONObject(i);
@@ -200,22 +210,23 @@ public class SubjectFragment extends Fragment {
                     }
                         adapter=new FabuInfoAdapter(list,getContext());
                         prl.setAdapter(adapter);
-                        if(list.size()>0&&prl.getRefreshableView().getFooterViewsCount()<=1){
+                        if(list.size()>0&&prl.getRefreshableView().getFooterViewsCount()<=1&&totalpage==p){
                             TextView tv=new TextView(getContext());
                             tv.setText("已经全部加载完毕");
                             tv.setTextSize(12);
                             tv.setTextColor(0xffa0a0a0);
-                            ViewGroup.LayoutParams params=new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,100);
+                            AbsListView.LayoutParams params=new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,100);
                             tv.setLayoutParams(params);
                             tv.setGravity(Gravity.CENTER);
                             prl.getRefreshableView().addFooterView(tv);
+                            prl.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
                         }
                         if(isup){
                             prl.getRefreshableView().setSelection(p*10-19);
                             isup=false;
                         }
                         adapter.notifyDataSetChanged();
-
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -228,8 +239,8 @@ public class SubjectFragment extends Fragment {
         });
         spr.putValue("uid",BaseApplication.app.getUser().getId());
         spr.putValue("type",type);
-        spr.putValue("p",String.valueOf(p).toString());
-        spr.putValue("t","10");
+        spr.putValue("p",p+"");
+        spr.putValue("t","20");
         SlingleVolleyRequestQueue.getInstance(getContext()).addToRequestQueue(spr);
     }
 
@@ -307,7 +318,11 @@ public class SubjectFragment extends Fragment {
                         case "7":
                             //菜谱
                             Intent intent6=new Intent(getContext(), CaipuDetail.class);
-                            intent6.putExtra("id",mydate.get(x).getId());
+                            if(which.equals("myshare_list")) {
+                                intent6.putExtra("id", mydate.get(x).getId());
+                            }else {
+                                intent6.putExtra("id", mydate.get(x).getMess_id());
+                            }
                             getActivity().startActivity(intent6);
                             break;
                     }
@@ -347,6 +362,7 @@ public class SubjectFragment extends Fragment {
         protected Void doInBackground(Void... voids) {
 
             //给系统2秒时间用来做出反应
+
             SystemClock.sleep(2000);
             return null;
         }
@@ -360,12 +376,7 @@ public class SubjectFragment extends Fragment {
                 getdate();
             }
             else{
-                if (totalpage ==0) {
-                    Toast.makeText(getContext(),"暂无信息",Toast.LENGTH_SHORT).show();
-                }
-                else
-                    Toast.makeText(getContext(),"己加载全部",Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(getContext(), "己加载全部", Toast.LENGTH_SHORT).show();
                 prl.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
             }
         }

@@ -13,23 +13,30 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.fragment.Nongli;
 import com.example.administrator.vegetarians824.fragment.SubjectFragment;
 import com.example.administrator.vegetarians824.fragment.Zangli;
+import com.example.administrator.vegetarians824.myinterface.SetTime;
 import com.example.administrator.vegetarians824.util.StatusBarUtil;
 
-public class MyCalender extends AppCompatActivity {
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class MyCalender extends AppCompatActivity{
     TextView nong,zang;
     FrameLayout fram;
     FragmentManager fm;
     FragmentTransaction ft;
     FrameLayout cal_fram;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_calender);
         StatusBarUtil.setColorDiff(this,0xff00aff0);
+
         cal_fram=(FrameLayout)findViewById(R.id.cal_fram);
         initop();
         initView();
@@ -40,7 +47,8 @@ public class MyCalender extends AppCompatActivity {
         zang=(TextView)findViewById(R.id.calendar_zang);
         fm=getSupportFragmentManager();
         ft = fm.beginTransaction();
-        ft.replace(R.id.calendar_frag,new Nongli());
+        Nongli nl=new Nongli();
+        ft.replace(R.id.calendar_frag,nl);
         ft.commit();
 
         nong.setOnClickListener(new View.OnClickListener() {
@@ -54,7 +62,8 @@ public class MyCalender extends AppCompatActivity {
                 zang.setBackgroundResource(R.drawable.button_bg);
                 fm=getSupportFragmentManager();
                 ft = fm.beginTransaction();
-                ft.replace(R.id.calendar_frag,new Nongli());
+                Nongli nl=new Nongli();
+                ft.replace(R.id.calendar_frag,nl);
                 ft.commit();
             }
         });
@@ -69,7 +78,8 @@ public class MyCalender extends AppCompatActivity {
                 nong.setBackgroundResource(R.drawable.button_bg_red);
                 fm=getSupportFragmentManager();
                 ft = fm.beginTransaction();
-                ft.replace(R.id.calendar_frag,new Zangli());
+                Zangli zl=new Zangli();
+                ft.replace(R.id.calendar_frag,zl);
                 ft.commit();
             }
         });
@@ -83,4 +93,17 @@ public class MyCalender extends AppCompatActivity {
             }
         });
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
+    }
+
+
 }

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.entry.FabuInfo;
 import com.example.administrator.vegetarians824.myapplications.BaseApplication;
@@ -60,5 +61,16 @@ public class MyCode extends AppCompatActivity {
         });
         spr.putValue("uid", BaseApplication.app.getUser().getId());
         SlingleVolleyRequestQueue.getInstance(getBaseContext()).addToRequestQueue(spr);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

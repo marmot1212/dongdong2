@@ -28,19 +28,48 @@ public class CantingInfo {
 	public String user_head_img_th;
 	public String username;
 	public String distance;
+	public String parking;
+	public String subway_status="";
+	public String vege_status;
+	public String vege_lv="0";
+
+
+	public String getVege_lv() {
+		return vege_lv;
+	}
+
+	public void setVege_lv(String vege_lv) {
+		this.vege_lv = vege_lv;
+	}
+
+	public String getSubway_status() {
+		return subway_status;
+	}
+
+	public void setSubway_status(String subway_status) {
+		this.subway_status = subway_status;
+	}
 
 	public CantingInfo() {
 		super();
 
 	}
 
+	public String getVege_status() {
+		return vege_status;
+	}
+
+	public void setVege_status(String vege_status) {
+		this.vege_status = vege_status;
+	}
+
 	public CantingInfo(String id, String title, String tel, String content,
-			String unit_pric, String longitude, String latitude,
-			String img_url_1, String img_url_2, String img_url_3,
-			String img_url_4, String img_url_5, String type,
-			String create_time, String uid, String address,
-			String img_url_th_1, String user_head_img, String user_head_img_th,
-			String username, String distance) {
+					   String unit_pric, String longitude, String latitude,
+					   String img_url_1, String img_url_2, String img_url_3,
+					   String img_url_4, String img_url_5, String type,
+					   String create_time, String uid, String address,
+					   String img_url_th_1, String user_head_img, String user_head_img_th,
+					   String username, String distance) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -248,13 +277,12 @@ public class CantingInfo {
 				+ distance + "]";
 	}
 
-	
-	
-	
 
-	
-	
+	public String getParking() {
+		return parking;
+	}
 
-	
-	
+	public void setParking(String parking) {
+		this.parking = parking;
+	}
 }

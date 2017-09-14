@@ -28,6 +28,7 @@ import com.amap.api.maps2d.model.MarkerOptions;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.entry.BitmapUtils;
 import com.example.administrator.vegetarians824.entry.Country;
@@ -138,6 +139,7 @@ public class Trip extends AppCompatActivity implements AMap.OnMarkerClickListene
     protected void onResume() {
         super.onResume();
         mapView.onResume();
+        StatService.onResume(this);
     }
 
     /**
@@ -148,6 +150,7 @@ public class Trip extends AppCompatActivity implements AMap.OnMarkerClickListene
         super.onPause();
         mapView.onPause();
         deactivate();
+        StatService.onPause(this);
     }
 
     /**
@@ -536,4 +539,7 @@ public class Trip extends AppCompatActivity implements AMap.OnMarkerClickListene
         }
 
     };
+
+
+
 }

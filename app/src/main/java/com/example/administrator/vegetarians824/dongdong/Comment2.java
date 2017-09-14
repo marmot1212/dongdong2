@@ -3,6 +3,7 @@ package com.example.administrator.vegetarians824.dongdong;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +11,7 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,16 +34,24 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.mannager.URLMannager;
+import com.example.administrator.vegetarians824.myView.LoadingDialog;
 import com.example.administrator.vegetarians824.myapplications.BaseApplication;
+import com.example.administrator.vegetarians824.util.CheckPermission;
 import com.example.administrator.vegetarians824.util.StatusBarUtil;
 import com.example.administrator.vegetarians824.util.UpLoadUtil;
 import com.tb.emoji.Emoji;
 import com.tb.emoji.EmojiUtil;
 import com.tb.emoji.FaceFragment;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,11 +78,14 @@ public class Comment2 extends AppCompatActivity {
     ImageView icon;
     private boolean emisShow=false;
     LinearLayout etparent;
+    private LoadingDialog loadingDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment2);
         StatusBarUtil.setColorDiff(this,0xff00aff0);
+        loadingDialog=new LoadingDialog(this);
+        loadingDialog.setMessage("正在上传");
         et1=(EditText)findViewById(R.id.comment2_et);
         etparent=(LinearLayout)findViewById(R.id.comment2_etparent);
         mainline=(FrameLayout)findViewById(R.id.comment2_main);
@@ -138,10 +151,12 @@ public class Comment2 extends AppCompatActivity {
                 }
                 else if(position == 0) { //点击图片位置为+ 0对应0张图片
 
-                    //选择图片
-                    Intent intent = new Intent(Intent.ACTION_PICK,
-                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, IMAGE_OPEN);
+                    if(CheckPermission.requestReadStorageRuntimePermission(Comment2.this)) {
+                        //选择图片
+                        Intent intent = new Intent(Intent.ACTION_PICK,
+                                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        startActivityForResult(intent, IMAGE_OPEN);
+                    }
                     //通过onResume()刷新数据
                 }
                 else {
@@ -212,7 +227,7 @@ public class Comment2 extends AppCompatActivity {
             //刷新后释放防止手机休眠后自动添加
             pathImage = null;
         }
-
+        StatService.onResume(this);
     }
 
     protected void dialog(final int position) {
@@ -246,6 +261,7 @@ public class Comment2 extends AppCompatActivity {
                 Intent intent=getIntent();
                 pid=intent.getStringExtra("id");
                 ptype=intent.getStringExtra("type");
+                loadingDialog.show();
                 new picdoPost().execute(URLMannager.CommentAdd);
 
             }
@@ -264,10 +280,28 @@ public class Comment2 extends AppCompatActivity {
             final Map<String, File> files = new HashMap<String, File>();
 
             for(int i=0;i<filePath.size();i++){
-                File file=new File(filePath.get(i));
-                StringBuffer buffer=new StringBuffer();
-                buffer.append("img_url_").append(i+1);
-                files.put(buffer.toString(),file);
+                //File file=new File(filePath.get(i));
+
+                try {
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inSampleSize = 4;
+                    Bitmap addbmp=BitmapFactory.decodeFile(filePath.get(i),options);
+                    File file=new File("/sdcard/"+"comment"+i+".jpg");//将要保存图片的路径
+
+                    BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+                    addbmp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                    bos.flush();
+                    bos.close();
+
+                    StringBuffer buffer=new StringBuffer();
+                    buffer.append("img_url_").append(i+1);
+                    files.put(buffer.toString(),file);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
             }
             String s="";
             try {
@@ -282,8 +316,21 @@ public class Comment2 extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Toast.makeText(getBaseContext(),"发布成功",Toast.LENGTH_SHORT).show();
-            finish();
+            Log.d("==============ss",s);
+            try {
+                JSONObject js1=new JSONObject(s);
+                if(js1.getString("Code").equals("1")){
+                    loadingDialog.dismiss();
+                    Toast.makeText(getBaseContext(),"评价成功",Toast.LENGTH_SHORT).show();
+                    finish();
+                }else {
+                    loadingDialog.dismiss();
+                    Toast.makeText(getBaseContext(),js1.getString("Message"),Toast.LENGTH_SHORT).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
@@ -397,5 +444,26 @@ public class Comment2 extends AppCompatActivity {
 
             }
         });
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==197){
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent intent = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, IMAGE_OPEN);
+            } else {
+                Toast.makeText(getBaseContext(), "权限错误", Toast.LENGTH_SHORT).show();
+            }
+            return;
+        }
     }
 }

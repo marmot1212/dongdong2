@@ -36,7 +36,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
+import com.example.administrator.vegetarians824.adapter.CommentAdapter;
 import com.example.administrator.vegetarians824.entry.Pinglun;
 import com.example.administrator.vegetarians824.entry.Tiezi;
 import com.example.administrator.vegetarians824.mannager.URLMannager;
@@ -131,7 +133,7 @@ public class Comment extends AppCompatActivity {
             @Override
             public void onResponse(String s) {
                 myJson(s);
-                adapter= new CommentAdapter(list,getBaseContext());
+                adapter= new CommentAdapter(list,Comment.this);
                 prl.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
                 if(list.size()>0){
@@ -187,69 +189,8 @@ public class Comment extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-    public class CommentAdapter extends BaseAdapter{
-        private List<Pinglun> mydata;
-        private Context context;
-        public CommentAdapter(List<Pinglun> mydata,Context context){
-            this.mydata=mydata;
-            this.context=context;
-        }
-        @Override
-        public int getCount() {
-            return mydata.size();
-        }
 
-        @Override
-        public Object getItem(int i) {
-            return mydata.get(i);
-        }
 
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(final int i, View view, ViewGroup viewGroup) {
-            View v= LayoutInflater.from(context).inflate(R.layout.comment_item,null);
-            ImageView ima=(ImageView)v.findViewById(R.id.comment_item_ima);
-            TextView c=(TextView)v.findViewById(R.id.comment_item_content);
-            TextView n=(TextView)v.findViewById(R.id.comment_item_uname);
-            TextView t=(TextView)v.findViewById(R.id.comment_item_time);
-            ImageView lv=(ImageView)v.findViewById(R.id.comment_item_lv);
-            c.setText(mydata.get(i).getContent());
-            try {
-                EmojiUtil.handlerEmojiText(c, c.getText().toString(), getBaseContext());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            n.setText(mydata.get(i).getUsername());
-            t.setText(mydata.get(i).getCreate_time_text());
-            switch (mydata.get(i).getLv()){
-                case "1":lv.setImageResource(R.mipmap.lv1);break;
-                case "2":lv.setImageResource(R.mipmap.lv2);break;
-                case "3":lv.setImageResource(R.mipmap.lv3);break;
-                default:break;
-            }
-            com.nostra13.universalimageloader.core.ImageLoader loader= ImageLoaderUtils.getInstance(context);
-            DisplayImageOptions options=ImageLoaderUtils.getOpt();
-            loader.displayImage(URLMannager.Imag_URL+""+mydata.get(i).getUser_head_img_th(),ima,options);
-            ima.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent=new Intent(Comment.this,UserDetial.class);
-                    intent.putExtra("uid",mydata.get(i).getUid());
-                    if(BaseApplication.app.getUser().islogin()){
-                        intent.putExtra("id",BaseApplication.app.getUser().getId());
-                    }else {
-                        intent.putExtra("id","");
-                    }
-                    Comment.this.startActivity(intent);
-                }
-            });
-            return v;
-        }
-    }
     public class DataRefresh extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -436,5 +377,15 @@ public class Comment extends AppCompatActivity {
         spr.putValue("content",input.getText().toString());
         SlingleVolleyRequestQueue.getInstance(Comment.this).addToRequestQueue(spr);
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
+    }
 }

@@ -57,6 +57,7 @@ public class CaidanAdapter2 extends BaseAdapter {
         DisplayImageOptions options2=ImageLoaderUtils.getOpt();
         loader2.displayImage(URLMannager.Imag_URL+""+mydata.get(i).getPic(),ima,options2);
         //裁剪图片
+        /*
         Display display = windowManager.getDefaultDisplay();
         int Width = display.getWidth();
         ViewGroup.LayoutParams params=ima.getLayoutParams();
@@ -69,6 +70,7 @@ public class CaidanAdapter2 extends BaseAdapter {
         LinearLayout.LayoutParams lLayoutlayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,360);
         ima.setLayoutParams(lLayoutlayoutParams);
         ima.requestLayout();
+        */
         //text
         TextView tv1=(TextView)view.findViewById(R.id.caipu2_title);
         tv1.setText(mydata.get(i).getTitle());

@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.entry.User;
 import com.example.administrator.vegetarians824.myapplications.BaseApplication;
@@ -119,7 +120,7 @@ public class Zhuce extends AppCompatActivity {
 
     //请求服务器发送验证码
     public void sendRequest(){
-        StringPostRequest spr=new StringPostRequest("https://www.isuhuo.com/plainLiving/androidapi/send/send", new Response.Listener<String>() {
+        StringPostRequest spr=new StringPostRequest("http://www.isuhuo.com/plainLiving/androidapi/send/send", new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
                 try {
@@ -150,12 +151,13 @@ public class Zhuce extends AppCompatActivity {
     }
     //本地审核通过后提交注册信息
     public void admits(){
-        StringPostRequest spr=new StringPostRequest("https://www.isuhuo.com/plainLiving/Androidapi/user/register", new Response.Listener<String>() {
+        StringPostRequest spr=new StringPostRequest("http://www.isuhuo.com/plainLiving/Androidapi/user/register", new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
                 try {
                     JSONObject js1=new JSONObject(s);
                     if(js1.getString("Code").equals("1")){
+                        /*
                         JSONObject js2=js1.getJSONObject("Result");
                         User user=new User();
                         user.setId(js2.getString("id"));
@@ -173,6 +175,7 @@ public class Zhuce extends AppCompatActivity {
                         saveToPre(user);
                         //app的application中重置用户信息
                         BaseApplication.app.setUser(user);
+                        */
                         Toast.makeText(getBaseContext(),js1.getString("Message"),Toast.LENGTH_SHORT).show();
                         finish();
 
@@ -195,7 +198,7 @@ public class Zhuce extends AppCompatActivity {
     }
     //存到本地的sharedpreference
     public void saveToPre(User u){
-        SharedPreferences preferences=Zhuce.this.getSharedPreferences("shared", Context.MODE_WORLD_READABLE|Context.MODE_WORLD_WRITEABLE);
+        SharedPreferences preferences=Zhuce.this.getSharedPreferences("shared", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor=preferences.edit();
         editor.putString("id",u.getId());
         editor.putString("username",u.getName());
@@ -246,4 +249,16 @@ public class Zhuce extends AppCompatActivity {
             send.setBackgroundResource(R.drawable.button_bg);
         }
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
+    }
+
 }

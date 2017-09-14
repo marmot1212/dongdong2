@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.dongdong.CaipuDetail;
 import com.example.administrator.vegetarians824.dongdong.CantingDetail;
@@ -110,6 +111,7 @@ public class UserDetial extends AppCompatActivity {
             @Override
             public void onResponse(final String s) {
                 try {
+                    Log.d("==============sss",s);
                     JSONObject js1=new JSONObject(s);
                     JSONObject js2=js1.getJSONObject("Result");
                     JSONArray ja=js2.getJSONArray("userData");
@@ -190,31 +192,35 @@ public class UserDetial extends AppCompatActivity {
                         introt.setText(intro);
                     //赞的人
                     LinearLayout zanadd=(LinearLayout)vv.findViewById(R.id.zan_addline);
+                    LinearLayout zanshow=(LinearLayout)vv.findViewById(R.id.zan_showline);
                     JSONArray jaa=js3.getJSONArray("laudlist");
-                    for(int i=0;i<jaa.length();i++){
-                        JSONObject jo=jaa.getJSONObject(i);
-                        RoundImageView imas=new RoundImageView(getBaseContext());
-                        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(60,60);
-                        params.setMargins(15,0,0,0);
-                        imas.setLayoutParams(params);
-                        com.nostra13.universalimageloader.core.ImageLoader loader2= ImageLoaderUtils.getInstance(UserDetial.this);
-                        DisplayImageOptions options2=ImageLoaderUtils.getOpt();
-                        loader2.displayImage(URLMannager.Imag_URL+""+jo.getString("user_head_img"),imas,options2);
-                        final String id=jo.getString("id");
-                        imas.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                Intent intent=new Intent(UserDetial.this,UserDetial.class);
-                                intent.putExtra("uid",id);
-                                if(BaseApplication.app.getUser().islogin()){
-                                    intent.putExtra("id",BaseApplication.app.getUser().getId());
-                                }else {
-                                    intent.putExtra("id","");
+                    if(jaa.length()>0) {
+                        zanshow.setVisibility(View.VISIBLE);
+                        for (int i = 0; i < jaa.length(); i++) {
+                            JSONObject jo = jaa.getJSONObject(i);
+                            RoundImageView imas = new RoundImageView(getBaseContext());
+                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(60, 60);
+                            params.setMargins(15, 0, 0, 0);
+                            imas.setLayoutParams(params);
+                            com.nostra13.universalimageloader.core.ImageLoader loader2 = ImageLoaderUtils.getInstance(UserDetial.this);
+                            DisplayImageOptions options2 = ImageLoaderUtils.getOpt();
+                            loader2.displayImage(URLMannager.Imag_URL + "" + jo.getString("user_head_img"), imas, options2);
+                            final String id = jo.getString("id");
+                            imas.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent = new Intent(UserDetial.this, UserDetial.class);
+                                    intent.putExtra("uid", id);
+                                    if (BaseApplication.app.getUser().islogin()) {
+                                        intent.putExtra("id", BaseApplication.app.getUser().getId());
+                                    } else {
+                                        intent.putExtra("id", "");
+                                    }
+                                    UserDetial.this.startActivity(intent);
                                 }
-                                UserDetial.this.startActivity(intent);
-                            }
-                        });
-                        zanadd.addView(imas);
+                            });
+                            zanadd.addView(imas);
+                        }
                     }
                     //积分
                     String jf=js3.getString("jifen");
@@ -328,7 +334,6 @@ public class UserDetial extends AppCompatActivity {
         }else {
             url="http://www.isuhuo.com/plainliving/Androidapi/List/userProfiles/uid/"+uid+"/p/" + count + "/t/10";
         }
-        Log.d("================lis",url);
         StringRequest request=new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
@@ -539,5 +544,15 @@ public class UserDetial extends AppCompatActivity {
         popWindow.showAtLocation(hima, Gravity.CENTER, 0, 0);
 
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
+    }
 }

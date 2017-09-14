@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.dongdong.CaipuDetail;
 import com.example.administrator.vegetarians824.dongdong.CantingDetail;
@@ -176,7 +178,7 @@ public class SellerFragment extends Fragment {
     //请求数据
     public void getdate(){
         if(type!="4") {
-            StringPostRequest spr = new StringPostRequest("https://www.isuhuo.com/plainLiving/Androidapi/userCenter/mysharetenans_list", new Response.Listener<String>() {
+            StringPostRequest spr = new StringPostRequest("http://www.isuhuo.com/plainLiving/Androidapi/userCenter/mysharetenans_list", new Response.Listener<String>() {
                 @Override
                 public void onResponse(String s) {
                     try {
@@ -216,7 +218,7 @@ public class SellerFragment extends Fragment {
                             tv.setText("已经全部加载完毕");
                             tv.setTextSize(12);
                             tv.setTextColor(0xffa0a0a0);
-                            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100);
+                            AbsListView.LayoutParams params = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100);
                             tv.setLayoutParams(params);
                             tv.setGravity(Gravity.CENTER);
                             prl.getRefreshableView().addFooterView(tv);
@@ -242,7 +244,7 @@ public class SellerFragment extends Fragment {
             spr.putValue("t", "10");
             SlingleVolleyRequestQueue.getInstance(getContext()).addToRequestQueue(spr);
         }else {
-            StringPostRequest spr = new StringPostRequest("https://www.isuhuo.com/plainLiving/Androidapi/UserCenter/get_restaurantPackages", new Response.Listener<String>() {
+            StringPostRequest spr = new StringPostRequest("http://www.isuhuo.com/plainLiving/Androidapi/UserCenter/get_restaurantPackages", new Response.Listener<String>() {
                 @Override
                 public void onResponse(String s) {
                     try {
@@ -270,7 +272,7 @@ public class SellerFragment extends Fragment {
                             tvfoot.setText("已经全部加载完毕");
                             tvfoot.setTextSize(12);
                             tvfoot.setTextColor(0xffa0a0a0);
-                            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100);
+                            AbsListView.LayoutParams params = new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 100);
                             tvfoot.setLayoutParams(params);
                             tvfoot.setGravity(Gravity.CENTER);
                             prl.getRefreshableView().addFooterView(tvfoot);
@@ -440,5 +442,12 @@ public class SellerFragment extends Fragment {
             case "2":updateHD(getView());break;
             default:break;
         }
+        StatService.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

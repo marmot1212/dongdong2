@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.entry.UserRank;
 import com.example.administrator.vegetarians824.mannager.URLMannager;
@@ -121,7 +122,7 @@ public class JifenRank extends AppCompatActivity {
             TextView tv2=(TextView)view.findViewById(R.id.rank_name);
             tv2.setText(mydate.get(i).getUsername());
             TextView tv3=(TextView)view.findViewById(R.id.rank_score);
-            tv3.setText(mydate.get(i).getGrowth_index());
+            tv3.setText(Float.valueOf(mydate.get(i).getGrowth_index())+"");
             ImageView head=(ImageView)view.findViewById(R.id.rank_ima);
             com.nostra13.universalimageloader.core.ImageLoader loader= ImageLoaderUtils.getInstance(context);
             DisplayImageOptions options=ImageLoaderUtils.getOpt();
@@ -148,5 +149,16 @@ public class JifenRank extends AppCompatActivity {
             });
             return view;
         }
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

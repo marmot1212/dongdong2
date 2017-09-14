@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.mannager.URLMannager;
 import com.example.administrator.vegetarians824.myapplications.BaseApplication;
@@ -74,5 +75,16 @@ public class FabuCP extends AppCompatActivity {
         spr.putValue("title", title);
         spr.putValue("link",link);
         SlingleVolleyRequestQueue.getInstance(FabuCP.this).addToRequestQueue(spr);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

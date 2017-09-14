@@ -2,8 +2,12 @@ package com.example.administrator.vegetarians824.fragment;
 
 
 import android.animation.ObjectAnimator;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,6 +16,9 @@ import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.transition.Explode;
+import android.transition.TransitionInflater;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.Display;
 import android.view.DragEvent;
@@ -19,6 +26,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
@@ -28,6 +36,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,6 +65,7 @@ import com.example.administrator.vegetarians824.util.StatusBarUtil;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -94,6 +104,9 @@ public class SuFragment extends Fragment {
     private TextView aword_tv;
     private boolean starttTouch=true;
     private float  starty=0,fheight=0;
+    private List<View> advPics;
+    private PopupWindow popWindow;
+    private boolean keepflag=false;
     public SuFragment() {
         // Required empty public constructor
     }
@@ -114,6 +127,23 @@ public class SuFragment extends Fragment {
         advPager = (ViewPager)vv.findViewById(R.id.ditu_xiangqing_viewpager2);// ViewPager
         aword_tv=(TextView) getActivity().findViewById(R.id.atext);
         //确保fragment得到activity,放置切换过快闪退
+
+        View popView = LayoutInflater.from(getContext()).inflate(R.layout.pop_search,null);
+        popView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(),JKsearch.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
+        popWindow = new PopupWindow(popView, WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        // 获取光标
+        popWindow.setFocusable(false);
+        popWindow.setOutsideTouchable(true);
+        // backgroundAlpha(0.3f);
+        popWindow.setBackgroundDrawable(new ColorDrawable());
+
         if(getActivity()!=null){
         initHead();
         initoperate();
@@ -121,6 +151,7 @@ public class SuFragment extends Fragment {
         }
         return v;
     }
+
     public void initHead(){
         StringRequest request=new StringRequest(URLMannager.Caidan_URL+"/p/"+"1"+"/t/10", new Response.Listener<String>() {
             @Override
@@ -129,6 +160,7 @@ public class SuFragment extends Fragment {
                     JSONObject jsonObj1 = new JSONObject(s);
                     JSONObject jsonObj2 = jsonObj1.getJSONObject("Result");
                     JSONArray imaja=jsonObj2.getJSONArray("picinfo");
+                    Log.d("=======joo",imaja.toString());
                     for(int x=0;x< imaja.length();x++){
                         JSONObject imajo=imaja.getJSONObject(x);
                         HeadImag headImag=new HeadImag();
@@ -136,9 +168,7 @@ public class SuFragment extends Fragment {
                         headImag.setPic(imajo.getString("pic"));
                         list_imag.add(headImag);
                     }
-
                     initvp(list_imag);
-
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -216,8 +246,6 @@ public class SuFragment extends Fragment {
         });
     }
 
-
-
     public void initData(){
         StringRequest request=new StringRequest(URLMannager.Caidan_URL+"/p/"+count+"/t/10", new Response.Listener<String>() {
             @Override
@@ -291,7 +319,6 @@ public class SuFragment extends Fragment {
         listView.setOnPullEventListener(new PullToRefreshBase.OnPullEventListener<ListView>() {
             @Override
             public void onPullEvent(PullToRefreshBase<ListView> refreshView, PullToRefreshBase.State state, PullToRefreshBase.Mode direction) {
-
                 if(state== PullToRefreshBase.State.RESET){
                     LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,0);
                     aword_tv.setLayoutParams(params);
@@ -299,32 +326,86 @@ public class SuFragment extends Fragment {
                     starttTouch=true;
                 }else if(state== PullToRefreshBase.State.RELEASE_TO_REFRESH)
                 {
-
-                    listView.setOnTouchListener(new View.OnTouchListener() {
-                        @Override
-                        public boolean onTouch(View view, MotionEvent ev) {
-
-                            if(starttTouch){
-                                starty=ev.getY();
-                                starttTouch=false;
-                            }
-                            float height=ev.getY()-starty;
-                            if(height>100&&height<180&&height>fheight){
-                                Log.d("===========h",""+((int)height-100));
-                                LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,(int)height-100);
-                                aword_tv.setLayoutParams(params);
-                                aword_tv.requestLayout();
-                            }
-                            fheight=height;
-                            return false;
-                        }
-                    });
-
+                    if(aword_tv.getLayoutParams().height>=0){
+                        LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,60);
+                        aword_tv.setLayoutParams(params);
+                        aword_tv.requestLayout();
+                    }
                 }
 
             }
         });
 
+        listView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent ev) {
+                if(starttTouch){
+                    starty=ev.getY();
+                    starttTouch=false;
+                }
+                if(ev.getAction()==MotionEvent.ACTION_MOVE) {
+                    //滑动的距离
+                    float height = ev.getY() - starty;
+                    if (height > 20 && height < 80 && height > fheight) {
+                        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) height - 20);
+                        aword_tv.setLayoutParams(params);
+                        aword_tv.requestLayout();
+                    }
+                    fheight = height;
+                }
+                return false;
+            }
+        });
+
+
+        listView.getRefreshableView().setOnTouchListener(new View.OnTouchListener() {
+            float yy;
+            boolean isfirst=true;
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if(isfirst){
+                    yy=motionEvent.getY();
+                    isfirst=false;//初始值是true，此处置为false。
+                }
+                switch (motionEvent.getAction()){
+                    case MotionEvent.ACTION_MOVE:
+                        float moveY = motionEvent.getY();
+                        if(moveY>yy&&(!et.isShown())){
+                                if(!keepflag){
+                                    popWindow.showAsDropDown(aword_tv);
+                                    keepflag=true;
+                                }
+
+                        }else {
+                            if(yy-moveY>20) {
+                                popWindow.dismiss();
+                                keepflag = false;
+                            }
+                        }
+                        yy=moveY;
+                        break;
+                }
+                return false;
+            }
+        });
+
+        listView.getRefreshableView().setOnScrollListener(new AbsListView.OnScrollListener() {
+
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int i, int i1, int i2) {
+
+                if (et.isShown()) {
+                    popWindow.dismiss();
+                    keepflag=false;
+                }
+
+            }
+        });
         initData();
 
         listView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
@@ -357,8 +438,6 @@ public class SuFragment extends Fragment {
 
     }
 
-
-
     public class DataRefresh extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -386,14 +465,16 @@ public class SuFragment extends Fragment {
     public void initvp(List<HeadImag> list_imag){
         Log.d("===========size",list_imag.size()+"");
         group.removeAllViews();
-        List<View> advPics = new ArrayList<View>();// 轮播图片View集合
+        advPics = new ArrayList<View>();// 轮播图片View集合
         // ImageLoader工具类
 
         for (int i = 0; i < list_imag.size(); i++) {
             if(getActivity()!=null) {
-                com.nostra13.universalimageloader.core.ImageLoader loader = ImageLoaderUtils.getInstance(getContext());
+                ImageLoader loader = ImageLoaderUtils.getInstance(getContext());
                 DisplayImageOptions options = ImageLoaderUtils.getOpt();
+
                 View v=LayoutInflater.from(getContext()).inflate(R.layout.viewpaper_view,null);
+                /*
                 HorizontalScrollView hscroll=(HorizontalScrollView)v.findViewById(R.id.h_scroll);
                 hscroll.setOnTouchListener(new View.OnTouchListener() {
                     @Override
@@ -401,6 +482,7 @@ public class SuFragment extends Fragment {
                         return true;
                     }
                 });
+                */
                 MyImageView imal=(MyImageView)v.findViewById(R.id.vpima_left);
                 MyImageView imac=(MyImageView)v.findViewById(R.id.vpima_center);
                 MyImageView imar=(MyImageView)v.findViewById(R.id.vpima_right);
@@ -438,15 +520,15 @@ public class SuFragment extends Fragment {
 
                 final String id = list_imag.get(i).getId();
                 imac.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(getActivity(), TieziDetial.class);
-                        intent.putExtra("tid", id);
-                        getActivity().startActivity(intent);
-                    }
-                });
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getActivity(), TieziDetial.class);
+                    intent.putExtra("tid", id);
+                    getActivity().startActivity(intent);
+                }
+            });
 
-                advPics.add(v);// 轮播图片View集合
+            advPics.add(v);// 轮播图片View集合
             }
         }
 
@@ -466,7 +548,7 @@ public class SuFragment extends Fragment {
         }
         advPager.setAdapter(new AdvAdapter(advPics));// 适配器
 
-        advPager.setOffscreenPageLimit(3);
+        //advPager.setOffscreenPageLimit(3);
         advPager.setPageMargin(20);
         // 设置监听，主要是设置点点的背景
 
@@ -521,7 +603,6 @@ public class SuFragment extends Fragment {
 
         }
     }
-
     /**
      * handle设置当前的应该播放的图片
      */
@@ -541,9 +622,7 @@ public class SuFragment extends Fragment {
      *
      */
     private final class GuidePageChangeListener implements ViewPager.OnPageChangeListener {
-
         // onInterceptTouchEvent
-
         @Override
         public void onPageScrollStateChanged(int arg0) {
 
@@ -592,6 +671,7 @@ public class SuFragment extends Fragment {
         @Override
         public int getCount() {
             return views.size();
+
         }
 
         /**
@@ -622,6 +702,18 @@ public class SuFragment extends Fragment {
         public void startUpdate(View arg0) {
 
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        StatService.onPause(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        StatService.onResume(this);
     }
 
 

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.CaptureActivity;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.adapter.SubjectFragmentAdapter;
@@ -112,5 +113,16 @@ public class JKlingshi extends AppCompatActivity {
                 }
                 break;
         }
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

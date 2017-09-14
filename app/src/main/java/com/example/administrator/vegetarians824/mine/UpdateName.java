@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.myapplications.BaseApplication;
 import com.example.administrator.vegetarians824.util.SlingleVolleyRequestQueue;
@@ -92,5 +93,17 @@ public class UpdateName extends AppCompatActivity {
         spr.putValue("uid",id);
         spr.putValue("username",name);
         SlingleVolleyRequestQueue.getInstance(UpdateName.this).addToRequestQueue(spr);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

@@ -1,1 +1,1 @@
-include ':app', 'PullToRefresh', 'PagerSlidingTabStrip', ':multiple-images-selector', 'Emoji'
+include ':app', 'PullToRefresh', 'PagerSlidingTabStrip', ':multiple-images-selector', 'Emoji', ':easy-bottom-tab', ':SlidingMenu', ':jjdxm-ijkplayer'

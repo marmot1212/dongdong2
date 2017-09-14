@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.fragment.MapFragment;
 import com.example.administrator.vegetarians824.fragment.SuFragment;
@@ -114,5 +115,15 @@ public class FabuShHd extends AppCompatActivity {
         }
         return false;
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
+    }
 }

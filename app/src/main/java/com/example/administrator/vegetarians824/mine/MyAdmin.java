@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.myapplications.BaseApplication;
 import com.example.administrator.vegetarians824.util.StatusBarUtil;
@@ -261,5 +262,15 @@ public class MyAdmin extends AppCompatActivity {
         }
         return false;
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
+    }
 }

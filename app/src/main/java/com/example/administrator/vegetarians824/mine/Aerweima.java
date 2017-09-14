@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 
 public class Aerweima extends AppCompatActivity {
@@ -26,5 +27,16 @@ public class Aerweima extends AppCompatActivity {
                 finish();
             }
         });
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

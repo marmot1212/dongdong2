@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.entry.Caidan;
 import com.example.administrator.vegetarians824.entry.CantingInfo;
@@ -56,12 +57,14 @@ public class MapSearch extends AppCompatActivity {
     private EditText et;
     private String city;
     LinearLayout hd,jd;
+    TextView none;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_search);
         StatusBarUtil.setColorDiff(this,0xff00aff0);
         listView=(ListView)findViewById(R.id.mapsearch_list);
+        none=(TextView)findViewById(R.id.mapsearch_none);
         et=(EditText)findViewById(R.id.mapsearch_et);
         Intent intent=getIntent();
         city=intent.getStringExtra("city");
@@ -167,6 +170,7 @@ public class MapSearch extends AppCompatActivity {
 
                 if(editable.toString().equals("")){
                     listView.setVisibility(View.INVISIBLE);
+                    none.setVisibility(View.INVISIBLE);
                 }else {
                     listView.setVisibility(View.VISIBLE);
                     searchRequest(editable.toString());
@@ -250,22 +254,25 @@ public class MapSearch extends AppCompatActivity {
                 @Override
                 public void onResponse(String s) {
                     try {
+                        none.setVisibility(View.INVISIBLE);
+                        Log.d("============result",s);
                         JSONObject js1=new JSONObject(s);
                         JSONArray ja=js1.getJSONArray("Result");
-                        for (int i=0;i<ja.length();i++){
-                            JSONObject jo=ja.getJSONObject(i);
-                            CantingInfo ct=new CantingInfo();
-                            ct.setTitle(jo.getString("title"));
-                            ct.setId(jo.getString("id"));
-                            ct.setType(jo.getString("type"));
-                            list_ct.add(ct);
+                        if(ja.length()>0) {
+                            for (int i = 0; i < ja.length(); i++) {
+                                JSONObject jo = ja.getJSONObject(i);
+                                CantingInfo ct = new CantingInfo();
+                                ct.setTitle(jo.getString("title"));
+                                ct.setId(jo.getString("id"));
+                                ct.setType(jo.getString("type"));
+                                list_ct.add(ct);
+                            }
+                        }else {
+                            none.setVisibility(View.VISIBLE);
                         }
-
-                        if(list_ct.size()>0){
-                            SearchAdapter sa=new SearchAdapter(list_ct,getBaseContext());
-                            listView.setAdapter(sa);
-                            sa.notifyDataSetChanged();
-                        }
+                        SearchAdapter sa=new SearchAdapter(list_ct,getBaseContext());
+                        listView.setAdapter(sa);
+                        sa.notifyDataSetChanged();
 
 
 
@@ -337,5 +344,16 @@ public class MapSearch extends AppCompatActivity {
                 });
             return view;
         }
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

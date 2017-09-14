@@ -37,7 +37,9 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
+import com.example.administrator.vegetarians824.adapter.CommentAdapter;
 import com.example.administrator.vegetarians824.entry.Pinglun;
 import com.example.administrator.vegetarians824.entry.Tiezi;
 import com.example.administrator.vegetarians824.login.Login;
@@ -200,6 +202,7 @@ public class Tiezi3Detial extends AppCompatActivity {
                     JSONObject js1=new JSONObject(s);
                     JSONObject js2=js1.getJSONObject("Result");
                     JSONObject js3=js2.getJSONObject("detail");
+                    Log.d("========detail",js3.toString());
                     type=js3.getString("type");
                     //图文混排
                     if(!js3.isNull("contents")) {
@@ -273,6 +276,7 @@ public class Tiezi3Detial extends AppCompatActivity {
                     String uname=js3.getString("username");
                     String ima=js3.getString("user_head_img");
                     String grade=js3.getString("lv");
+                    final String uid=js3.getString("uid");
 
                     //用户信息
                     user_head= getLayoutInflater().inflate(R.layout.tiezi_head,null);
@@ -284,6 +288,20 @@ public class Tiezi3Detial extends AppCompatActivity {
                     com.nostra13.universalimageloader.core.ImageLoader loader= ImageLoaderUtils.getInstance(getBaseContext());
                     DisplayImageOptions options=ImageLoaderUtils.getOpt();
                     loader.displayImage(URLMannager.Imag_URL+""+ima,im,options);
+                    im.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent=new Intent(Tiezi3Detial.this,UserDetial.class);
+                            intent.putExtra("uid",uid);
+                            if(BaseApplication.app.getUser().islogin()){
+                                intent.putExtra("id",BaseApplication.app.getUser().getId());
+                            }else {
+                                intent.putExtra("id","");
+                            }
+                            Tiezi3Detial.this.startActivity(intent);
+                        }
+                    });
+
                     tv1.setText(actitle);
                     tv2.setText(uname);
                     tv3.setText(time);
@@ -328,7 +346,7 @@ public class Tiezi3Detial extends AppCompatActivity {
                         //评论列表
                         if (pl_list.size() > 0) {
                             listView_pl = new ListViewForScrollView(getBaseContext());
-                            listView_pl.setAdapter(new CommentAdapter(pl_list, getBaseContext()));
+                            listView_pl.setAdapter(new CommentAdapter(pl_list, Tiezi3Detial.this));
                             TextView tall = new TextView(getBaseContext());
                             tall.setText("全部回复");
                             tall.setTextColor(0xff000000);
@@ -539,7 +557,7 @@ public class Tiezi3Detial extends AppCompatActivity {
         qq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlatformConfig.setQQZone("1105683168", "U2MDcVrp5vlfA3Xc");
+
 
                 String url=URLMannager.ShareTiezi+id;
                 UMImage image = new UMImage(Tiezi3Detial.this,URLMannager.Imag_URL+acpic);
@@ -572,7 +590,7 @@ public class Tiezi3Detial extends AppCompatActivity {
         zone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlatformConfig.setQQZone("1105683168", "U2MDcVrp5vlfA3Xc");
+
                 String url=URLMannager.ShareTiezi+id;
                 UMImage image = new UMImage(Tiezi3Detial.this,URLMannager.Imag_URL+acpic);
                 new ShareAction(Tiezi3Detial.this)
@@ -603,7 +621,7 @@ public class Tiezi3Detial extends AppCompatActivity {
         weixin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlatformConfig.setWeixin("wxfa8558a0ee056f0c", "cf0c56f350578c651320a2b94675b379");
+
                 String url=URLMannager.ShareTiezi+id;
                 UMImage image = new UMImage(Tiezi3Detial.this,URLMannager.Imag_URL+acpic);
                 new ShareAction(Tiezi3Detial.this)
@@ -634,7 +652,7 @@ public class Tiezi3Detial extends AppCompatActivity {
         pengyouquan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlatformConfig.setWeixin("wxfa8558a0ee056f0c", "cf0c56f350578c651320a2b94675b379");
+
                 String url=URLMannager.ShareTiezi+id;
                 UMImage image = new UMImage(Tiezi3Detial.this,URLMannager.Imag_URL+acpic);
                 new ShareAction(Tiezi3Detial.this)
@@ -685,7 +703,7 @@ public class Tiezi3Detial extends AppCompatActivity {
                     }
                 });
 
-                PlatformConfig.setSinaWeibo("2225421609","835f1b19840f1f8bc90264a90e436321");
+
                 String url=URLMannager.ShareTiezi+id;
                 UMImage image = new UMImage(Tiezi3Detial.this,URLMannager.Imag_URL+acpic);
 
@@ -727,69 +745,7 @@ public class Tiezi3Detial extends AppCompatActivity {
         lp.alpha = bgAlpha; //0.0-1.0
         Tiezi3Detial.this.getWindow().setAttributes(lp);
     }
-    public class CommentAdapter extends BaseAdapter{
-        private List<Pinglun> mydata;
-        private Context context;
-        public CommentAdapter(List<Pinglun> mydata,Context context){
-            this.mydata=mydata;
-            this.context=context;
-        }
-        @Override
-        public int getCount() {
-            return mydata.size();
-        }
 
-        @Override
-        public Object getItem(int i) {
-            return mydata.get(i);
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return i;
-        }
-
-        @Override
-        public View getView(final int i, View view, ViewGroup viewGroup) {
-            View v= LayoutInflater.from(context).inflate(R.layout.comment_item,null);
-            ImageView ima=(ImageView)v.findViewById(R.id.comment_item_ima);
-            TextView c=(TextView)v.findViewById(R.id.comment_item_content);
-            TextView n=(TextView)v.findViewById(R.id.comment_item_uname);
-            TextView t=(TextView)v.findViewById(R.id.comment_item_time);
-            ImageView lv=(ImageView)v.findViewById(R.id.comment_item_lv);
-            c.setText(mydata.get(i).getContent());
-            try {
-                EmojiUtil.handlerEmojiText(c, c.getText().toString(), getBaseContext());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            n.setText(mydata.get(i).getUsername());
-            t.setText(mydata.get(i).getCreate_time_text());
-            switch (mydata.get(i).getLv()){
-                case "1":lv.setImageResource(R.mipmap.lv1);break;
-                case "2":lv.setImageResource(R.mipmap.lv2);break;
-                case "3":lv.setImageResource(R.mipmap.lv3);break;
-                default:break;
-            }
-            com.nostra13.universalimageloader.core.ImageLoader loader= ImageLoaderUtils.getInstance(context);
-            DisplayImageOptions options=ImageLoaderUtils.getOpt();
-            loader.displayImage(URLMannager.Imag_URL+""+mydata.get(i).getUser_head_img_th(),ima,options);
-            ima.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent=new Intent(Tiezi3Detial.this,UserDetial.class);
-                    intent.putExtra("uid",mydata.get(i).getUid());
-                    if(BaseApplication.app.getUser().islogin()){
-                        intent.putExtra("id",BaseApplication.app.getUser().getId());
-                    }else {
-                        intent.putExtra("id","");
-                    }
-                    Tiezi3Detial.this.startActivity(intent);
-                }
-            });
-            return v;
-        }
-    }
     public class DataRefresh extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -975,10 +931,16 @@ public class Tiezi3Detial extends AppCompatActivity {
 
     }
     */
+
     @Override
     protected void onResume() {
         super.onResume();
-
+        StatService.onResume(this);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
+    }
 }

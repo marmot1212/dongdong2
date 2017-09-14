@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".dongdong.CaipuDetail"
-    android:background="#fff">
+    >
     <FrameLayout
+        android:id="@+id/caipu_fram"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:focusableInTouchMode="true">
@@ -22,17 +24,21 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="#fff">
-                <FrameLayout
-                    android:id="@+id/caipu_fram"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="290dp">
+                    android:layout_height="wrap_content">
                     <ImageView
+                        android:layout_marginBottom="40dp"
                         android:id="@+id/caipu_pic"
-                        android:scaleType="fitXY"
+                        android:scaleType="centerCrop"
                         android:layout_width="match_parent"
                         android:layout_gravity="center"
-                        android:layout_height="250dp"
+                        android:layout_height="320dp"
                         />
+                    <FrameLayout
+                        android:layout_alignParentBottom="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
                     <LinearLayout
                         android:orientation="horizontal"
                         android:layout_marginBottom="40dp"
@@ -73,7 +79,8 @@
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:src="@drawable/touxiang_ogo"/>
-                </FrameLayout>
+                    </FrameLayout>
+                </RelativeLayout>
                 <TextView
                     android:id="@+id/caipu_name"
                     android:layout_marginTop="10dp"
@@ -106,6 +113,7 @@
                     android:text="用料"/>
                 <com.example.administrator.vegetarians824.myView.ListViewForScrollView
                     android:id="@+id/caipu_yongliao"
+                    android:divider="@null"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                 </com.example.administrator.vegetarians824.myView.ListViewForScrollView>
@@ -134,10 +142,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:layout_marginBottom="60dp"
                     >
                 <TextView
                     android:id="@+id/caipu_line1"
-                    android:layout_marginBottom="20dp"
                     android:layout_marginLeft="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -145,7 +153,6 @@
                     android:textSize="16sp"
                     android:text="小贴士"/>
                 <TextView
-                    android:layout_marginBottom="60dp"
                     android:layout_marginTop="20dp"
                     android:id="@+id/caipu_items"
                     android:layout_width="wrap_content"
@@ -187,7 +194,7 @@
                     android:textSize="16sp" />
                 <TextView
                     android:layout_marginLeft="5dp"
-                    android:id="@+id/tiezi_pinglunnum"
+                    android:id="@+id/caipu_pinglunnum"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
@@ -216,4 +223,4 @@
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>
-</RelativeLayout>
+</LinearLayout>

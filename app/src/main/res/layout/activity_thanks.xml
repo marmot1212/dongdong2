@@ -30,7 +30,7 @@
             android:textSize="16sp"
             android:gravity="center"/>
     </FrameLayout>
-    <ScrollView
+    <com.example.administrator.vegetarians824.myView.UserDefineScrollView
         android:id="@+id/scrolls"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -129,5 +129,5 @@
                 </com.example.administrator.vegetarians824.myView.NewGridView>
             </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </com.example.administrator.vegetarians824.myView.UserDefineScrollView>
 </LinearLayout>

@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.login.Login;
 import com.example.administrator.vegetarians824.mannager.URLMannager;
@@ -570,7 +571,7 @@ public class Tiezi2Detial extends AppCompatActivity {
         qq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlatformConfig.setQQZone("1105683168", "U2MDcVrp5vlfA3Xc");
+
 
                 String url=URLMannager.ShareTiezi+id;
                 UMImage image = new UMImage(Tiezi2Detial.this,URLMannager.Imag_URL+acpic);
@@ -603,7 +604,7 @@ public class Tiezi2Detial extends AppCompatActivity {
         zone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlatformConfig.setQQZone("1105683168", "U2MDcVrp5vlfA3Xc");
+
                 String url=URLMannager.ShareTiezi+id;
                 UMImage image = new UMImage(Tiezi2Detial.this,URLMannager.Imag_URL+acpic);
                 new ShareAction(Tiezi2Detial.this)
@@ -634,7 +635,7 @@ public class Tiezi2Detial extends AppCompatActivity {
         weixin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlatformConfig.setWeixin("wxfa8558a0ee056f0c", "cf0c56f350578c651320a2b94675b379");
+
                 String url=URLMannager.ShareTiezi+id;
                 UMImage image = new UMImage(Tiezi2Detial.this,URLMannager.Imag_URL+acpic);
                 new ShareAction(Tiezi2Detial.this)
@@ -665,7 +666,7 @@ public class Tiezi2Detial extends AppCompatActivity {
         pengyouquan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlatformConfig.setWeixin("wxfa8558a0ee056f0c", "cf0c56f350578c651320a2b94675b379");
+
                 String url=URLMannager.ShareTiezi+id;
                 UMImage image = new UMImage(Tiezi2Detial.this,URLMannager.Imag_URL+acpic);
                 new ShareAction(Tiezi2Detial.this)
@@ -716,7 +717,7 @@ public class Tiezi2Detial extends AppCompatActivity {
                     }
                 });
 
-                PlatformConfig.setSinaWeibo("2225421609","835f1b19840f1f8bc90264a90e436321");
+
                 String url=URLMannager.ShareTiezi+id;
                 UMImage image = new UMImage(Tiezi2Detial.this,URLMannager.Imag_URL+acpic);
 
@@ -760,5 +761,15 @@ public class Tiezi2Detial extends AppCompatActivity {
         lp.alpha = bgAlpha; //0.0-1.0
         Tiezi2Detial.this.getWindow().setAttributes(lp);
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
+    }
 }

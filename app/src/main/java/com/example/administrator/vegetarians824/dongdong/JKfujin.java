@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.adapter.CantingListAdapter;
 import com.example.administrator.vegetarians824.entry.CantingInfo;
@@ -44,6 +45,7 @@ public class JKfujin extends AppCompatActivity {
         list_info=new ArrayList<>();
         list=(ListView)findViewById(R.id.fujin_list);
         if(BaseApplication.app.getMyLociation()!=null){
+            Log.d("===========aa","aa");
             initdata();
         }
     }
@@ -61,6 +63,7 @@ public class JKfujin extends AppCompatActivity {
         StringRequest request=new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
+                Log.d("===========s",s);
                 try {
                     JSONObject jsonObj1 = new JSONObject(s);
                     JSONObject jsonObj2 = jsonObj1.getJSONObject("Result");
@@ -112,5 +115,16 @@ public class JKfujin extends AppCompatActivity {
             }
         });
         SlingleVolleyRequestQueue.getInstance(this).addToRequestQueue(request);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

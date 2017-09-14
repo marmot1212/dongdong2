@@ -1,38 +1,42 @@
 [
     {
-        "merged": "F:\\project2.1\\MyApplication\\Emoji\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_btn_checkable.xml",
-        "source": "F:\\project2.1\\MyApplication\\Emoji\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\color-v23\\abc_tint_btn_checkable.xml"
+        "merged": "/Users/scorpion/Documents/project2.5/MyApplication/Emoji/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_seek_thumb.xml",
+        "source": "/Users/scorpion/.android/build-cache/2586fbef6c509e2a05f886fb3b3dee6fbe1a1ef7/output/res/color-v23/abc_tint_seek_thumb.xml"
     },
     {
-        "merged": "F:\\project2.1\\MyApplication\\Emoji\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_color_highlight_material.xml",
-        "source": "F:\\project2.1\\MyApplication\\Emoji\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\color-v23\\abc_color_highlight_material.xml"
+        "merged": "/Users/scorpion/Documents/project2.5/MyApplication/Emoji/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_default.xml",
+        "source": "/Users/scorpion/.android/build-cache/2586fbef6c509e2a05f886fb3b3dee6fbe1a1ef7/output/res/color-v23/abc_tint_default.xml"
     },
     {
-        "merged": "F:\\project2.1\\MyApplication\\Emoji\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_edittext.xml",
-        "source": "F:\\project2.1\\MyApplication\\Emoji\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\color-v23\\abc_tint_edittext.xml"
+        "merged": "/Users/scorpion/Documents/project2.5/MyApplication/Emoji/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_switch_track.xml",
+        "source": "/Users/scorpion/.android/build-cache/2586fbef6c509e2a05f886fb3b3dee6fbe1a1ef7/output/res/color-v23/abc_tint_switch_track.xml"
     },
     {
-        "merged": "F:\\project2.1\\MyApplication\\Emoji\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_seek_thumb.xml",
-        "source": "F:\\project2.1\\MyApplication\\Emoji\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\color-v23\\abc_tint_seek_thumb.xml"
+        "merged": "/Users/scorpion/Documents/project2.5/MyApplication/Emoji/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_btn_checkable.xml",
+        "source": "/Users/scorpion/.android/build-cache/2586fbef6c509e2a05f886fb3b3dee6fbe1a1ef7/output/res/color-v23/abc_tint_btn_checkable.xml"
     },
     {
-        "merged": "F:\\project2.1\\MyApplication\\Emoji\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_btn_colored_borderless_text_material.xml",
-        "source": "F:\\project2.1\\MyApplication\\Emoji\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\color-v23\\abc_btn_colored_borderless_text_material.xml"
+        "merged": "/Users/scorpion/Documents/project2.5/MyApplication/Emoji/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_spinner.xml",
+        "source": "/Users/scorpion/.android/build-cache/2586fbef6c509e2a05f886fb3b3dee6fbe1a1ef7/output/res/color-v23/abc_tint_spinner.xml"
     },
     {
-        "merged": "F:\\project2.1\\MyApplication\\Emoji\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_default.xml",
-        "source": "F:\\project2.1\\MyApplication\\Emoji\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\color-v23\\abc_tint_default.xml"
+        "merged": "/Users/scorpion/Documents/project2.5/MyApplication/Emoji/build/intermediates/res/merged/androidTest/debug/color-v23/abc_btn_colored_borderless_text_material.xml",
+        "source": "/Users/scorpion/.android/build-cache/2586fbef6c509e2a05f886fb3b3dee6fbe1a1ef7/output/res/color-v23/abc_btn_colored_borderless_text_material.xml"
     },
     {
-        "merged": "F:\\project2.1\\MyApplication\\Emoji\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_spinner.xml",
-        "source": "F:\\project2.1\\MyApplication\\Emoji\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\color-v23\\abc_tint_spinner.xml"
+        "merged": "/Users/scorpion/Documents/project2.5/MyApplication/Emoji/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_switch_thumb.xml",
+        "source": "/Users/scorpion/.android/build-cache/2586fbef6c509e2a05f886fb3b3dee6fbe1a1ef7/output/res/color-v23/abc_tint_switch_thumb.xml"
     },
     {
-        "merged": "F:\\project2.1\\MyApplication\\Emoji\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_switch_thumb.xml",
-        "source": "F:\\project2.1\\MyApplication\\Emoji\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\color-v23\\abc_tint_switch_thumb.xml"
+        "merged": "/Users/scorpion/Documents/project2.5/MyApplication/Emoji/build/intermediates/res/merged/androidTest/debug/color-v23/abc_btn_colored_text_material.xml",
+        "source": "/Users/scorpion/.android/build-cache/2586fbef6c509e2a05f886fb3b3dee6fbe1a1ef7/output/res/color-v23/abc_btn_colored_text_material.xml"
     },
     {
-        "merged": "F:\\project2.1\\MyApplication\\Emoji\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_switch_track.xml",
-        "source": "F:\\project2.1\\MyApplication\\Emoji\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\24.2.0\\res\\color-v23\\abc_tint_switch_track.xml"
+        "merged": "/Users/scorpion/Documents/project2.5/MyApplication/Emoji/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_edittext.xml",
+        "source": "/Users/scorpion/.android/build-cache/2586fbef6c509e2a05f886fb3b3dee6fbe1a1ef7/output/res/color-v23/abc_tint_edittext.xml"
+    },
+    {
+        "merged": "/Users/scorpion/Documents/project2.5/MyApplication/Emoji/build/intermediates/res/merged/androidTest/debug/color-v23/abc_color_highlight_material.xml",
+        "source": "/Users/scorpion/.android/build-cache/2586fbef6c509e2a05f886fb3b3dee6fbe1a1ef7/output/res/color-v23/abc_color_highlight_material.xml"
     }
 ]

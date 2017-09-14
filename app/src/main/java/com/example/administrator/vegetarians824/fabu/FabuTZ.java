@@ -4,12 +4,14 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,16 +34,24 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.mannager.URLMannager;
+import com.example.administrator.vegetarians824.myView.LoadingDialog;
 import com.example.administrator.vegetarians824.myapplications.BaseApplication;
+import com.example.administrator.vegetarians824.util.CheckPermission;
 import com.example.administrator.vegetarians824.util.StatusBarUtil;
 import com.example.administrator.vegetarians824.util.UpLoadUtil;
 import com.tb.emoji.Emoji;
 import com.tb.emoji.EmojiUtil;
 import com.tb.emoji.FaceFragment;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,15 +74,20 @@ public class FabuTZ extends AppCompatActivity {
     Boolean isEmojishow=false;
     FrameLayout fram_emoji;
     FaceFragment faceFragment;
+    private LoadingDialog loadingDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fabu_tz);
         StatusBarUtil.setColorDiff(this,0xff00aff0);
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         //锁定屏幕
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         //获取控件对象
+
+        loadingDialog=new LoadingDialog(this);
+        loadingDialog.setMessage("正在上传");
         et1=(EditText)findViewById(R.id.fabu06_et1);
         et2=(EditText)findViewById(R.id.fabu06_et2);
         fm=(FrameLayout)findViewById(R.id.fabu06_getpic);
@@ -207,15 +222,17 @@ public class FabuTZ extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View v, int position, long id)
             {
-                 if(position == 0) { //点击图片位置为+ 0对应0张图片
-                     if( imageItem.size() == 7) { //第一张为默认图片
-                         Toast.makeText(getBaseContext(),"最多只能选择6张",Toast.LENGTH_SHORT).show();
-                     }else {
-                         //选择图片
-                         Intent intent = new Intent(Intent.ACTION_PICK,
-                                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                         startActivityForResult(intent, IMAGE_OPEN);
-                     }
+                if(position == 0) { //点击图片位置为+ 0对应0张图片
+                    if( imageItem.size() == 7) { //第一张为默认图片
+                        Toast.makeText(getBaseContext(),"最多只能选择6张",Toast.LENGTH_SHORT).show();
+                    }else {
+                        //选择图片
+                        if(CheckPermission.requestReadStorageRuntimePermission(FabuTZ.this)) {
+                            Intent intent = new Intent(Intent.ACTION_PICK,
+                                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            startActivityForResult(intent, IMAGE_OPEN);
+                        }
+                    }
                 }
                 else {
                     dialog(position);
@@ -306,7 +323,7 @@ public class FabuTZ extends AppCompatActivity {
             //及时回收图片，防止占用多余内存
 
         }
-
+        StatService.onResume(this);
     }
 
     protected void dialog(final int position) {
@@ -350,7 +367,8 @@ public class FabuTZ extends AppCompatActivity {
                     if(content.length()<10){
                         Toast.makeText(getBaseContext(),"内容请至少输入10个字",Toast.LENGTH_SHORT).show();
                     }else {
-                            new picdoPost().execute(URLMannager.FabuTZPost);
+                        loadingDialog.show();
+                        new picdoPost().execute(URLMannager.FabuTZPost);
                     }
                 }
                 //new picdoPost().execute("http://www.isuhuo.com/plainLiving/Androidapi/addapi/add_posts");
@@ -370,10 +388,31 @@ public class FabuTZ extends AppCompatActivity {
             final Map<String, File> files = new HashMap<String, File>();
 
             for(int i=0;i<filePath.size();i++){
-                File file=new File(filePath.get(i));
-                StringBuffer buffer=new StringBuffer();
-                buffer.append("img_url_").append(i+1);
-                files.put(buffer.toString(),file);
+
+
+                // File file=new File(filePath.get(i));
+                //StringBuffer buffer=new StringBuffer();
+                //buffer.append("img_url_").append(i+1);
+                //files.put(buffer.toString(),file);
+
+                try {
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inSampleSize = 4;
+                    Bitmap addbmp=BitmapFactory.decodeFile(filePath.get(i),options);
+                    File file=new File("/sdcard/"+"qus"+i+".jpg");//将要保存图片的路径
+
+                    BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+                    addbmp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                    bos.flush();
+                    bos.close();
+
+                    StringBuffer buffer=new StringBuffer();
+                    buffer.append("img_url_").append(i+1);
+                    files.put(buffer.toString(),file);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             String s="";
             try {
@@ -388,9 +427,42 @@ public class FabuTZ extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.d("==========ds",s);
-            Toast.makeText(getBaseContext(),"发布成功，等待审核",Toast.LENGTH_SHORT).show();
-            finish();
+            try {
+                JSONObject js1=new JSONObject(s);
+                if(js1.getString("Code").equals("1")){
+                    loadingDialog.dismiss();
+                    Toast.makeText(getBaseContext(),"发布成功，等待审核",Toast.LENGTH_SHORT).show();
+                    finish();
+                }else {
+                    loadingDialog.dismiss();
+                    Toast.makeText(getBaseContext(),js1.getString("Message"),Toast.LENGTH_SHORT).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==197){
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent intent = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, IMAGE_OPEN);
+            } else {
+                Toast.makeText(getBaseContext(), "权限错误", Toast.LENGTH_SHORT).show();
+            }
+            return;
         }
     }
 }

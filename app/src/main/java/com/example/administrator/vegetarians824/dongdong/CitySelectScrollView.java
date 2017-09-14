@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.entry.HotCity;
 import com.example.administrator.vegetarians824.entry.Province;
@@ -298,6 +299,7 @@ public class CitySelectScrollView extends AppCompatActivity {
 
             elv_Adapter = new ExpandableAdapter();
             listView.setAdapter(elv_Adapter);// 绑定适配器，
+
             if(which>=0) {
                 listView.expandGroup(which);
                 Log.d("=========which",which+"");
@@ -311,20 +313,26 @@ public class CitySelectScrollView extends AppCompatActivity {
             listView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
                 @Override
                 public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+                    listView.setSelection(i);
                     which=i;
                     where=scrollView.getScrollY();
                     return false;
                 }
             });
 
-            //setListViewHeight(listView);// 动态获取ListView的高度
+            listView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+                @Override
+                public void onGroupExpand(int i) {
+                    //View v=elv_Adapter.getGroupView(i,true,null,null);
+                listView.setSelection(i);
+                }
+            });
 
         }
 
         /**
          * 自定义适配器（放在了内部类里边）
          *
-         * @author Administrator
          */
         class ExpandableAdapter extends BaseExpandableListAdapter {
             /**
@@ -386,14 +394,10 @@ public class CitySelectScrollView extends AppCompatActivity {
              *
              */
             @Override
-            public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-                if (convertView == null) {
-                    convertView = getLayoutInflater().inflate(
-                            R.layout.city_select_list_item, null);
-                }
+            public View getGroupView(int groupPosition, boolean isExpanded, View view, ViewGroup parent) {
+                    View convertView = getLayoutInflater().inflate(R.layout.city_select_list_item, null);
                 TextView tv = (TextView) convertView.findViewById(R.id.city_select_list_item_tv);
-                tv.setText(province_list.get(groupPosition).getName().toString());// textView展示省份名字
-
+                tv.setText(province_list.get(groupPosition).getName());// textView展示省份名字
                 return convertView;
             }
 
@@ -435,6 +439,7 @@ public class CitySelectScrollView extends AppCompatActivity {
 
             @Override
             public boolean isChildSelectable(int groupPosition, int childPosition) {
+
                 return true;
             }
         }// adapter结尾
@@ -506,6 +511,7 @@ public class CitySelectScrollView extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         super.finish();
+        StatService.onPause(this);
     }
     @Override
     protected void onStop() {
@@ -520,4 +526,12 @@ public class CitySelectScrollView extends AppCompatActivity {
 
         return false;
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+
 }

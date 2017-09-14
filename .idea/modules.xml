@@ -6,7 +6,10 @@
       <module fileurl="file://$PROJECT_DIR$/MyApplication.iml" filepath="$PROJECT_DIR$/MyApplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/PagerSlidingTabStrip/PagerSlidingTabStrip.iml" filepath="$PROJECT_DIR$/PagerSlidingTabStrip/PagerSlidingTabStrip.iml" />
       <module fileurl="file://$PROJECT_DIR$/PullToRefresh/PullToRefresh.iml" filepath="$PROJECT_DIR$/PullToRefresh/PullToRefresh.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SlidingMenu/SlidingMenu.iml" filepath="$PROJECT_DIR$/SlidingMenu/SlidingMenu.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/easy-bottom-tab/easy-bottom-tab.iml" filepath="$PROJECT_DIR$/easy-bottom-tab/easy-bottom-tab.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jjdxm-ijkplayer/jjdxm-ijkplayer.iml" filepath="$PROJECT_DIR$/jjdxm-ijkplayer/jjdxm-ijkplayer.iml" />
       <module fileurl="file://$PROJECT_DIR$/multiple-images-selector/multiple-images-selector.iml" filepath="$PROJECT_DIR$/multiple-images-selector/multiple-images-selector.iml" />
     </modules>
   </component>

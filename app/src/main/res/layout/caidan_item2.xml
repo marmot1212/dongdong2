@@ -3,15 +3,16 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
+        android:background="#fff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <ImageView
             android:layout_gravity="center"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:id="@+id/caipu2_ima"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="160dp" />
         <TextView
             android:textSize="16sp"
             android:layout_marginLeft="30dp"

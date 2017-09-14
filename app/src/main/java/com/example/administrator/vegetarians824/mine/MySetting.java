@@ -28,6 +28,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.baidu.android.pushservice.PushConstants;
 import com.baidu.android.pushservice.PushManager;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.UserCenter;
 import com.example.administrator.vegetarians824.fankui.Fankui;
@@ -50,11 +51,14 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.Map;
 
+import cn.jpush.android.api.JPushInterface;
+
 public class MySetting extends AppCompatActivity {
     PopupWindow popupWindow;
     String version=null;
     TextView ddversion;
     private android.support.v7.app.AlertDialog.Builder builder;
+    private SharedPreferences pre;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +66,7 @@ public class MySetting extends AppCompatActivity {
         setContentView(R.layout.activity_my_setting);
         StatusBarUtil.setColorDiff(this,0xff00aff0);
         // 获取packagemanager的实例
+        pre=getSharedPreferences("shared", Context.MODE_PRIVATE);
         PackageManager packageManager = getPackageManager();
         // getPackageName()是你当前类的包名，0代表是获取版本信息
         PackageInfo packInfo = null;
@@ -114,25 +119,62 @@ public class MySetting extends AppCompatActivity {
                 versionAch();
             }
         });
+        //推送开关
         Switch swit=(Switch)findViewById(R.id.set_switch);
-        if( PushManager.isPushEnabled(getApplicationContext())){
+        if(!JPushInterface.isPushStopped(getApplicationContext())){
             swit.setChecked(true);
         }else {
             swit.setChecked(false);
         }
-
         swit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b){
                     Toast.makeText(getBaseContext(),"开启成功",Toast.LENGTH_SHORT).show();
-                    PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY,"p4FCm8tu8MqD4BLDuHvuwRX4");
+                    //PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY,"p4FCm8tu8MqD4BLDuHvuwRX4");
+                    JPushInterface.resumePush(getApplicationContext());
                 }else {
                     Toast.makeText(getBaseContext(),"关闭成功",Toast.LENGTH_SHORT).show();
-                    PushManager.stopWork(getApplicationContext());
+                    //PushManager.stopWork(getApplicationContext());
+                    JPushInterface.stopPush(getApplicationContext());
                 }
             }
         });
+        //2g 3g,4g wifi播放下载开关
+        boolean play_gprs=pre.getBoolean("play_gprs",false);
+        boolean download_gprs=pre.getBoolean("download_gprs",false);
+        boolean autoplay_wifi=pre.getBoolean("autoplay_wifi",true);
+        Switch swit1=(Switch)findViewById(R.id.set_switch_play234g);
+        Switch swit2=(Switch)findViewById(R.id.set_switch_download234g);
+        Switch swit3=(Switch)findViewById(R.id.set_switch_autowifi);
+        swit1.setChecked(play_gprs);
+        swit2.setChecked(download_gprs);
+        swit3.setChecked(autoplay_wifi);
+        swit1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences.Editor editor=pre.edit();
+                editor.putBoolean("play_gprs",isChecked);
+                editor.apply();//提交数据
+            }
+        });
+        swit2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences.Editor editor=pre.edit();
+                editor.putBoolean("download_gprs",isChecked);
+                editor.apply();//提交数据
+            }
+        });
+        swit3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences.Editor editor=pre.edit();
+                editor.putBoolean("autoplay_wifi",isChecked);
+                editor.apply();//提交数据
+            }
+        });
+
         ImageView share=(ImageView)findViewById(R.id.share_dongdong);
         share.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,7 +223,6 @@ public class MySetting extends AppCompatActivity {
         qq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlatformConfig.setQQZone("1105683168", "U2MDcVrp5vlfA3Xc");
 
                 String url="http://www.isuhuo.com/mportal.htm";
                 UMImage image = new UMImage(MySetting.this,R.drawable.logo120);
@@ -215,7 +256,7 @@ public class MySetting extends AppCompatActivity {
         zone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlatformConfig.setQQZone("1105683168", "U2MDcVrp5vlfA3Xc");
+
                 String url="http://www.isuhuo.com/mportal.htm";
                 UMImage image = new UMImage(MySetting.this,R.drawable.logo120);
                 new ShareAction(MySetting.this)
@@ -246,7 +287,7 @@ public class MySetting extends AppCompatActivity {
         weixin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlatformConfig.setWeixin("wxfa8558a0ee056f0c", "cf0c56f350578c651320a2b94675b379");
+
                 String url="http://www.isuhuo.com/mportal.htm";
                 UMImage image = new UMImage(MySetting.this,R.drawable.logo120);
                 new ShareAction(MySetting.this)
@@ -277,7 +318,7 @@ public class MySetting extends AppCompatActivity {
         pengyouquan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlatformConfig.setWeixin("wxfa8558a0ee056f0c", "cf0c56f350578c651320a2b94675b379");
+
                 String url="http://www.isuhuo.com/mportal.htm";
                 UMImage image = new UMImage(MySetting.this,R.drawable.logo120);
                 new ShareAction(MySetting.this)
@@ -328,7 +369,7 @@ public class MySetting extends AppCompatActivity {
                     }
                 });
 
-                PlatformConfig.setSinaWeibo("2225421609","835f1b19840f1f8bc90264a90e436321");
+
                 String url="http://www.isuhuo.com/mportal.htm";
                 UMImage image = new UMImage(MySetting.this,R.drawable.logo120);
 
@@ -416,7 +457,7 @@ public class MySetting extends AppCompatActivity {
                         String apkUrl = "http://www.isuhuo.com/suhuo/download";
                         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(apkUrl));
                         request.setDestinationInExternalPublicDir("ddownload", "dongdong.apk");
-                        long downloadId=downloadManager.enqueue(request);
+                       // long downloadId=downloadManager.enqueue(request);
 
                     }
                 }).setNegativeButton("暂不更新", new DialogInterface.OnClickListener() {
@@ -427,5 +468,16 @@ public class MySetting extends AppCompatActivity {
             }
         });
         builder.show();
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

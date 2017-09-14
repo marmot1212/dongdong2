@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.Display;
 import android.view.GestureDetector;
 import android.view.Gravity;
@@ -26,11 +27,13 @@ import android.widget.ViewFlipper;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.calendardata.CalendarAdapter;
 import com.example.administrator.vegetarians824.calendardata.CalendarAdapter2;
 import com.example.administrator.vegetarians824.calendardata.CheckFestival;
 import com.example.administrator.vegetarians824.calendardata.SpecialCalendar;
+import com.example.administrator.vegetarians824.dongdong.MyCalender;
 import com.example.administrator.vegetarians824.entry.CaleadarDay;
 import com.example.administrator.vegetarians824.myapplications.BaseApplication;
 import com.example.administrator.vegetarians824.util.SlingleVolleyRequestQueue;
@@ -49,7 +52,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Zangli extends Fragment implements View.OnClickListener {
+public class Zangli extends Fragment {
     private int year_c = 0;
     private int month_c = 0;
     private int day_c = 0;
@@ -126,72 +129,77 @@ public class Zangli extends Fragment implements View.OnClickListener {
     }
     public void getData(int year, final int month){
         list_day=new ArrayList<>();
-        prevMonth.setVisibility(View.VISIBLE);
-        nextMonth.setVisibility(View.VISIBLE);
+        prevMonth.setVisibility(View.INVISIBLE);
+        nextMonth.setVisibility(View.INVISIBLE);
         SpecialCalendar sc=new SpecialCalendar();
          dayofweek=sc.getWeekdayOfMonth(year,month);
         for(int i=0;i<dayofweek;i++){
             CaleadarDay cd=new CaleadarDay();
             list_day.add(cd);
         }
+
         StringPostRequest spr=new StringPostRequest("http://www.isuhuo.com/plainliving/androidapi/Indexs/register_lists", new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
                 try {
                     JSONObject js1=new JSONObject(s);
-                    JSONObject js2=js1.getJSONObject("Result");
-                    JSONArray ja=js2.getJSONArray("zangli");
-                    JSONObject joleft=ja.getJSONObject(0);
-                    JSONObject joright=ja.getJSONObject(2);
-                    if(joleft.getJSONArray("list").length()==0){
-                        prevMonth.setVisibility(View.INVISIBLE);
-                    }
-                    if(joright.getJSONArray("list").length()==0){
-                        nextMonth.setVisibility(View.INVISIBLE);
-                    }
-                    JSONObject jo=ja.getJSONObject(1);
-                    JSONArray ja2=jo.getJSONArray("list");
-                    for(int i=0;i<ja2.length();i++){
-                        JSONObject joo=ja2.getJSONObject(i);
-                        CaleadarDay cd=new CaleadarDay();
-                        cd.setId(joo.getString("id"));
-                        cd.setZangli(joo.getString("zangli"));
-                        cd.setY(joo.getString("y"));
-                        cd.setM(joo.getString("m"));
-                        cd.setD(joo.getString("d"));
-                        cd.setTime(joo.getString("time"));
-                        if(!joo.isNull("zanglis")){
-                            cd.setZanglis(joo.getString("zanglis"));
+                    if(js1.getString("Code").equals("1")) {
+                        JSONObject js2=js1.getJSONObject("Result");
+                        JSONArray ja = js2.getJSONArray("zangli");
+                        JSONObject joleft = ja.getJSONObject(0);
+                        JSONObject joright = ja.getJSONObject(2);
+
+                        if (joleft.getJSONArray("list").length() > 0) {
+                            prevMonth.setVisibility(View.VISIBLE);
                         }
-                        if(!joo.isNull("active")){
-                            JSONArray jay=joo.getJSONArray("active");
-                            List<String> ls=new ArrayList();
-                            for(int j=0;j<jay.length();j++){
-                                ls.add(jay.getString(j));
+                        if (joright.getJSONArray("list").length() > 0) {
+                            nextMonth.setVisibility(View.VISIBLE);
+                        }
+                        JSONObject jo = ja.getJSONObject(1);
+                        JSONArray ja2 = jo.getJSONArray("list");
+                        for (int i = 0; i < ja2.length(); i++) {
+                            JSONObject joo = ja2.getJSONObject(i);
+                            CaleadarDay cd = new CaleadarDay();
+                            cd.setId(joo.getString("id"));
+                            cd.setZangli(joo.getString("zangli"));
+                            cd.setY(joo.getString("y"));
+                            cd.setM(joo.getString("m"));
+                            cd.setD(joo.getString("d"));
+                            cd.setTime(joo.getString("time"));
+                            if (!joo.isNull("zanglis")) {
+                                cd.setZanglis(joo.getString("zanglis"));
                             }
-                            cd.setActive(ls);
+                            if (!joo.isNull("active")) {
+                                JSONArray jay = joo.getJSONArray("active");
+                                List<String> ls = new ArrayList();
+                                for (int j = 0; j < jay.length(); j++) {
+                                    ls.add(jay.getString(j));
+                                }
+                                cd.setActive(ls);
+                            }
+                            list_day.add(cd);
+
                         }
-                        list_day.add(cd);
+                        if (!js2.isNull("register")) {
+                            JSONArray ja22 = js2.getJSONArray("register");
+                            for (int i = 0; i < ja22.length(); i++) {
+                                JSONObject jo22 = ja22.getJSONObject(i);
+                                if (month == Integer.valueOf(jo22.getString("m"))) {
+                                    int d = Integer.valueOf(jo22.getString("d")) + dayofweek - 1;
+                                    list_day.get(d).setIsmark(true);
+                                }
+                            }
+                        }
+                        ca = new CalendarAdapter2(list_day, getContext());
+                        gridView.setAdapter(ca);
+                        addqiandao();
+                        setListener();
 
                     }
-                    if(!js2.isNull("register")){
-                        JSONArray ja22=js2.getJSONArray("register");
-                        for (int i=0;i<ja22.length();i++){
-                            JSONObject jo22=ja22.getJSONObject(i);
-                            if(month==Integer.valueOf(jo22.getString("m")).intValue()){
-                                int d=Integer.valueOf(jo22.getString("d")).intValue()+dayofweek-1;
-                                list_day.get(d).setIsmark(true);
-                            }
-                        }
-                    }
-                    ca=new CalendarAdapter2(list_day,getContext());
-                    gridView.setAdapter(ca);
-                    addqiandao();
-                    list_day=new ArrayList<>();
+                    //list_day=new ArrayList<>();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
 
             }
         }, new Response.ErrorListener() {
@@ -200,6 +208,7 @@ public class Zangli extends Fragment implements View.OnClickListener {
 
             }
         });
+
         spr.putValue("uid", BaseApplication.app.getUser().getId());
         spr.putValue("day",year+"-"+month);
         SlingleVolleyRequestQueue.getInstance(getContext()).addToRequestQueue(spr);
@@ -233,29 +242,31 @@ public class Zangli extends Fragment implements View.OnClickListener {
                 // TODO Auto-generated method stub
                 // 点击任何一个item，得到这个item的日期(排除点击的是周日到周六(点击不响应))
                 CaleadarDay cal=list_day.get(position);
-                String s1=cal.getD();
-                String s2=cal.getY();
-                String s3=cal.getM();
-                String s4=cal.getZanglis();
-                String s5="";
-                if(cal.getActive()!=null){
-                    StringBuffer sb=new StringBuffer();
-                    for(int i=0;i<cal.getActive().size();i++){
-                        sb.append(cal.getActive().get(i)).append(",");
+                if(cal.getD()!=null) {
+                    String s1 = cal.getD();
+                    String s2 = cal.getY();
+                    String s3 = cal.getM();
+                    String s4 = cal.getZanglis();
+                    String s5 = "";
+                    if (cal.getActive() != null) {
+                        StringBuffer sb = new StringBuffer();
+                        for (int i = 0; i < cal.getActive().size(); i++) {
+                            sb.append(cal.getActive().get(i)).append(",");
+                        }
+                        s5 = sb.toString().substring(0, sb.length() - 1);
                     }
-                    s5=sb.toString().substring(0,sb.length()-1);
+
+                    tv.setBackground(bgdraw);
+                    tv.setTextColor(acolor);
+                    TextView textView = (TextView) arg1.findViewById(R.id.tvtext);
+                    tv = textView;
+                    acolor = tv.getCurrentTextColor();
+                    bgdraw = tv.getBackground();
+                    textView.setBackgroundResource(R.drawable.button_bg5);
+                    textView.setTextColor(Color.WHITE);
+
+                    getPopwindow(s1, s2, s3, s4, s5);
                 }
-
-                tv.setBackground(bgdraw);
-                tv.setTextColor(acolor);
-                TextView textView = (TextView) arg1.findViewById(R.id.tvtext);
-                tv=textView;
-                acolor=tv.getCurrentTextColor();
-                bgdraw=tv.getBackground();
-                textView.setBackgroundResource(R.drawable.button_bg5);
-                textView.setTextColor(Color.WHITE);
-
-                getPopwindow(s1,s2,s3,s4,s5);
             }
         });
         gridView.setLayoutParams(params);
@@ -330,24 +341,27 @@ public class Zangli extends Fragment implements View.OnClickListener {
         flipper.showPrevious();
         flipper.removeViewAt(0);
     }
-    @Override
-    public void onClick(View v) {
-        // TODO Auto-generated method stub
-        switch (v.getId()) {
-            case R.id.nextMonth2: // 下一个月
-                enterNextMonth(gvFlag);
-                break;
-            case R.id.prevMonth2: // 上一个月
-                enterPrevMonth(gvFlag);
-                break;
-            default:
-                break;
-        }
-    }
+
 
     private void setListener() {
-        prevMonth.setOnClickListener(this);
-        nextMonth.setOnClickListener(this);
+        prevMonth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                prevMonth.setOnClickListener(null);
+                nextMonth.setOnClickListener(null);
+                enterPrevMonth(gvFlag);
+
+            }
+        });
+        nextMonth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                prevMonth.setOnClickListener(null);
+                nextMonth.setOnClickListener(null);
+                enterNextMonth(gvFlag);
+
+            }
+        });
     }
 
     public void addTextToTopTextView() {
@@ -355,6 +369,8 @@ public class Zangli extends Fragment implements View.OnClickListener {
         // draw = getResources().getDrawable(R.drawable.top_day);
         // view.setBackgroundDrawable(draw);
         textDate.append(stepYear).append("年").append(stepMonth).append("月").append("\t");
+       // ((MyCalender)getActivity()).setYear(stepYear);
+        //((MyCalender)getActivity()).setMonth(stepMonth);
         currentMonth.setText(textDate);
     }
 
@@ -371,7 +387,10 @@ public class Zangli extends Fragment implements View.OnClickListener {
                 }
             });
         }
-        if(!isqd){
+
+        Log.d("=========size",list_day.size()+" "+(day_c+dayofweek-1));
+
+        if((!isqd)&&(month_c==stepMonth)){
             if(list_day.get(day_c+dayofweek-1).ismark()){
                 qiandao.setClickable(false);
                 qiandao.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_bg2));
@@ -387,7 +406,9 @@ public class Zangli extends Fragment implements View.OnClickListener {
             });
             }
         }
+
         isqd=true;
+
     }
 
     public void doPost(){
@@ -441,5 +462,15 @@ public class Zangli extends Fragment implements View.OnClickListener {
             }
         });
     }
+    @Override
+    public void onPause() {
+        super.onPause();
+        StatService.onPause(this);
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
 }

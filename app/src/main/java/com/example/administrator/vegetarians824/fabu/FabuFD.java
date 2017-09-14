@@ -2,11 +2,13 @@ package com.example.administrator.vegetarians824.fabu;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -32,12 +34,14 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.entry.Yongliao;
 import com.example.administrator.vegetarians824.entry.Zuofa;
 import com.example.administrator.vegetarians824.mannager.URLMannager;
 import com.example.administrator.vegetarians824.myView.ListViewForScrollView;
 import com.example.administrator.vegetarians824.myapplications.BaseApplication;
+import com.example.administrator.vegetarians824.util.CheckPermission;
 import com.example.administrator.vegetarians824.util.SlingleVolleyRequestQueue;
 import com.example.administrator.vegetarians824.util.StatusBarUtil;
 import com.example.administrator.vegetarians824.util.StringPostRequest;
@@ -47,7 +51,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -155,9 +161,11 @@ public class FabuFD extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 flag=1;
-                Intent intent = new Intent(Intent.ACTION_PICK,
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent,1);
+                if(CheckPermission.requestReadStorageRuntimePermission(FabuFD.this)) {
+                    Intent intent = new Intent(Intent.ACTION_PICK,
+                            MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, 1);
+                }
             }
         });
 
@@ -236,10 +244,10 @@ public class FabuFD extends AppCompatActivity {
 
         @Override
         public View getView(final int i, View view, ViewGroup viewGroup) {
-             view= LayoutInflater.from(context).inflate(R.layout.fabu_food_yl,null);
-             final AutoCompleteTextView et1=(AutoCompleteTextView) view.findViewById(R.id.fabu_food_et1);
-             et1.setThreshold(1);
-             EditText et2=(EditText) view.findViewById(R.id.fabu_food_et2);
+            view= LayoutInflater.from(context).inflate(R.layout.fabu_food_yl,null);
+            final AutoCompleteTextView et1=(AutoCompleteTextView) view.findViewById(R.id.fabu_food_et1);
+            et1.setThreshold(1);
+            EditText et2=(EditText) view.findViewById(R.id.fabu_food_et2);
             LinearLayout del=(LinearLayout) view.findViewById(R.id.fabu_food_del);
             et1.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -418,7 +426,7 @@ public class FabuFD extends AppCompatActivity {
 
             if(flag==2){
                 if(!list_is.get(count)){
-                 params.put("oldpic",headname);
+                    params.put("oldpic",headname);
                 }else {
                     list_is.set(count,false);
                 }
@@ -426,13 +434,31 @@ public class FabuFD extends AppCompatActivity {
 
             final Map<String, File> files = new HashMap<String, File>();
             File file=new File(strings[0]);
-            files.put("img_title ",file);
+            //files.put("img_title ",file);
+            try {
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 4;
+                Bitmap addbmp=BitmapFactory.decodeFile(file.getPath(),options);
+                File afile=new File("/sdcard/aa.jpg");//将要保存图片的路径
+
+                BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(afile));
+                addbmp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+                bos.flush();
+                bos.close();
+                files.put("img_title ",afile);
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             String s="";
             try {
                 s= UpLoadUtil.post(URLMannager.FabuFDPostIMA,params,files);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+
             return s;
         }
 
@@ -463,7 +489,7 @@ public class FabuFD extends AppCompatActivity {
         StringPostRequest spr=new StringPostRequest(URLMannager.FabuFDPostTXT, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                //Log.d("========sssss",s);
+                Log.d("========sssss",s);
                 try {
                     JSONObject js1=new JSONObject(s);
                     String m=js1.getString("Message");
@@ -484,15 +510,6 @@ public class FabuFD extends AppCompatActivity {
 
             }
         });
-        /*
-        Log.d("=========id",BaseApplication.app.getUser().getId());
-        Log.d("=========title",et1.getText().toString());
-        Log.d("=========content",et2.getText().toString());
-        Log.d("=========reminded",et3.getText().toString());
-        Log.d("=========dress",dress);
-        Log.d("=========step",stp);
-        Log.d("=========img_title",headname);
-        */
         spr.putValue("uid",BaseApplication.app.getUser().getId());
         spr.putValue("title",et1.getText().toString());
         spr.putValue("content",et2.getText().toString());
@@ -582,5 +599,30 @@ public class FabuFD extends AppCompatActivity {
         return false;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==197){
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent intent = new Intent(Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, 1);
+            } else {
+                Toast.makeText(getBaseContext(), "权限错误", Toast.LENGTH_SHORT).show();
+            }
+            return;
+        }
+    }
 }

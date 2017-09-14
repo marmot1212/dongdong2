@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.administrator.vegetarians824.dongdong.CantingDetail;
@@ -49,12 +50,26 @@ public class CantingListAdapter extends BaseAdapter {
         view= LayoutInflater.from(myContext).inflate(R.layout.canting_item,null);
         TextView name=(TextView) view.findViewById(R.id.canting_item_name);
         name.setText(canting_info.get(i).getTitle());
+        //荤餐厅
+        if(canting_info.get(i).getVege_status().equals("2")){
+            name.setTextColor(0xffff5e5e);
+        }
         TextView jiage=(TextView)view.findViewById(R.id.canting_item_jiage);
-        jiage.setText("¥"+canting_info.get(i).getUnit_pric());
+        LinearLayout jiageline=(LinearLayout)view.findViewById(R.id.canting_item_jiageline);
+        if(canting_info.get(i).getUnit_pric().equals("0")||canting_info.get(i).getUnit_pric().equals("99999999")) {
+            jiageline.setVisibility(View.GONE);
+        }else {
+            jiage.setText("¥" + canting_info.get(i).getUnit_pric());
+        }
         TextView juli=(TextView) view.findViewById(R.id.canting_item_juli);
         juli.setText("距您"+canting_info.get(i).getDistance()+"米");
         final TextView content=(TextView)view.findViewById(R.id.canting_item_neirong);
         content.setText(canting_info.get(i).getContent());
+        //荤餐厅
+        if(canting_info.get(i).getVege_status().equals("2")){
+            content.setText("已加入素食餐厅友好餐厅计划（点击发现素食）");
+            content.setTextColor(0xff51b30c);
+        }
         ImageView logo=(ImageView) view.findViewById(R.id.canting_item_logo);
         if(canting_info.get(i).getType().equals("1")){
             logo.setImageResource(R.mipmap.maplistdini);

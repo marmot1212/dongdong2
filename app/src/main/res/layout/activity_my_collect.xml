@@ -46,7 +46,9 @@
         android:divider="@null"
         android:id="@+id/subfrag_list2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        ptr:ptrShowIndicator="false">
     </com.handmark.pulltorefresh.library.PullToRefreshListView>
         <TextView
             android:id="@+id/noinfo2"

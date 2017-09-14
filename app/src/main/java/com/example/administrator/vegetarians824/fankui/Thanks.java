@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.entry.SpecialUser;
 import com.example.administrator.vegetarians824.mannager.URLMannager;
@@ -149,5 +150,17 @@ public class Thanks extends AppCompatActivity {
             name.setText(mydate.get(i).getUsername());
             return view;
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

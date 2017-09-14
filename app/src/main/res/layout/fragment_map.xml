@@ -95,7 +95,7 @@
                 android:id="@+id/ditu_find_lin_liebiao"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#f2f2f2f2"
+                android:background="#cef2f2f2"
                 android:gravity="center"
                 android:orientation="vertical"
                 >

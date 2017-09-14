@@ -169,4 +169,5 @@ public class JKPaihangDetial extends AppCompatActivity {
         super.onPause();
         StatService.onPause(this);
     }
+
 }

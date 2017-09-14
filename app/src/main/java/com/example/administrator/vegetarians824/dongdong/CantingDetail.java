@@ -25,6 +25,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AbsListView;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -33,23 +36,36 @@ import android.widget.TextView;
 
 import com.amap.api.maps2d.AMapUtils;
 import com.amap.api.maps2d.model.LatLng;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
+import com.example.administrator.vegetarians824.adapter.CaidanFriendlyAdapter;
 import com.example.administrator.vegetarians824.adapter.PinglunAdapter;
+import com.example.administrator.vegetarians824.entry.Caidan;
 import com.example.administrator.vegetarians824.entry.CanTingXq;
 import com.example.administrator.vegetarians824.entry.IMg_Url_w;
 import com.example.administrator.vegetarians824.entry.Pinglun;
+import com.example.administrator.vegetarians824.entry.RestaurantTag;
 import com.example.administrator.vegetarians824.fabu.FabuShUpdate;
 import com.example.administrator.vegetarians824.login.Login;
 import com.example.administrator.vegetarians824.mannager.URLMannager;
 import com.example.administrator.vegetarians824.mine.MyAdmin;
 import com.example.administrator.vegetarians824.myView.ListViewForScrollView;
 import com.example.administrator.vegetarians824.myView.MyImageView;
+import com.example.administrator.vegetarians824.myView.NewGridView;
+import com.example.administrator.vegetarians824.myView.RoundImageView;
 import com.example.administrator.vegetarians824.myView.UserDefineScrollView;
 import com.example.administrator.vegetarians824.myapplications.BaseApplication;
+import com.example.administrator.vegetarians824.util.DipPX;
 import com.example.administrator.vegetarians824.util.ImageLoaderUtils;
+import com.example.administrator.vegetarians824.util.SlingleVolleyRequestQueue;
 import com.example.administrator.vegetarians824.util.StatusBarUtil;
+import com.example.administrator.vegetarians824.util.StringPostRequest;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tb.emoji.EmojiUtil;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.ShareAction;
@@ -63,6 +79,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -89,7 +106,7 @@ public class CantingDetail extends AppCompatActivity {
     private boolean isContinue = true;// 设置标记
 
     private MyHandler handler;// 解析数据
-    public String item_id;// 地图底部点击事件传过来的id
+    public String item_id,vege_status="1";// 地图底部点击事件传过来的id
     private PopupWindow popupWindow,popWindow;
     public ImageLoader loader;// ImageLoader工具类
     public DisplayImageOptions options;// ImageLoader方法
@@ -107,6 +124,13 @@ public class CantingDetail extends AppCompatActivity {
     private LinearLayout line1,line2,line3,line4;
     private UserDefineScrollView scrollView;
     private LinearLayout dish;
+    private ListView list_friendly,list_danmu;
+    private TextView menu1,menu2,menu3;
+    private DanmuAdapter adapter_danmu;
+    private TagGridAdapter adapter_tag;
+    private NewGridView gridView;
+    private LinearLayout lv;
+    private TextView viewcount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,8 +140,11 @@ public class CantingDetail extends AppCompatActivity {
         canTing=new CanTingXq();
         Intent intent = getIntent();
         item_id = intent.getStringExtra("item_id");
-
+        if(intent.hasExtra("vege_status")){
+            vege_status=intent.getStringExtra("vege_status");
+        }
         initViews();// 加载布局
+        initNewView();
         //initDatas();// 拿到id,请求服务器接口
         //initOpers();// 初始化操作
 
@@ -169,12 +196,60 @@ public class CantingDetail extends AppCompatActivity {
                 scrollView.smoothScrollTo(0,prom.getTop());
             }
         });
+        gridView=(NewGridView)findViewById(R.id.ditu_xiangqing_grid);
+        lv=(LinearLayout)findViewById(R.id.ditu_xiangqing_lv);
+        viewcount=(TextView)findViewById(R.id.ditu_xiangqing_viewcount);
     }
 
-    public void initDatas() {
-        // 拿到地图地步列表点击事件传过来的id
-        HttpGet(item_id);
+    public void initNewView(){
+        menu1=(TextView)findViewById(R.id.canting_detail_menu1);
+        if(vege_status.equals("2")){
+            menu1.setVisibility(View.VISIBLE);
+        }
+        menu2=(TextView)findViewById(R.id.canting_detail_menu2);
+        menu3=(TextView)findViewById(R.id.canting_detail_menu3);
+        list_friendly=(ListView)findViewById(R.id.canting_detail_friendlylist);
+        list_danmu=(ListView)findViewById(R.id.canting_detail_danmu);
+        menu1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                list_friendly.setVisibility(View.VISIBLE);
+                menu1.setBackgroundResource(R.drawable.button_bg_red2);
+                menu1.setTextColor(0xffffffff);
+                menu2.setBackgroundColor(0xffffffff);
+                menu2.setTextColor(0xff8e8e8e);
+                menu3.setBackgroundColor(0xffffffff);
+                menu3.setTextColor(0xff8e8e8e);
+            }
+        });
+        menu2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                list_friendly.setVisibility(View.GONE);
+                menu2.setBackgroundResource(R.drawable.button_bg_red2);
+                menu2.setTextColor(0xffffffff);
+                menu1.setBackgroundColor(0xffffffff);
+                menu1.setTextColor(0xff8e8e8e);
+                menu3.setBackgroundColor(0xffffffff);
+                menu3.setTextColor(0xff8e8e8e);
+                scrollView.smoothScrollTo(0,advPager.getTop());
+            }
+        });
+        menu3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                list_friendly.setVisibility(View.GONE);
+                menu3.setBackgroundResource(R.drawable.button_bg_red2);
+                menu3.setTextColor(0xffffffff);
+                menu2.setBackgroundColor(0xffffffff);
+                menu2.setTextColor(0xff8e8e8e);
+                menu1.setBackgroundColor(0xffffffff);
+                menu1.setTextColor(0xff8e8e8e);
+                scrollView.smoothScrollTo(0,list_pinglun.getTop());
+            }
+        });
     }
+
 
     public void initOpers() {
         // back设置监听
@@ -250,7 +325,6 @@ public class CantingDetail extends AppCompatActivity {
         qq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlatformConfig.setQQZone("1105683168", "U2MDcVrp5vlfA3Xc");
                 String title=canTing.getTitle();
                 String tex=canTing.getContent();
                 String url=URLMannager.ShareRestaurant+canTing.getId();
@@ -285,7 +359,7 @@ public class CantingDetail extends AppCompatActivity {
         zone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlatformConfig.setQQZone("1105683168", "U2MDcVrp5vlfA3Xc");
+
                 String title=canTing.getTitle();
                 String tex=canTing.getContent();
                 String url=URLMannager.ShareRestaurant+canTing.getId();
@@ -319,7 +393,7 @@ public class CantingDetail extends AppCompatActivity {
         weixin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlatformConfig.setWeixin("wxfa8558a0ee056f0c", "cf0c56f350578c651320a2b94675b379");
+
                 String title=canTing.getTitle();
                 String tex=canTing.getContent();
                 String url=URLMannager.ShareRestaurant+canTing.getId();
@@ -353,7 +427,7 @@ public class CantingDetail extends AppCompatActivity {
         pengyouquan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlatformConfig.setWeixin("wxfa8558a0ee056f0c", "cf0c56f350578c651320a2b94675b379");
+
                 String title=canTing.getTitle();
                 String tex=canTing.getContent();
                 String url=URLMannager.ShareRestaurant+canTing.getId();
@@ -408,7 +482,6 @@ public class CantingDetail extends AppCompatActivity {
                     }
                 });
 
-                PlatformConfig.setSinaWeibo("2225421609","835f1b19840f1f8bc90264a90e436321");
                 String tex=canTing.getContent();
                 String url=URLMannager.ShareRestaurant+canTing.getId();
                 UMImage image = new UMImage(CantingDetail.this,URLMannager.Imag_URL+imageUrl);
@@ -458,10 +531,20 @@ public class CantingDetail extends AppCompatActivity {
             tv.setText("已经全部加载完毕");
             tv.setTextSize(12);
             tv.setTextColor(0xffa0a0a0);
-            ViewGroup.LayoutParams params=new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,100);
+            AbsListView.LayoutParams params=new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,100);
             tv.setLayoutParams(params);
             tv.setGravity(Gravity.CENTER);
             list_pinglun.addFooterView(tv);
+
+            TextView tv2=new TextView(getBaseContext());
+            tv2.setText("评价");
+            tv2.setTextSize(14);
+            tv2.setBackgroundColor(0xffffffff);
+            tv2.setTextColor(0xff8e8e8e);
+            AbsListView.LayoutParams params2=new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,100);
+            tv2.setLayoutParams(params2);
+            tv2.setGravity(Gravity.CENTER);
+            list_pinglun.addHeaderView(tv2);
         }
         list_pinglun.setEnabled(false);// 设置不可滑动
 
@@ -586,6 +669,7 @@ public class CantingDetail extends AppCompatActivity {
     /**
      * handle设置当前的应该播放的图片
      */
+
     private final Handler viewHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -697,6 +781,9 @@ public class CantingDetail extends AppCompatActivity {
             public void run() {
                 try {
                     String str1 = str + "/res_id/" + id + "/p/1/t/1000";
+                    if(BaseApplication.app.getUser()!=null&&BaseApplication.app.getUser().islogin()){
+                        str1=str1+"/uid/"+BaseApplication.app.getUser().getId();
+                    }
                     System.out.println("链接" + str1);
                     URL url = new URL(str1);
                     HttpURLConnection conn = (HttpURLConnection) url
@@ -736,7 +823,7 @@ public class CantingDetail extends AppCompatActivity {
         Pinglun mPinglun = null;// 评论
         IMg_Url_w img_Url_w;// 轮播图url
         List<IMg_Url_w> img_Url_list;// 轮播图url集合
-
+        List<RestaurantTag> list_tag;
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -771,14 +858,18 @@ public class CantingDetail extends AppCompatActivity {
 
                     JSONArray array1 = jsonObj2.getJSONArray("detail");
                     JSONObject array1_2 = array1.getJSONObject(0);
+                    viewcount.setText(array1_2.getString("view")+"次回眸");
                     mCanTing.id = array1_2.getString("id");// id
                     type=array1_2.getString("type");
+                    initDanmu();
                     mCanTing.title = array1_2.getString("title");// 名字
                     canting_title=array1_2.getString("title");
                     if(!array1_2.isNull("tel"))
                         mCanTing.tel = array1_2.getString("tel");// 电话
+
                     if(!array1_2.isNull("unit_price"))
                         mCanTing.unit_price = array1_2.getString("unit_price");// 价格
+
                     mCanTing.longitude = array1_2.getDouble("longitude");// 经度
                     mCanTing.latitude = array1_2.getDouble("latitude");// 维度
                     mCanTing.address = array1_2.getString("address");// 地址
@@ -794,7 +885,39 @@ public class CantingDetail extends AppCompatActivity {
                         prom1.setText(array1_2.getString("newstitle"));
                         prom2.setText(array1_2.getString("newscontent"));
                     }
-
+                    //标签 营业时间 停车位
+                    if(array1_2.has("food_type")){
+                        ImageView tag=(ImageView)findViewById(R.id.ditu_xiangqing_tv_tag);
+                        tag.setVisibility(View.VISIBLE);
+                        switch (array1_2.getString("food_type")){
+                            case "1":tag.setImageResource(R.drawable.su1);break;
+                            case "2":tag.setImageResource(R.drawable.su3);break;
+                            case "3":tag.setImageResource(R.drawable.su2);break;
+                            default:break;
+                        }
+                    }
+                    if(array1_2.has("parking_status")||array1_2.has("open_times")){
+                        LinearLayout line=(LinearLayout)findViewById(R.id.ditu_xiangqing_line);
+                        line.setVisibility(View.VISIBLE);
+                        if(array1_2.has("open_times")){
+                            LinearLayout line1=(LinearLayout)findViewById(R.id.ditu_xiangqing_line1);
+                            line1.setVisibility(View.VISIBLE);
+                            TextView time=(TextView)findViewById(R.id.ditu_xiangqing_tv_time);
+                            time.setText(array1_2.getString("open_times"));
+                        }
+                        if(array1_2.has("parking_status")){
+                            if(!array1_2.getString("parking_status").equals("0")){
+                                LinearLayout line2=(LinearLayout)findViewById(R.id.ditu_xiangqing_line2);
+                                line2.setVisibility(View.VISIBLE);
+                                TextView park=(TextView)findViewById(R.id.ditu_xiangqing_tv_park);
+                                if(array1_2.getString("parking_status").equals("1")){
+                                    park.setText("有");
+                                }else {
+                                    park.setText("无");
+                                }
+                            }
+                        }
+                    }
                     // 轮播图片的数据处理，图片，最少1张，最多6张
                     img_Url_list = new ArrayList<IMg_Url_w>();
                     for (int k = 1; k < 7; k++) {
@@ -841,7 +964,6 @@ public class CantingDetail extends AppCompatActivity {
                     line.removeAllViews();
                     if(jsonObj2.has("dish")){
                         JSONObject js4 = jsonObj2.getJSONObject("dish");
-                        Log.d("==========dish",js4.toString());
                         if(js4.has("list")){
                             dish.setVisibility(View.VISIBLE);
                             line2.setVisibility(View.VISIBLE);
@@ -871,6 +993,52 @@ public class CantingDetail extends AppCompatActivity {
 
                         }
                     }
+
+                    //素食友好菜单
+                    if(vege_status.equals("2")){
+                        List<Caidan> list_caidan=new ArrayList<>();
+                        JSONArray ja=jsonObj2.getJSONArray("friend_list");
+                        for(int i=0;i<ja.length();i++){
+                            JSONObject jo=ja.getJSONObject(i);
+                            Caidan cd=new Caidan();
+                            cd.setTitle(jo.getString("title"));
+                            cd.setPic(jo.getString("img_url"));
+                            cd.setContent(jo.getString("content"));
+                            cd.setPrice(jo.getString("price"));
+                            cd.setId(jo.getString("id"));
+                            list_caidan.add(cd);
+                        }
+                        list_friendly.setAdapter(new CaidanFriendlyAdapter(list_caidan,CantingDetail.this));
+                    }
+                    //标签
+                    list_tag=new ArrayList<>();
+                    if(jsonObj2.has("friend_real")){
+                        JSONArray jaa=jsonObj2.getJSONArray("friend_real");
+                        for(int i=0;i<jaa.length();i++){
+                            JSONObject joo=jaa.getJSONObject(i);
+                            RestaurantTag rt=new RestaurantTag();
+                            rt.setId(joo.getString("id"));
+                            rt.setTitle(joo.getString("title"));
+                            rt.setCount(joo.getString("count"));
+                            rt.setStatus(joo.getString("status"));
+                            rt.setClick_status(joo.getString("click_status"));
+                            list_tag.add(rt);
+                        }
+                        adapter_tag=new TagGridAdapter(list_tag,CantingDetail.this);
+                        gridView.setAdapter(adapter_tag);
+                    }
+                    //lv
+                    if(jsonObj2.has("vege_lv")){
+                        int lvnum=Integer.valueOf(jsonObj2.getString("vege_lv"));
+                        for(int i=0;i<lvnum;i++){
+                            ImageView ima=new ImageView(getBaseContext());
+                            ViewGroup.LayoutParams params=new ViewGroup.LayoutParams(DipPX.dip2px(getBaseContext(),16),DipPX.dip2px(getBaseContext(),16));
+                            ima.setLayoutParams(params);
+                            ima.setImageResource(R.mipmap.yezi);
+                            lv.addView(ima);
+                        }
+                    }
+
                     canTing=mCanTing;
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -883,7 +1051,12 @@ public class CantingDetail extends AppCompatActivity {
 				 * 设置名字，价格，地址
 				 */
                 tv_name.setText(mCanTing.getTitle());
-                tv_price.setText(mCanTing.getUnit_price());
+                if(mCanTing.getUnit_price().equals("0")||mCanTing.getUnit_price().equals("99999999")){
+                    LinearLayout priceline=(LinearLayout)findViewById(R.id.ditu_xiangqing_tv_priceline);
+                    priceline.setVisibility(View.GONE);
+                }else {
+                    tv_price.setText(mCanTing.getUnit_price());
+                }
                 float distance=0;
                 if(BaseApplication.app.getMyLociation()!=null){
                     LatLng latLngs=new LatLng(Double.valueOf(BaseApplication.app.getMyLociation().getLatitude()),Double.valueOf(BaseApplication.app.getMyLociation().getLongitude()));
@@ -946,6 +1119,7 @@ public class CantingDetail extends AppCompatActivity {
                         Intent intent = new Intent(CantingDetail.this, CantingRoute.class);
                         intent.putExtra("longitude",mCanTing.getLongitude());
                         intent.putExtra("latitude",mCanTing.getLatitude());
+                        intent.putExtra("name",tv_address.getText().toString());
                         CantingDetail.this.startActivity(intent);
 
                     }
@@ -1012,12 +1186,12 @@ public class CantingDetail extends AppCompatActivity {
         builder.show();
     }
 
-    public void backgroundAlpha(float bgAlpha)
-    {
+    public void backgroundAlpha(float bgAlpha) {
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = bgAlpha; //0.0-1.0
         getWindow().setAttributes(lp);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -1028,14 +1202,226 @@ public class CantingDetail extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        initDatas();// 拿到id,请求服务器接口
+        HttpGet(item_id);// 拿到id,请求服务器接口
         initOpers();// 初始化操作
+        //initDanmu();
+        StatService.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         isrun=false;
+        StatService.onPause(this);
+    }
+
+    public void initDanmu(){
+        String url=URLMannager.CommentList +type+ "/mess_id/" + item_id + "/p/1/t/3";
+        if(BaseApplication.app.getUser()!=null&&BaseApplication.app.getUser().islogin()){
+            url=url+"/uid/"+BaseApplication.app.getUser().getId();
+        }
+        StringRequest request=new StringRequest(url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                try {
+                    List<Pinglun> danmuku=new ArrayList<>();
+                    JSONObject js1=new JSONObject(s);
+                    if(js1.getString("Code").equals("1")){
+                        JSONObject js2=js1.getJSONObject("Result");
+                        JSONArray ja=js2.getJSONArray("list");
+                        for(int i=0;i<ja.length();i++){
+                            JSONObject jo=ja.getJSONObject(i);
+                            Pinglun pl=new Pinglun();
+                            pl.setId(jo.getString("id"));
+                            pl.setUser_head_img_th(jo.getString("user_head_img"));
+                            pl.setUsername(jo.getString("username"));
+                            pl.setContent(jo.getString("content"));
+                            pl.setZancount(jo.getString("comment_laund_count"));
+                            pl.setZanstatus(jo.getString("comment_status").equals("1"));
+                            danmuku.add(pl);
+                        }
+                        adapter_danmu=new DanmuAdapter(danmuku,getBaseContext());
+                        list_danmu.setAdapter(adapter_danmu);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        });
+        SlingleVolleyRequestQueue.getInstance(getBaseContext()).addToRequestQueue(request);
+    }
+
+    public class DanmuAdapter extends BaseAdapter{
+        private List<Pinglun> mydata;
+        private Context context;
+        public DanmuAdapter(List<Pinglun> mydata,Context context){
+            this.mydata=mydata;
+            this.context=context;
+        }
+        @Override
+        public int getCount() {
+            return mydata.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return mydata.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            convertView=LayoutInflater.from(context).inflate(R.layout.adapter_danmu,null);
+            final int x=position;
+            RoundImageView ima=(RoundImageView)convertView.findViewById(R.id.danmu_ima);
+            TextView name=(TextView)convertView.findViewById(R.id.danmu_name);
+            TextView content=(TextView)convertView.findViewById(R.id.danmu_content);
+            TextView zancount=(TextView)convertView.findViewById(R.id.danmu_zancount);
+            com.nostra13.universalimageloader.core.ImageLoader loader= ImageLoaderUtils.getInstance(context);
+            DisplayImageOptions options=ImageLoaderUtils.getOpt();
+            loader.displayImage(URLMannager.Imag_URL+""+mydata.get(position).getUser_head_img_th(),ima,options);
+            name.setText(mydata.get(position).getUsername());
+            content.setText(mydata.get(position).getContent());
+            zancount.setText(mydata.get(position).getZancount());
+            try {
+                EmojiUtil.handlerEmojiText3(content, content.getText().toString(), context);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            LinearLayout zan=(LinearLayout)convertView.findViewById(R.id.danmu_zan);
+            ImageView zanicon=(ImageView)convertView.findViewById(R.id.danmu_zanicon);
+            if(mydata.get(position).isZanstatus()){
+                zanicon.setImageResource(R.mipmap.icon_zan1);
+            }else {
+                zanicon.setImageResource(R.mipmap.icon_zan2);
+            }
+            zan.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    boolean flag=mydata.get(x).isZanstatus();
+                    if(flag){
+                        int count=Integer.valueOf(mydata.get(x).getZancount());
+                        mydata.get(x).setZancount((count-1)+"");
+                    }else {
+                        int count=Integer.valueOf(mydata.get(x).getZancount());
+                        mydata.get(x).setZancount((count+1)+"");
+                    }
+                    mydata.get(x).setZanstatus(!flag);
+                    adapter_danmu.notifyDataSetChanged();
+                    doCommentLand(mydata.get(x).getId());
+                }
+            });
+
+            return convertView;
+        }
+    }
+
+    public void doCommentLand(String id){
+        if(BaseApplication.app.getUser()!=null&&BaseApplication.app.getUser().islogin()) {
+            StringPostRequest spr = new StringPostRequest(URLMannager.CommentZan, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String s) {
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+
+                }
+            });
+            spr.putValue("id", id);
+            spr.putValue("uid", BaseApplication.app.getUser().getId());
+            SlingleVolleyRequestQueue.getInstance(getBaseContext()).addToRequestQueue(spr);
+        }else {
+            startActivity(new Intent(this,Login.class));
+        }
+    }
+
+    public class TagGridAdapter extends BaseAdapter{
+        private List<RestaurantTag> mydata;
+        private Context context;
+        public TagGridAdapter( List<RestaurantTag> mydata,Context context){
+            this.mydata=mydata;
+            this.context=context;
+        }
+        @Override
+        public int getCount() {
+            return mydata.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return mydata.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            convertView=LayoutInflater.from(context).inflate(R.layout.adapter_tag_item,null);
+            final int x=position;
+            TextView tv=(TextView)convertView.findViewById(R.id.restaurant_tag_tv);
+            LinearLayout bg=(LinearLayout)convertView.findViewById(R.id.restaurant_tag_line);
+            tv.setText(mydata.get(position).getTitle()+"\t\t"+mydata.get(position).getCount());
+            if(mydata.get(position).getClick_status().equals("2")){
+                bg.setBackgroundResource(R.drawable.button_bg_gray2);
+                tv.setTextColor(0xff8e8e8e);
+            }else {
+                bg.setBackgroundResource(R.drawable.button_bg);
+                tv.setTextColor(0xff00aff0);
+            }
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(mydata.get(x).getClick_status().equals("2")){
+                        mydata.get(x).setClick_status("1");
+                        int count=Integer.valueOf(mydata.get(x).getCount());
+                        mydata.get(x).setCount((count+1)+"");
+                    }else {
+                        mydata.get(x).setClick_status("2");
+                        int count=Integer.valueOf(mydata.get(x).getCount());
+                        mydata.get(x).setCount((count-1)+"");
+                    }
+                    adapter_tag.notifyDataSetChanged();
+                    doTagClick(mydata.get(x).getId());
+                }
+            });
+            return convertView;
+        }
+    }
+
+    public void doTagClick(String id){
+        if(BaseApplication.app.getUser()!=null&&BaseApplication.app.getUser().islogin()) {
+            StringPostRequest spr = new StringPostRequest(URLMannager.TagClick, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String s) {
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+
+                }
+            });
+            spr.putValue("uid",BaseApplication.app.getUser().getId());
+            spr.putValue("rest_id",item_id);
+            spr.putValue("real_id",id);
+            SlingleVolleyRequestQueue.getInstance(getBaseContext()).addToRequestQueue(spr);
+        }else {
+            startActivity(new Intent(this,Login.class));
+        }
     }
 
 

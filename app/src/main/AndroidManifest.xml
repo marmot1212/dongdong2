@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.administrator.vegetarians824">
+    package="com.example.administrator.vegetarians824"
+    android:versionCode="4"
+    android:versionName="4.1.1">
 
+    <uses-sdk
+        android:minSdkVersion="17"
+        android:targetSdkVersion="24" />
     <!-- 需要申明的权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -118,6 +123,34 @@
     <permission
         android:name="baidu.push.permission.WRITE_PUSHINFOPROVIDER.com.example.administrator.vegetarians824"
         android:protectionLevel="normal" />
+    <!-- Required -->
+    <permission
+        android:name="com.example.administrator.vegetarians824.permission.JPUSH_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <!-- Required -->
+    <uses-permission android:name="com.example.administrator.vegetarians824.permission.JPUSH_MESSAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <!-- Optional. Required for location feature -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <!-- 用于开启 debug 版本的应用在6.0 系统上 层叠窗口权限 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <application
         android:name=".myapplications.BaseApplication"
@@ -128,6 +161,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".WelcomeActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/StartAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -135,9 +169,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".dongdong.HuodongDetail" />
-        <activity android:name=".dongdong.LishiDetail" />
-        <activity android:name=".dongdong.HuodongDiqu" />
+        <activity
+            android:name=".dongdong.HuodongDetail"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.LishiDetail"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.HuodongDiqu"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
@@ -146,10 +186,18 @@
             android:name="UMENG_APPKEY"
             android:value="57d2202967e58e6b740005ef" />
 
-        <activity android:name=".dongdong.HuodongRoute" />
-        <activity android:name=".dongdong.CitySelectScrollView" />
-        <activity android:name=".dongdong.CantingDetail" />
-        <activity android:name=".dongdong.CantingRoute" />
+        <activity
+            android:name=".dongdong.HuodongRoute"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.CitySelectScrollView"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.CantingDetail"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.CantingRoute"
+            android:screenOrientation="portrait" />
 
         <!-- QQ分享 -->
         <activity
@@ -200,57 +248,149 @@
         <activity
             android:name=".dongdong.AWord"
             android:screenOrientation="landscape" />
-        <activity android:name=".dongdong.AWord2" />
-        <activity android:name=".dongdong.Trip" />
-        <activity android:name=".dongdong.CaipuDetail" />
-        <activity android:name=".dongdong.JKyuansu" />
-        <activity android:name=".dongdong.JKYuansuDetail" />
-        <activity android:name=".dongdong.JKsheru" />
-        <activity android:name=".dongdong.JKsheruResult" />
-        <activity android:name=".dongdong.JKshuguo" />
-        <activity android:name=".dongdong.JKshuguoDetial" />
-        <activity android:name=".dongdong.JKshuguoPH" />
-        <activity android:name=".dongdong.JKPaihangDetial" />
-        <activity android:name=".dongdong.JKtiaozhan" />
-        <activity android:name=".dongdong.TieziDetial" />
-        <activity android:name=".login.Login" />
-        <activity android:name=".login.Zhuce" />
-        <activity android:name=".login.Xiugai" />
-        <activity android:name=".login.Xieyi" />
-        <activity android:name=".mine.MyEdit" />
-        <activity android:name=".mine.UpdateName" />
-        <activity android:name=".mine.UpdateIntro" />
-        <activity android:name=".mine.UpdateArea" />
-        <activity android:name=".mine.UpdateAreaCity" />
-        <activity android:name=".mine.UpdatePwd" />
-        <activity android:name=".mine.MyFabu" />
-        <activity android:name=".mine.MyDianping" />
-        <activity android:name=".dongdong.Tiezi2Detial" />
-        <activity android:name=".mine.MyCollect" />
-        <activity android:name=".mine.MyFankui" />
-        <activity android:name=".mine.MyCode" />
-        <activity android:name=".mine.MySetting" />
-        <activity android:name=".fankui.Fankui" />
-        <activity android:name=".fankui.Thanks" />
-        <activity android:name=".mine.JifenRank" />
-        <activity android:name=".mine.UpdatePhone" />
-        <activity android:name=".fabu.FabuCP" />
-        <activity android:name=".fabu.FabuFD" />
-        <activity android:name=".fabu.FabuTZ" />
+        <activity
+            android:name=".dongdong.AWord2"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.Trip"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.CaipuDetail"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.JKyuansu"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.JKYuansuDetail"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.JKsheru"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.JKsheruResult"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.JKshuguo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.JKshuguoDetial"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.JKshuguoPH"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.JKPaihangDetial"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.JKtiaozhan"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.TieziDetial"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".login.Login"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".login.Zhuce"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".login.Xiugai"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".login.Xieyi"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.MyEdit"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.UpdateName"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.UpdateIntro"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.UpdateArea"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.UpdateAreaCity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.UpdatePwd"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.MyFabu"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.MyDianping"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.Tiezi2Detial"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.MyCollect"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.MyFankui"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.MyCode"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.MySetting"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fankui.Fankui"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fankui.Thanks"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.JifenRank"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.UpdatePhone"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fabu.FabuCP"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fabu.FabuFD"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fabu.FabuTZ"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".dongdong.Comment"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".dongdong.Comment2"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".mine.UserDetial" />
-        <activity android:name=".dongdong.MyCalender" />
-        <activity android:name=".dongdong.JKquestion" />
-        <activity android:name=".dongdong.HuodongWeb" />
-        <activity android:name=".dongdong.CantingJiucuo" />
-        <activity android:name=".dongdong.JKsearch" />
-        <activity android:name=".CaptureActivity" />
-        <activity android:name=".mine.MyDuihuan" />
+        <activity
+            android:name=".mine.UserDetial"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.MyCalender"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.JKquestion"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.HuodongWeb"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.CantingJiucuo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.JKsearch"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CaptureActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.MyDuihuan"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.zfdang.multiple_images_selector.ImagesSelectorActivity"
             android:configChanges="orientation|screenSize" />
@@ -319,27 +459,59 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".dongdong.JKlingshi" />
-        <activity android:name=".dongdong.JKlsdetial" />
-        <activity android:name=".mine.Aerweima" />
-        <activity android:name=".dongdong.JKfujin" />
-        <activity android:name=".FirstActivity" />
-        <activity android:name=".UserCenter" />
+        <activity
+            android:name=".dongdong.JKlingshi"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.JKlsdetial"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.Aerweima"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.JKfujin"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".FirstActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".UserCenter"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".dongdong.MapSearch"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysVisible" />
-        <activity android:name=".dongdong.Jiudian" />
-        <activity android:name=".fabu.FabuShHd" />
-        <activity android:name=".dongdong.Wenda" />
-        <activity android:name=".mine.MyAdmin" />
+        <activity
+            android:name=".dongdong.Jiudian"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fabu.FabuShHd"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.Wenda"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mine.MyAdmin"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".dongdong.Tiezi3Detial"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".fabu.FabuShUpdate" />
-        <activity android:name=".SellerCenter" />
-        <activity android:name=".fabu.FabuCaipuUpdate" />
-        <activity android:name=".fabu.FabuHD" />
-        <activity android:name=".fabu.FabuHDUpdate"></activity>
+        <activity
+            android:name=".fabu.FabuShUpdate"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SellerCenter"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fabu.FabuCaipuUpdate"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fabu.FabuHD"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fabu.FabuHDUpdate"
+            android:screenOrientation="portrait" />
 
         <!-- 您从百度网站获取的APP KEY -->
         <meta-data
@@ -349,7 +521,7 @@
         <!-- 渠道商编号 -->
         <meta-data
             android:name="BaiduMobAd_CHANNEL"
-            android:value="Baidu Market" />
+            android:value="isuhuo" />
 
         <!-- 是否开启错误日志统计，默认为false -->
         <meta-data
@@ -378,7 +550,170 @@
             android:name="BaiduMobAd_WIFI_LOCATION"
             android:value="true" />
 
-        <activity android:name=".fabu.FabuFDWhere"></activity>
+        <activity android:name=".fabu.FabuFDWhere" />
+
+        <service
+            android:name="cn.jpush.android.service.PushService"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.REGISTER" />
+                <action android:name="cn.jpush.android.intent.REPORT" />
+                <action android:name="cn.jpush.android.intent.PushService" />
+                <action android:name="cn.jpush.android.intent.PUSH_TIME" />
+            </intent-filter>
+        </service>
+        <service
+            android:name="cn.jpush.android.service.DaemonService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="cn.jpush.android.intent.DaemonService" />
+
+                <category android:name="com.example.administrator.vegetarians824" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name="cn.jpush.android.service.PushReceiver"
+            android:enabled="true">
+            <intent-filter android:priority="1000">
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED_PROXY" />
+
+                <category android:name="com.example.administrator.vegetarians824" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+            <!-- Optional -->
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <action android:name="android.intent.action.PACKAGE_REMOVED" />
+
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+        <!-- Required SDK核心功能 -->
+        <activity
+            android:name="cn.jpush.android.ui.PushActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="false"
+            android:theme="@android:style/Theme.NoTitleBar">
+            <intent-filter>
+                <action android:name="cn.jpush.android.ui.PushActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="com.example.administrator.vegetarians824" />
+            </intent-filter>
+        </activity>
+        <!-- SDK核心功能 -->
+        <activity
+            android:name="cn.jpush.android.ui.PopWinActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:exported="false"
+            android:theme="@style/MyDialogStyle">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="com.example.administrator.vegetarians824" />
+            </intent-filter>
+        </activity>
+        <!-- Required SDK核心功能 -->
+        <service
+            android:name="cn.jpush.android.service.DownloadService"
+            android:enabled="true"
+            android:exported="false" />
+        <!-- Required SDK核心功能 -->
+        <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
+        <receiver
+            android:name=".MyReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+
+                <!-- Required 用户注册SDK的intent -->
+                <action android:name="cn.jpush.android.intent.REGISTRATION" />
+                <!-- Required 用户接收SDK消息的intent -->
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" />
+                <!-- Required 用户接收SDK通知栏信息的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" />
+                <!-- Required 用户打开自定义通知栏的intent -->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" />
+                <!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <action android:name="cn.jpush.android.intent.CONNECTION" />
+
+                <category android:name="com.example.administrator.vegetarians824" />
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="JPUSH_CHANNEL"
+            android:value="developer-default" />
+        <!-- Required. AppKey copied from Portal -->
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="95ef1894483dd72cab669833" />
+
+        <activity
+            android:name=".dongdong.JKshuguoDetialMore"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".dongdong.WendaSearch"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".HomePage"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MapActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".search.SearchRestaurant"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".article.ArticleList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".article.ArticleDetial"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".veganpass.WelcomePage"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".veganpass.FeedBack"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".veganpass.VPHomePage"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".veganpass.FavourList"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".veganpass.EditFavour"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".article.ArticleSearch"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".fabu.FabuShangHu"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".video.VideoList"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".video.VideoDetail"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+        <activity
+            android:name=".video.VideoDownload"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".video.VideoSearch"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".video.VideoDownloading"
+            android:screenOrientation="portrait" />
+        <activity android:name=".video.CaipuGet" />
+        <activity android:name=".mine.MyCollect2" />
+        <activity android:name=".dongdong.CantingDetail2"></activity>
     </application>
 
 </manifest>

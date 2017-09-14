@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.adapter.SubjectFragmentAdapter;
 import com.example.administrator.vegetarians824.fragment.SubjectFragment;
@@ -61,5 +62,16 @@ public class MyFabu extends AppCompatActivity {
         }
         adapter = new SubjectFragmentAdapter(getSupportFragmentManager(),list_fragemrnt,list_title);
         viewPager.setAdapter(adapter);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

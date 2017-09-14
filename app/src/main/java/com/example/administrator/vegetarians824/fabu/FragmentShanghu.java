@@ -1,6 +1,8 @@
 package com.example.administrator.vegetarians824.fabu;
 
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -20,26 +22,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.mannager.URLMannager;
+import com.example.administrator.vegetarians824.myView.LoadingDialog;
 import com.example.administrator.vegetarians824.myapplications.BaseApplication;
 import com.example.administrator.vegetarians824.util.PhoneFormatCheckUtils;
 import com.example.administrator.vegetarians824.util.UpLoadUtil;
 import com.zfdang.multiple_images_selector.ImagesSelectorActivity;
 import com.zfdang.multiple_images_selector.SelectorSettings;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,14 +68,21 @@ public class FragmentShanghu extends Fragment {
     private HashMap<String, Object> map;
     private List<String> filePath;
     private SimpleAdapter simpleAdapter;     //适配器
-    TextView tv;
-    FrameLayout fm;
-    EditText et1,et2,et3,et4;
-    String title,content,tel,longitude,latitude,uid,address;
-    Button button;
-
+    private TextView tv;
+    private FrameLayout fm;
+    private EditText et1,et2,et3,et4;
+    private String title,content,tel,longitude,latitude,uid,address;
+    private Button button;
+    private RadioGroup group1,group2;
     private static final int REQUEST_CODE = 732;
     private ArrayList<String> mResults = new ArrayList<>();
+    private int type=0,park=0;
+    private TextView time1,time2;
+    private String start="",end="";
+    private int hour;
+    private int minute;
+    private Calendar calendar;
+    private LoadingDialog loadingDialog;
     public FragmentShanghu() {
         // Required empty public constructor
     }
@@ -74,6 +92,8 @@ public class FragmentShanghu extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v=inflater.inflate(R.layout.fragment_fragment_shanghu, container, false);
+        loadingDialog=new LoadingDialog(getActivity());
+        loadingDialog.setMessage("正在上传");
         et1=(EditText)v.findViewById(R.id.fabu01_et1);
         et2=(EditText)v.findViewById(R.id.fabu01_et2);
         et3=(EditText)v.findViewById(R.id.fabu01_et3);
@@ -83,6 +103,13 @@ public class FragmentShanghu extends Fragment {
         button=(Button) v.findViewById(R.id.fabu01_bt);
         gridView1 = (GridView) v.findViewById(R.id.gridView1);
         imageItem = new ArrayList<HashMap<String, Object>>();
+        group1=(RadioGroup)v.findViewById(R.id.fabu01_group1);
+        group2=(RadioGroup)v.findViewById(R.id.fabu01_group2);
+        time1=(TextView)v.findViewById(R.id.fabu01_time1);
+        time2=(TextView)v.findViewById(R.id.fabu01_time2);
+        calendar = Calendar.getInstance();
+        hour=calendar.get(Calendar.HOUR_OF_DAY);
+        minute=calendar.get(Calendar.MINUTE);
         initop();
         setpic();
         sendPost();
@@ -92,6 +119,46 @@ public class FragmentShanghu extends Fragment {
     public void initop(){
         if(BaseApplication.app.getMyLociation()!=null)
             et2.setText(BaseApplication.app.getMyLociation().getMyaddress());
+        group1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                Log.d("========sel1",checkedId+"");
+                type=checkedId;
+            }
+        });
+        group2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                Log.d("========sel2",checkedId+"");
+                park=checkedId;
+            }
+        });
+        time1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerDialog timePicker=new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                        time1.setText(i+":"+i1);
+                        start=i+":"+i1;
+                    }
+                },hour, minute, true);
+                timePicker.show();
+            }
+        });
+        time2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TimePickerDialog timePicker=new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                        time2.setText(i+":"+i1);
+                        end=i+":"+i1;
+                    }
+                },hour, minute, true);
+                timePicker.show();
+            }
+        });
     }
 
     public void setpic(){
@@ -248,7 +315,7 @@ public class FragmentShanghu extends Fragment {
             pathImage = null;
 
         }
-
+        StatService.onResume(this);
     }
 
     protected void dialog(final int position) {
@@ -300,6 +367,7 @@ public class FragmentShanghu extends Fragment {
                         if(content.length()<10){
                             Toast.makeText(getContext(),"点评至少输入10个字",Toast.LENGTH_SHORT).show();
                         }else {
+                            loadingDialog.show();
                             new picdoPost().execute(URLMannager.FabuSHPost);
                         }
                     }
@@ -322,6 +390,15 @@ public class FragmentShanghu extends Fragment {
             params.put("latitude",latitude);
             params.put("uid",uid);
             params.put("address",address);
+            if(type!=0){
+                params.put("food_type",type+"");
+            }
+            if(park!=0){
+                params.put("parking_status",(park-3)+"");
+            }
+            if(!start.equals("")&&!end.equals("")){
+                params.put("open_times",start+"~"+end);
+            }
             final Map<String, File> files = new HashMap<String, File>();
 
             for(int i=0;i<mResults.size();i++){
@@ -346,8 +423,26 @@ public class FragmentShanghu extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Toast.makeText(getContext(),"发布成功，等待审核",Toast.LENGTH_SHORT).show();
-            getActivity().finish();
+            try {
+                JSONObject js1=new JSONObject(s);
+                if(js1.getString("Code").equals("1")){
+                    loadingDialog.dismiss();
+                    Toast.makeText(getContext(),"发布成功，等待审核",Toast.LENGTH_SHORT).show();
+                    getActivity().finish();
+                }else {
+                    loadingDialog.dismiss();
+                    Toast.makeText(getContext(),js1.getString("Message"),Toast.LENGTH_SHORT).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

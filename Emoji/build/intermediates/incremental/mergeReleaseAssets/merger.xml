@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="F:\project2.1\MyApplication\Emoji\src\main\assets"/><source path="F:\project2.1\MyApplication\Emoji\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="F:\project2.1\MyApplication\Emoji\src\release\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/Users/scorpion/Documents/project2.5/MyApplication/Emoji/src/main/assets"/><source path="/Users/scorpion/Documents/project2.5/MyApplication/Emoji/build/generated/assets/shaders/release"/></dataSet><dataSet config="release"><source path="/Users/scorpion/Documents/project2.5/MyApplication/Emoji/src/release/assets"/></dataSet></merger>

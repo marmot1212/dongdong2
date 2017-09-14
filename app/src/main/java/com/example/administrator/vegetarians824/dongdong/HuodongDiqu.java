@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.adapter.MyListAdapter;
 import com.example.administrator.vegetarians824.adapter.VPAdapter;
@@ -204,5 +205,16 @@ public class HuodongDiqu extends AppCompatActivity {
         }
         listView.addHeaderView(headview);
         listView.setAdapter(new MyListAdapter(started_list,HuodongDiqu.this));
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

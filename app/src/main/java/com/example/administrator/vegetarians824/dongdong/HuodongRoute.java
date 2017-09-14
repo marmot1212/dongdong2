@@ -28,6 +28,7 @@ import com.amap.api.services.route.DrivePath;
 import com.amap.api.services.route.DriveRouteResult;
 import com.amap.api.services.route.RouteSearch;
 import com.amap.api.services.route.WalkRouteResult;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.entry.MyLociation;
 import com.example.administrator.vegetarians824.myapplications.BaseApplication;
@@ -139,7 +140,7 @@ public class HuodongRoute extends AppCompatActivity{
         //在activity执行onResume时执行mMapView.onResume ()，实现地图生命周期管理
         mMapView.onResume();
 
-
+        StatService.onResume(this);
 
     }
     @Override
@@ -147,7 +148,7 @@ public class HuodongRoute extends AppCompatActivity{
         super.onPause();
         //在activity执行onPause时执行mMapView.onPause ()，实现地图生命周期管理
         mMapView.onPause();
-
+        StatService.onPause(this);
     }
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -156,6 +157,7 @@ public class HuodongRoute extends AppCompatActivity{
         mMapView.onSaveInstanceState(outState);
 
     }
+
 
 
 

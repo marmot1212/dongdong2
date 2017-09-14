@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -30,6 +31,7 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.entry.Tiezi;
 import com.example.administrator.vegetarians824.fabu.FabuTZ;
@@ -77,13 +79,13 @@ public class Wenda extends AppCompatActivity {
         setContentView(R.layout.activity_wenda);
         StatusBarUtil.setColorDiff(this,0xff00aff0);
         date=new Date();
-        count=1;
+        //count=1;
         isup=false;
         prl=(PullToRefreshListView)findViewById(R.id.wenda_prl);
         listView=(ListView)findViewById(R.id.wenda_list);
-        list=new ArrayList<>();
+        //list=new ArrayList<>();
         searchlist=new ArrayList<>();
-        et=(EditText)findViewById(R.id.wenda_et);
+        et=(EditText) findViewById(R.id.wenda_et);
         initop();
         //initPRL();
     }
@@ -126,7 +128,7 @@ public class Wenda extends AppCompatActivity {
                 }else {
                     listView.setVisibility(View.VISIBLE);
                     try {
-                        httpRequest(URLMannager.FaXian2+"p/1/t/100/keyword/"+ URLEncoder.encode(editable.toString(),"utf-8"));
+                        httpRequest(URLMannager.FaXian2+"p/1/t/1000/keyword/"+ URLEncoder.encode(editable.toString(),"utf-8"));
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
@@ -219,21 +221,25 @@ public class Wenda extends AppCompatActivity {
     }
 
     public void getData(String s){
+        if(prl.getRefreshableView().getFooterViewsCount()>0){
+            prl.getRefreshableView().removeFooterView(tvfoot);
+        }
         StringRequest request=new StringRequest(s, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
                 myJson(s);
                 adapter= new WDAdapter(list,getBaseContext());
                 prl.setAdapter(adapter);
-                if(list.size()>0&&prl.getRefreshableView().getFooterViewsCount()==0){
+                if(totalpage==count){
                     tvfoot=new TextView(getBaseContext());
                     tvfoot.setText("已经全部加载完毕");
                     tvfoot.setTextSize(12);
                     tvfoot.setTextColor(0xffa0a0a0);
-                    ViewGroup.LayoutParams params=new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,100);
+                    AbsListView.LayoutParams params=new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,100);
                     tvfoot.setLayoutParams(params);
                     tvfoot.setGravity(Gravity.CENTER);
                     prl.getRefreshableView().addFooterView(tvfoot);
+                    prl.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
                 }
                 if(isup){
                     prl.getRefreshableView().setSelection(count*10-11);
@@ -256,10 +262,7 @@ public class Wenda extends AppCompatActivity {
             JSONObject js1=new JSONObject(s);
             JSONObject js2=js1.getJSONObject("Result");
             String st=js2.getString("totalpage");
-            totalpage=Integer.valueOf(st).intValue();
-            if(totalpage==1){
-                prl.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
-            }
+            totalpage=Integer.valueOf(st);
             JSONArray ja=js2.getJSONArray("list");
             for(int i=0;i<ja.length();i++){
                 JSONObject jo=ja.getJSONObject(i);
@@ -397,61 +400,6 @@ public class Wenda extends AppCompatActivity {
         }
     }
 
-    public void httpRequest(String url){
-        if(listView.getFooterViewsCount()>0)
-            listView.removeFooterView(tvf);
-        StringRequest request=new StringRequest(url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                searchlist=new ArrayList<>();
-                try {
-                    JSONObject js1=new JSONObject(s);
-                    JSONObject js2=js1.getJSONObject("Result");
-                    JSONArray ja=js2.getJSONArray("list");
-                    for(int i=0;i<ja.length();i++){
-                        JSONObject jo=ja.getJSONObject(i);
-                        Tiezi tz=new Tiezi();
-                        tz.setId(jo.getString("id"));
-                        tz.setTitle(jo.getString("title"));
-                        tz.setContent(jo.getString("content"));
-                        tz.setCreate_time_text(jo.getString("create_time_text"));
-                        if(!jo.isNull("img_url_1"))
-                            tz.setIma1(jo.getString("img_url_1"));
-                        if(!jo.isNull("img_url_2"))
-                            tz.setIma2(jo.getString("img_url_2"));
-                        if(!jo.isNull("img_url_3"))
-                            tz.setIma3(jo.getString("img_url_3"));
-                        if(!jo.isNull("img_url_4"))
-                            tz.setIma4(jo.getString("img_url_4"));
-                        if(!jo.isNull("img_url_5"))
-                            tz.setIma5(jo.getString("img_url_5"));
-                        if(!jo.isNull("img_url_6"))
-                            tz.setIma6(jo.getString("img_url_6"));
-                        searchlist.add(tz);
-                    }
-                    listView.setAdapter(new WDAdapter(searchlist,getBaseContext()));
-                    if(searchlist.size()>0){
-                         tvf=new TextView(getBaseContext());
-                        tvf.setText("已经全部加载完毕");
-                        tvf.setTextSize(12);
-                        tvf.setTextColor(0xffa0a0a0);
-                        ViewGroup.LayoutParams params=new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,100);
-                        tvf.setLayoutParams(params);
-                        tvf.setGravity(Gravity.CENTER);
-                        listView.addFooterView(tvf);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-
-            }
-        });
-        SlingleVolleyRequestQueue.getInstance(getBaseContext()).addToRequestQueue(request);
-    }
 
     @Override
     protected void onResume() {
@@ -463,8 +411,10 @@ public class Wenda extends AppCompatActivity {
         if(prl.getRefreshableView().getHeaderViewsCount()>0){
             prl.getRefreshableView().removeHeaderView(head);
         }
+        count=1;
         searchlist=new ArrayList<>();
         initPRL();
+        StatService.onResume(this);
     }
     //触摸退键盘
     @Override
@@ -504,5 +454,67 @@ public class Wenda extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
+    }
+    public void httpRequest(String url){
+        if(listView.getFooterViewsCount()>0)
+            listView.removeFooterView(tvf);
+        StringRequest request=new StringRequest(url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                searchlist=new ArrayList<>();
+                try {
+                    JSONObject js1=new JSONObject(s);
+                    JSONObject js2=js1.getJSONObject("Result");
+                    JSONArray ja=js2.getJSONArray("list");
+                    for(int i=0;i<ja.length();i++){
+                        JSONObject jo=ja.getJSONObject(i);
+                        Tiezi tz=new Tiezi();
+                        tz.setId(jo.getString("id"));
+                        tz.setTitle(jo.getString("title"));
+                        tz.setContent(jo.getString("content"));
+                        tz.setCreate_time_text(jo.getString("create_time_text"));
+                        if(!jo.isNull("img_url_1"))
+                            tz.setIma1(jo.getString("img_url_1"));
+                        if(!jo.isNull("img_url_2"))
+                            tz.setIma2(jo.getString("img_url_2"));
+                        if(!jo.isNull("img_url_3"))
+                            tz.setIma3(jo.getString("img_url_3"));
+                        if(!jo.isNull("img_url_4"))
+                            tz.setIma4(jo.getString("img_url_4"));
+                        if(!jo.isNull("img_url_5"))
+                            tz.setIma5(jo.getString("img_url_5"));
+                        if(!jo.isNull("img_url_6"))
+                            tz.setIma6(jo.getString("img_url_6"));
+                        searchlist.add(tz);
+                    }
+                    listView.setAdapter(new WDAdapter(searchlist,getBaseContext()));
+                    if(searchlist.size()>0){
+                        tvf=new TextView(getBaseContext());
+                        tvf.setText("已经全部加载完毕");
+                        tvf.setTextSize(12);
+                        tvf.setTextColor(0xffa0a0a0);
+                        AbsListView.LayoutParams params=new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,100);
+                        tvf.setLayoutParams(params);
+                        tvf.setGravity(Gravity.CENTER);
+                        listView.addFooterView(tvf);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        });
+        SlingleVolleyRequestQueue.getInstance(getBaseContext()).addToRequestQueue(request);
     }
 }

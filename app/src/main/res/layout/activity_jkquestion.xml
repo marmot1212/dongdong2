@@ -54,7 +54,7 @@
             />
         <ImageView
             android:id="@+id/question_pic"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"

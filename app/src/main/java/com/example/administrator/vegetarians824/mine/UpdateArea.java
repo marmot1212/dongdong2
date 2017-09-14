@@ -13,6 +13,7 @@ import android.widget.ListView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.myapplications.BaseApplication;
 import com.example.administrator.vegetarians824.util.SlingleVolleyRequestQueue;
@@ -110,6 +111,16 @@ public class UpdateArea extends AppCompatActivity {
         super.onRestart();
 
     }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
+    }
 
 }

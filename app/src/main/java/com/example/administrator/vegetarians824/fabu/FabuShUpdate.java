@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -33,16 +34,19 @@ import com.amap.api.services.geocoder.RegeocodeResult;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.dongdong.CitySelectScrollView;
 import com.example.administrator.vegetarians824.entry.BitmapUtils;
 import com.example.administrator.vegetarians824.mannager.URLMannager;
+import com.example.administrator.vegetarians824.myView.LoadingDialog;
 import com.example.administrator.vegetarians824.myapplications.BaseApplication;
 import com.example.administrator.vegetarians824.util.HttpUtil;
 import com.example.administrator.vegetarians824.util.PhoneFormatCheckUtils;
 import com.example.administrator.vegetarians824.util.SlingleVolleyRequestQueue;
 import com.example.administrator.vegetarians824.util.StatusBarUtil;
 import com.example.administrator.vegetarians824.util.UpLoadUtil;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.zfdang.multiple_images_selector.ImagesSelectorActivity;
 import com.zfdang.multiple_images_selector.SelectorSettings;
 
@@ -77,6 +81,7 @@ public class FabuShUpdate extends AppCompatActivity {
     private static final int REQUEST_CODE = 732;
     private static final int EDIT_CODE=101;
     private ArrayList<String> mResults = new ArrayList<>();
+    private LoadingDialog loadingDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,6 +159,7 @@ public class FabuShUpdate extends AppCompatActivity {
                     imageItem.add(map);
                     handler = new Mhander();
                     if(oldima.size()>0) {
+                        /*
                         new Thread() {
                             @Override
                             public void run() {
@@ -176,6 +182,11 @@ public class FabuShUpdate extends AppCompatActivity {
                                 handler.sendMessage(msg);// handle交给管理者处理
                             }
                         }.start();
+                        */
+                        new DataLoad().execute();
+                        //
+                         loadingDialog=new LoadingDialog(FabuShUpdate.this);
+                         loadingDialog.show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -247,7 +258,42 @@ public class FabuShUpdate extends AppCompatActivity {
                     }
                 });
             }
+
         }
+    }
+
+    public class DataLoad extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+                    for(int i=0;i<oldima.size();i++){
+                        Bitmap bm= null;
+                        Bitmap delbmp = BitmapFactory.decodeResource(getResources(), R.drawable.delete);
+                        try {
+                            bm = HttpUtil.getBitmap(URLMannager.Imag_URL+oldima.get(i));
+                            map = new HashMap<String, Object>();
+                            map.put("itemImage",bm);
+                            map.put("del",delbmp);
+                            imageItem.add(map);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    Message msg = new Message();
+                    msg.what = 2;
+                    handler.sendMessage(msg);// handle交给管理者处理
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            loadingDialog.dismiss();
+        }
+
+
     }
 
     public void saveBitmapFile(Bitmap bitmap,String name){
@@ -315,6 +361,7 @@ public class FabuShUpdate extends AppCompatActivity {
 
 
         }
+        StatService.onResume(this);
     }
 
     protected void dialog(final int position) {
@@ -427,5 +474,12 @@ public class FabuShUpdate extends AppCompatActivity {
             super.onPostExecute(s);
             finish();
         }
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

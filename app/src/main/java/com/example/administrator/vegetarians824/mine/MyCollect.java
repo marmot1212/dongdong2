@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.dongdong.CaipuDetail;
 import com.example.administrator.vegetarians824.dongdong.CantingDetail;
@@ -55,7 +56,7 @@ public class MyCollect extends AppCompatActivity {
     View popView;
     PopupWindow popWindow;
     private Date date;
-
+    TextView tv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +66,7 @@ public class MyCollect extends AppCompatActivity {
         etime=new Long("0").longValue();
         prl=(PullToRefreshListView) findViewById(R.id.subfrag_list2);
        // list=new ArrayList<>();
-        p=1;
+
         date=new Date();
         isup=false;
         initop();
@@ -149,7 +150,7 @@ public class MyCollect extends AppCompatActivity {
                     adapter=new FabuInfoAdapter(list,getBaseContext());
                     prl.setAdapter(adapter);
                     if(list.size()>0){
-                        TextView tv=new TextView(getBaseContext());
+                        tv=new TextView(getBaseContext());
                         tv.setText("已经全部加载完毕");
                         tv.setTextSize(12);
                         tv.setTextColor(0xffa0a0a0);
@@ -209,6 +210,7 @@ public class MyCollect extends AppCompatActivity {
             TextView tv2=(TextView) view.findViewById(R.id.my_fabu_time);
             tv1.setText(mydate.get(i).getTitle());
             tv2.setText(mydate.get(i).getCreate_time());
+
             final int x=i;
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -305,8 +307,7 @@ public class MyCollect extends AppCompatActivity {
         });
     }
 
-    public void backgroundAlpha(float bgAlpha)
-    {
+    public void backgroundAlpha(float bgAlpha) {
         WindowManager.LayoutParams lp = getWindow().getAttributes();
         lp.alpha = bgAlpha; //0.0-1.0
         getWindow().setAttributes(lp);
@@ -328,7 +329,7 @@ public class MyCollect extends AppCompatActivity {
         spr.putValue("uid",BaseApplication.app.getUser().getId());
         spr.putValue("list_id",info.getList_id());
         spr.putValue("type","3");
-        spr.putValue("type_mess_id","3");
+        spr.putValue("type_mess_id",info.getType_mess_id());
         SlingleVolleyRequestQueue.getInstance(getBaseContext()).addToRequestQueue(spr);
     }
 
@@ -336,6 +337,17 @@ public class MyCollect extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         list=new ArrayList<>();
+        p=1;
+        if(prl.getRefreshableView().getFooterViewsCount()>0){
+            prl.getRefreshableView().removeFooterView(tv);
+        }
         initprl();
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

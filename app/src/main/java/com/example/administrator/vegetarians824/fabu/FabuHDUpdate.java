@@ -19,8 +19,10 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.entry.FabuInfo2;
+import com.example.administrator.vegetarians824.mannager.URLMannager;
 import com.example.administrator.vegetarians824.myapplications.BaseApplication;
 import com.example.administrator.vegetarians824.util.SlingleVolleyRequestQueue;
 import com.example.administrator.vegetarians824.util.StatusBarUtil;
@@ -127,7 +129,7 @@ public class FabuHDUpdate extends AppCompatActivity {
     public void getData(){
         map=new HashMap();
         arr=new ArrayList<>();
-        StringPostRequest spr=new StringPostRequest("https://www.isuhuo.com/plainLiving/Androidapi/userCenter/mysharetenans_list", new Response.Listener<String>() {
+        StringPostRequest spr=new StringPostRequest(URLMannager.Mysharetenans, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
                 try {
@@ -187,7 +189,7 @@ public class FabuHDUpdate extends AppCompatActivity {
     }
 
     public void admit(){
-        StringPostRequest spr=new StringPostRequest("https://www.isuhuo.com/plainLiving/Androidapi/addapi/edit_restaurantPackages", new Response.Listener<String>() {
+        StringPostRequest spr=new StringPostRequest(URLMannager.EditrestaurantPackages, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
                 Log.d("==============d",s);
@@ -207,7 +209,7 @@ public class FabuHDUpdate extends AppCompatActivity {
     }
 
     public void delPost(){
-        StringPostRequest spr=new StringPostRequest("https://www.isuhuo.com/plainLiving/Androidapi/userCenter/del_tenans", new Response.Listener<String>() {
+        StringPostRequest spr=new StringPostRequest(URLMannager.Deltenans, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
                 finish();
@@ -222,5 +224,16 @@ public class FabuHDUpdate extends AppCompatActivity {
         spr.putValue("mess_id",fbinfo.getId());
         spr.putValue("type","3");
         SlingleVolleyRequestQueue.getInstance(FabuHDUpdate.this).addToRequestQueue(spr);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

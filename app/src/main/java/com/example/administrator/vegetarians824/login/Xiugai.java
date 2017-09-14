@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.entry.User;
 import com.example.administrator.vegetarians824.myapplications.BaseApplication;
@@ -110,7 +111,7 @@ public class Xiugai extends AppCompatActivity {
         });
     }
     public void sendRequest(){
-        StringPostRequest spr=new StringPostRequest("https://www.isuhuo.com/plainLiving/androidapi/send/send", new Response.Listener<String>() {
+        StringPostRequest spr=new StringPostRequest("http://www.isuhuo.com/plainLiving/androidapi/send/send", new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
                 try {
@@ -140,14 +141,14 @@ public class Xiugai extends AppCompatActivity {
     }
     
     public void doPosts(){
-        StringPostRequest spr=new StringPostRequest("https://www.isuhuo.com/plainLiving/Androidapi/user/find_pass", new Response.Listener<String>() {
+        StringPostRequest spr=new StringPostRequest("http://www.isuhuo.com/plainLiving/Androidapi/user/find_pass", new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
                 try {
                     JSONObject js=new JSONObject(s);
                     Toast.makeText(getBaseContext(),js.getString("Message"),Toast.LENGTH_SHORT).show();
                     BaseApplication.app.getUser().setPwd(pwd.getText().toString());
-                    SharedPreferences preferences=Xiugai.this.getSharedPreferences("shared",Context.MODE_WORLD_READABLE|Context.MODE_WORLD_WRITEABLE);
+                    SharedPreferences preferences=Xiugai.this.getSharedPreferences("shared",Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor=preferences.edit();
                     editor.putString("password",pwd.getText().toString());
                     editor.commit();//提交数据
@@ -197,5 +198,16 @@ public class Xiugai extends AppCompatActivity {
             send.setText(s);
             send.setBackgroundResource(R.drawable.button_bg);
         }
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

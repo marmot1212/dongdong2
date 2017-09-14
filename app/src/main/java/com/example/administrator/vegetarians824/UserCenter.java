@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.dongdong.MyCalender;
 import com.example.administrator.vegetarians824.entry.User;
 import com.example.administrator.vegetarians824.login.Login;
@@ -28,6 +29,7 @@ import com.example.administrator.vegetarians824.mine.JifenRank;
 import com.example.administrator.vegetarians824.mine.MyAdmin;
 import com.example.administrator.vegetarians824.mine.MyCode;
 import com.example.administrator.vegetarians824.mine.MyCollect;
+import com.example.administrator.vegetarians824.mine.MyCollect2;
 import com.example.administrator.vegetarians824.mine.MyDianping;
 import com.example.administrator.vegetarians824.mine.MyDuihuan;
 import com.example.administrator.vegetarians824.mine.MyEdit;
@@ -145,7 +147,7 @@ public class UserCenter extends AppCompatActivity {
         //积分
         if(user.islogin()) {
             TextView jifen = (TextView) findViewById(R.id.my_jifen);
-            jifen.setText(user.getJifen());
+            jifen.setText(Float.valueOf(user.getJifen())+"");
             View jindu = findViewById(R.id.my_jindu);
             LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, Float.valueOf(user.getJifen()));
             jindu.setLayoutParams(param);
@@ -203,7 +205,7 @@ public class UserCenter extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(user.islogin()) {
-                    Intent intent = new Intent(getBaseContext(), MyCollect.class);
+                    Intent intent = new Intent(getBaseContext(), MyCollect2.class);
                     UserCenter.this.startActivity(intent);
                 }
                 else {
@@ -260,7 +262,7 @@ public class UserCenter extends AppCompatActivity {
             }
         });
 
-
+        StatService.onResume(this);
     }
     public void getPicPop(Drawable drawable,View view){
         View popView = LayoutInflater.from(getBaseContext()).inflate(R.layout.image_pop,null);
@@ -353,7 +355,9 @@ public class UserCenter extends AppCompatActivity {
                     JSONObject js1=new JSONObject(s);
                     JSONObject js2=js1.getJSONObject("Result");
                     final String url=js2.getString("exchangelink");
-                    maxbackid=js2.getString("maxbackid");
+                    if(js2.has("maxbackid")){
+                        maxbackid=js2.getString("maxbackid");
+                    }
                     TextView duihuan=(TextView) findViewById(R.id.my_duihuan);
                     duihuan.setVisibility(View.VISIBLE);
                     duihuan.setOnClickListener(new View.OnClickListener() {
@@ -403,4 +407,10 @@ public class UserCenter extends AppCompatActivity {
         SlingleVolleyRequestQueue.getInstance(getBaseContext()).addToRequestQueue(spr);
     }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
+    }
 }

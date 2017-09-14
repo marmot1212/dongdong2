@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.ColorDrawable;
@@ -13,6 +14,7 @@ import android.hardware.Camera;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -26,14 +28,17 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.UserCenter;
 import com.example.administrator.vegetarians824.entry.User;
 import com.example.administrator.vegetarians824.mannager.URLMannager;
 import com.example.administrator.vegetarians824.myapplications.BaseApplication;
+import com.example.administrator.vegetarians824.util.CheckPermission;
 import com.example.administrator.vegetarians824.util.FileUitlity;
 import com.example.administrator.vegetarians824.util.ImageLoaderUtils;
 import com.example.administrator.vegetarians824.util.SlingleVolleyRequestQueue;
@@ -52,6 +57,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import cn.jpush.android.api.JPushInterface;
 
 public class MyEdit extends AppCompatActivity {
     User user;
@@ -73,7 +80,6 @@ public class MyEdit extends AppCompatActivity {
         StatusBarUtil.setColorDiff(this,0xff00aff0);
         initoperate();
         pic = (ImageView) findViewById(R.id.my_edit_pic);
-
         user= BaseApplication.app.getUser();
         if(!user.getPic().equals("")) {
             com.nostra13.universalimageloader.core.ImageLoader loader = ImageLoaderUtils.getInstance(getBaseContext());
@@ -146,6 +152,7 @@ public class MyEdit extends AppCompatActivity {
         super.onResume();
         initView();
         updataUser();
+        StatService.onResume(this);
     }
     public void updataUser(){
         RelativeLayout et2=(RelativeLayout)findViewById(R.id.edit02);
@@ -259,7 +266,10 @@ public class MyEdit extends AppCompatActivity {
         pop_phone_photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                phone_photo();
+
+                if(CheckPermission.requestReadStorageRuntimePermission(MyEdit.this)) {
+                    phone_photo();
+                }
                 //pic.setImageBitmap(mybit);
             }
         });
@@ -395,11 +405,11 @@ public class MyEdit extends AppCompatActivity {
                             null,
                             null);
             String capturePaths="";
-           if(cursor!=null) {
-               cursor.moveToFirst();
-               capturePaths = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-               cursor.close();
-           }
+            if(cursor!=null) {
+                cursor.moveToFirst();
+                capturePaths = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+                cursor.close();
+            }
             startPhoneZoom(Uri.fromFile(new File(capturePaths)));
         }
         //裁剪返回位图
@@ -453,21 +463,63 @@ public class MyEdit extends AppCompatActivity {
                     @SuppressLint("CommitPrefEdits")
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        releasePhone();
                         BaseApplication.app.getUser().initUser();
                         SharedPreferences preferences=MyEdit.this.getSharedPreferences("shared", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor=preferences.edit();
                         editor.putBoolean("islog",false);
                         editor.commit();
                         finish();
-                        UserCenter.instance.finish();
+                       // UserCenter.instance.finish();
                     }
                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
             // TODO 取消按钮
             @Override
             public void onClick(DialogInterface dialog, int which) {
-               dialog.dismiss();
+                dialog.dismiss();
             }
         });
         builder.show();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
+    }
+
+    public void releasePhone(){
+        StringPostRequest spr=new StringPostRequest(URLMannager.ReleasePhone, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+
+            }
+        });
+        spr.putValue("phoneid", JPushInterface.getRegistrationID(getApplicationContext()));
+        if(BaseApplication.app.getUser().getId()==null){
+            spr.putValue("uid","");
+        }else {
+            spr.putValue("uid", BaseApplication.app.getUser().getId());
+        }
+
+        SlingleVolleyRequestQueue.getInstance(getBaseContext()).addToRequestQueue(spr);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode==197){
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                phone_photo();
+            } else {
+                Toast.makeText(getBaseContext(), "权限错误", Toast.LENGTH_SHORT).show();
+            }
+            return;
+        }
     }
 }

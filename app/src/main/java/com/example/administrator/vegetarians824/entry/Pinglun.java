@@ -16,6 +16,25 @@ public class Pinglun {
 	public String img_url_03;
 	public String img_url_04;
 	public String lv;
+	public String zancount;
+	public boolean zanstatus;
+
+
+	public boolean isZanstatus() {
+		return zanstatus;
+	}
+
+	public void setZanstatus(boolean zanstatus) {
+		this.zanstatus = zanstatus;
+	}
+
+	public String getZancount() {
+		return zancount;
+	}
+
+	public void setZancount(String zancount) {
+		this.zancount = zancount;
+	}
 
 	public String getLv() {
 		return lv;

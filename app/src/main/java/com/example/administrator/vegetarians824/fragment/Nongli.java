@@ -1,6 +1,7 @@
 package com.example.administrator.vegetarians824.fragment;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -12,10 +13,12 @@ import android.view.ViewGroup;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.calendardata.CalendarAdapter;
 import com.example.administrator.vegetarians824.calendardata.CheckFestival;
 import com.example.administrator.vegetarians824.calendardata.SpecialCalendar;
+import com.example.administrator.vegetarians824.dongdong.MyCalender;
 import com.example.administrator.vegetarians824.login.Login;
 import com.example.administrator.vegetarians824.myapplications.BaseApplication;
 import com.example.administrator.vegetarians824.util.SlingleVolleyRequestQueue;
@@ -58,7 +61,6 @@ public class Nongli extends Fragment implements View.OnClickListener{
     private int year_c = 0;
     private int month_c = 0;
     private int day_c = 0;
-    private String currentDate = "";
     /** 每次添加gridview到viewflipper中时给的标记 */
     private int gvFlag = 0;
     /** 当前的年月，现在日历顶端 */
@@ -75,8 +77,8 @@ public class Nongli extends Fragment implements View.OnClickListener{
     private static int acolor=0;
     private static Drawable bgdraw=null;
     PopupWindow popWindow;
+    private String currentDate = "";
     public Nongli() {
-        // Required empty public constructor
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-M-d");
         currentDate = sdf.format(date); // 当期日期
@@ -97,7 +99,6 @@ public class Nongli extends Fragment implements View.OnClickListener{
         prevMonth = (ImageView) v.findViewById(R.id.prevMonth);
         nextMonth = (ImageView) v.findViewById(R.id.nextMonth);
         setListener();
-        gestureDetector = new GestureDetector(getContext(), new MyGestureListener());
         flipper = (ViewFlipper) v.findViewById(R.id.flipper);
         flipper.removeAllViews();
         addGridView();
@@ -110,22 +111,6 @@ public class Nongli extends Fragment implements View.OnClickListener{
         // Inflate the layout for this fragment
 
         return v;
-    }
-    private class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            int gvFlag = 0; // 每次添加gridview到viewflipper中时给的标记
-            if (e1.getX() - e2.getX() > 120) {
-                // 像左滑动
-                enterNextMonth(gvFlag);
-                return true;
-            } else if (e1.getX() - e2.getX() < -120) {
-                // 向右滑动
-                enterPrevMonth(gvFlag);
-                return true;
-            }
-            return false;
-        }
     }
 
     /**
@@ -180,7 +165,11 @@ public class Nongli extends Fragment implements View.OnClickListener{
         // view.setBackgroundDrawable(draw);
         textDate.append(calV.getShowYear()).append("年").append(calV.getShowMonth()).append("月").append("\t");
         view.setText(textDate);
+        //((MyCalender)getActivity()).setYear(Integer.valueOf(calV.getShowYear()));
+        //((MyCalender)getActivity()).setMonth(Integer.valueOf(calV.getShowMonth()));
     }
+
+
 
     private void addGridView() {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -203,14 +192,6 @@ public class Nongli extends Fragment implements View.OnClickListener{
         // 去除gridView边框
         gridView.setVerticalSpacing(1);
         gridView.setHorizontalSpacing(1);
-        gridView.setOnTouchListener(new View.OnTouchListener() {
-            // 将gridview中的触摸事件回传给gestureDetector
-
-            public boolean onTouch(View v, MotionEvent event) {
-                // TODO Auto-generated method stub
-                return Nongli.this.gestureDetector.onTouchEvent(event);
-            }
-        });
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -335,8 +316,12 @@ public class Nongli extends Fragment implements View.OnClickListener{
                 qiandao.setClickable(false);
                 qiandao.setBackgroundDrawable(getResources().getDrawable(R.drawable.button_bg2));
                 qiandao.setText("已签到");
-                schDateTagFlag[day_c+dayOfWeek-1]=true;
-                calV.notifyDataSetChanged();
+
+                if(jumpMonth==0&&jumpYear==0) {
+                    schDateTagFlag[day_c + dayOfWeek - 1] = true;
+                    calV.notifyDataSetChanged();
+                }
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -380,5 +365,17 @@ public class Nongli extends Fragment implements View.OnClickListener{
                 //    backgroundAlpha(1f);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

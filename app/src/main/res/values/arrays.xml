@@ -1,2 +1,545 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string-array name="letter">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+        <item>F</item>
+        <item>G</item>
+        <item>H</item>
+        <item>I</item>
+        <item>J</item>
+        <item>K</item>
+        <item>L</item>
+        <item>M</item>
+        <item>N</item>
+        <item>O</item>
+        <item>P</item>
+        <item>Q</item>
+        <item>R</item>
+        <item>S</item>
+        <item>T</item>
+        <item>U</item>
+        <item>V</item>
+        <item>W</item>
+        <item>X</item>
+        <item>Y</item>
+        <item>Z</item>
+    </string-array>
+
+
+    <string-array name="英语">
+        <item>I\'m a vegan. </item>
+        <item>I don\'t eat fish, seafood, poultry, meat or any animal products, including eggs, dairy and honey.</item>
+        <item>I am a vegetarian. </item>
+        <item>I do not eat fish, seafood, poultry, meat or any animal product, not including eggs, dairy products and honey.</item>
+        <item>I am a vegetarian. </item>
+        <item> I do not eat fish, seafood, poultry, meat or any animal products, including eggs, dairy products and honey, special, I do not eat with onions, garlic, leeks, garlic, onions</item>
+        <item>english</item>
+    </string-array>
+
+    <string-array name="西班牙语">
+        <item>Yo era UN puro de los tca.</item>
+        <item> Yo no comer pescado, marisco, carne de aves de corral, o de cualquier otro, incluidos productos animales y de los productos lácteos, huevos de miel</item>
+        <item>Soy vegetariano. </item>
+        <item>Yo no como pescado, marisco, aves de corral, carne o cualquier producto animal, sin incluir los huevos, productos lácteos y miel.</item>
+        <item>Soy vegetariano. </item>
+        <item>No como pescado, marisco, aves de corral, carne o cualquier producto de origen animal, incluidos los huevos, productos lácteos y miel, en particular, que no comen con la cebolla, el ajo, el puerro, el ajo, la cebolla</item>
+        <item>español</item>
+    </string-array>
+
+    <string-array name="法语">
+        <item>Je suis un maigre pur. </item>
+        <item>Je ne mange pas de poisson, fruits de mer, de viande de volaille, ou de produits animaux, y compris des œufs, des produits laitiers et de miel.</item>
+        <item>Je suis végétarien. </item>
+        <item>Je ne mange pas de poisson, fruits de mer, de la volaille, de la viande ou des produits d\'origine animale, non compris les œufs, les produits laitiers et le miel.</item>
+        <item>Je suis végétarien. </item>
+        <item> Je ne mange pas de poisson, fruits de mer, de la volaille, de la viande ou des produits d\'origine animale, y compris les œufs, les produits laitiers et le miel, en particulier, je ne mange pas avec l\'oignon, l\'ail, le poireau, l\'ail, l\'oignon</item>
+        <item>français</item>
+    </string-array>
+
+    <string-array name="葡萄牙语">
+        <item>Eu sou um vegans.</item>
+        <item>Não vou comer peixe, marisco, carne de aves de capoeira, ou de qualquer dos produtos de origem animal, incluindo ovos, laticínios e mel.</item>
+        <item>Eu sou um vegetariano. </item>
+        <item>Eu não comer peixe, frutos do mar, aves, carne ou produtos de origem animal, não incluindo ovos, leite e mel.</item>
+        <item>Eu sou um vegetariano. </item>
+        <item> Eu não comer peixe, frutos do mar, aves, carne ou produtos de origem animal, incluindo ovos, leite e mel, em particular, eu não comer com cebola, alho, alho-poró, alho, cebola</item>
+        <item>portugueses</item>
+    </string-array>
+
+    <string-array name="阿拉伯语">
+        <item>أنا نباتي</item>
+        <item>. أنا لا تأكل السمك والمأكولات البحرية والدواجن واللحوم أو أي من المنتجات  الحيوانية، بما في ذلك البيض، ومنتجات الألبان والعسل</item>
+        <item>أنا نباتي</item>
+        <item>أنا لا تأكل السمك والمأكولات البحرية والدواجن واللحوم أو أي من المنتجات الحيوانية، وليس بما في ذلك البيض، ومنتجات الألبان والعسل.</item>
+        <item>أنا نباتي</item>
+        <item>أنا لا تأكل السمك والمأكولات البحرية والدواجن واللحوم أو أي من المنتجات الحيوانية، بما في ذلك البيض، ومنتجات الألبان والعسل، على وجه الخصوص، أنا لا آكل مع البصل والثوم والكراث والثوم والبصل</item>
+        <item>ومنتجات الألبان والعسل</item>
+    </string-array>
+
+
+    <string-array name="索马里语">
+        <item>Anigu waxaan ahay vegan ah.</item>
+        <item> Anigu ma cuno kalluunka, cuntada badda, digaag, hilib ama wax soo saarka xoolaha, oo ay ku jiraan ukunta, caanaha iyo malabka.</item>
+        <item>Aan ahay qof khudaarta ah. </item>
+        <item>Anigu ma cuno kalluunka, cuntada badda, digaag, hilib ama wax soo saarka xoolaha, aan ay ka mid yihiin ukunta, caanaha iyo malabka.</item>
+        <item>Aan ahay qof khudaarta ah. </item>
+        <item>Anigu ma cuno kalluunka, cuntada badda, digaag, hilib ama wax soo saarka xoolaha, oo ay ku jiraan ukunta, caanaha iyo malabka, gaar ahaan, waxaan waxba ma cunaan leh basal, toon, leek, toon, basal</item>
+        <item>Soomaali</item>
+    </string-array>
+
+    <string-array name="斯瓦希里语">
+        <item>Mimi ni vegan. Sili samaki,</item>
+        <item> dagaa, kuku, nyama au bidhaa yoyote ya wanyama, ikiwa ni pamoja na mayai, maziwa na asali.</item>
+        <item>Mimi ni mboga. </item>
+        <item>Sili samaki, dagaa, kuku, nyama au bidhaa yoyote ya wanyama, si pamoja na mayai, maziwa na asali.</item>
+        <item>Mimi ni mboga. </item>
+        <item>Sili samaki, dagaa, kuku, nyama au bidhaa yoyote ya wanyama, ikiwa ni pamoja na mayai, maziwa na asali, hasa, mimi si kula pamoja na kitunguu, vitunguu, leek, vitunguu, vitunguu</item>
+        <item>Kiswahili</item>
+    </string-array>
+
+    <string-array name="俄语">
+        <item>Я был Один чистый простой лиц.</item>
+        <item> Я не ем рыбу, морепродуктов, мяса птицы, или любое животное изделия, включая яйца, молочных продуктов и мед.</item>
+        <item>Я вегетарианец. </item>
+        <item>Я не ем рыбу, морепродукты, птицу, мясо или любые продукты животного происхождения, не включая яйца, молочные продукты и мед.</item>
+        <item>Я вегетарианец. </item>
+        <item>Я не ем рыбу, морепродукты, птицу, мясо или любые продукты животного происхождения, в том числе яйца, молочные продукты и мед, в частности, я не ем с луком, чесноком, лук-порей, чеснок, лук</item>
+        <item>русский </item>
+    </string-array>
+
+    <string-array name="白俄罗斯语">
+        <item>Я вегетарыянец. </item>
+        <item>Я не ем рыбу, морапрадукты, птушку, мяса або любыя прадукты жывёльнага паходжання, у тым ліку яйкі, малочныя прадукты і мёд.</item>
+        <item>Я вегетарыянец. </item>
+        <item>Я не ем рыбу, морапрадукты, птушку, мяса або любыя прадукты жывёльнага паходжання, не ўключаючы яйкі, малочныя прадукты і мёд.</item>
+        <item>Я вегетарыянец. </item>
+        <item>Я не ем рыбу, морапрадукты, птушку, мяса або любыя прадукты жывёльнага паходжання, у тым ліку яйкі, малочныя прадукты і мёд, у прыватнасці, я не ем з цыбуляй, часнаком, лук-порей, часнык, лук</item>
+        <item>беларускі</item>
+    </string-array>
+
+    <string-array name="爱沙尼亚语">
+        <item>Ma olen vegan. </item>
+        <item>Ma ei söö kala, mereannid, liha, linnuliha või loomsete saaduste, sealhulgas munad, piimatooted ja mesi</item>
+        <item>Ma olen taimetoitlane. </item>
+        <item>Ma ei söö kala, mereannid, liha, linnuliha või loomsete saaduste, välja arvatud munad, piimatooted ja mesi.</item>
+        <item>Ma olen taimetoitlane. </item>
+        <item>Ma ei söö kala, mereannid, liha, linnuliha või loomsete saaduste, sealhulgas munad, piimatooted ja mesi, eriti, ma ei söö sibula, küüslaugu, porru, küüslauk, sibul</item>
+        <item>eesti</item>
+    </string-array>
+
+    <string-array name="乌克兰语">
+        <item>Я вегетаріанець. </item>
+        <item>Я не їм рибу, морепродукти, птицю, м\'ясо або будь-які продукти тваринного походження, в тому числі яйця, молочні продукти і мед. </item>
+        <item>Я вегетаріанець. </item>
+        <item>Я не їм рибу, морепродукти, птицю, м\'ясо або будь-які продукти тваринного походження, не включаючи яйця, молочні продукти і мед.</item>
+        <item>Я вегетаріанець. </item>
+        <item>Я не їм рибу, морепродукти, птицю, м\'ясо або будь-які продукти тваринного походження, в тому числі яйця, молочні продукти і мед, зокрема, я не їм з цибулею, часником, цибуля-порей, часник, цибуля</item>
+        <item>український </item>
+    </string-array>
+
+    <string-array name="波兰语">
+        <item>Jestem weganinem. </item>
+        <item>Nie jem ryby, owoce morza, drób, mięso lub żadnych produktów pochodzenia zwierzęcego, w tym jaj, mleka i miodu. </item>
+        <item>Jestem wegetarianką.</item>
+        <item> Nie jem ryby, owoce morza, drób, mięso lub jakichkolwiek produktów zwierzęcych, nie w tym jaj, mleka i miodu.</item>
+        <item>Jestem wegetarianką.</item>
+        <item>Nie jem ryby, owoce morza, drób, mięso lub żadnych produktów pochodzenia zwierzęcego, w tym jaj, mleka i miodu, w szczególności, nie jem z cebula, czosnek, por, czosnek, cebula</item>
+        <item>polski</item>
+    </string-array>
+
+    <string-array name="捷克语">
+        <item>Jsem vegan.</item>
+        <item> Nejím ryby, mořské plody, drůbež, maso nebo žádné živočišné produkty včetně vajec, mléka a medu.</item>
+        <item>Jsem vegetarián.</item>
+        <item>Nejím ryby, mořské plody, drůbež, maso nebo žádné živočišné produkty, ne včetně vajec, mléka a medu.</item>
+        <item>Jsem vegetarián.</item>
+        <item>Nejím ryby, mořské plody, drůbež, maso nebo žádné živočišné produkty včetně vajec, mléka a medu, zejména nejím s cibulí, česnekem, pórek, česnek, cibule</item>
+        <item>český</item>
+    </string-array>
+
+    <string-array name="斯洛伐克语">
+        <item>Som vegan. </item>
+        <item>Nejem ryby, morské plody, hydina, mäso alebo žiadne živočíšne produkty vrátane vajec, mlieka a medu. </item>
+        <item>Som vegetarián.</item>
+        <item>Nejem ryby, morské plody, hydina, mäso alebo žiadne živočíšne produkty, nie vrátane vajec, mlieka a medu.</item>
+        <item>Som vegetarián.</item>
+        <item>Nejem ryby, morské plody, hydina, mäso alebo žiadne živočíšne produkty vrátane vajec, mlieka a medu, najmä nejem s cibuľou, cesnakom, pór, cesnak, cibuľa</item>
+        <item>Sneh Slovensko jazyk</item>
+    </string-array>
+
+    <string-array name="匈牙利语">
+        <item>Vagyok vegán. </item>
+        <item>Nem eszem halat, tenger gyümölcsei, baromfi, hús, vagy bármilyen állati eredetű termékek, beleértve a tojást, tejtermékeket és a méz. </item>
+        <item>Vegetáriánus vagyok.</item>
+        <item>Nem eszem halat, tenger gyümölcsei, baromfi, hús, vagy bármilyen állati termék, ide nem értve a tojás, tej, méz.</item>
+        <item>Vegetáriánus vagyok.</item>
+        <item>Nem eszem halat, tenger gyümölcsei, baromfi, hús, vagy bármilyen állati eredetű termékek, beleértve az ikrákat, tejtermékek, méz, különösen, hogy nem eszem a hagyma, fokhagyma, póréhagyma, fokhagyma, hagyma</item>
+        <item>magyar</item>
+    </string-array>
+
+    <string-array name="保加利亚语">
+        <item>Аз съм веган. </item>
+        <item>Аз не ям риба, морски дарове, птиче месо, месо или животински продукти, включително яйца, млечни продукти и мед. </item>
+        <item>Аз съм вегетарианец.</item>
+        <item>Аз не ям риба, морски дарове, птиче месо, месо или каквито и да било продукти от животински произход, с изключение на яйца, млечни продукти и мед.</item>
+        <item>Аз съм вегетарианец.</item>
+        <item>Аз не ям риба, морски дарове, птиче месо, месо или животински продукти, включително яйца, млечни продукти и мед, по-специално, не ми се яде с лук, чесън, праз, чесън, лук</item>
+        <item>български</item>
+    </string-array>
+
+    <string-array name="塞尔维亚语">
+        <item>Ја сам вегетаријанац. </item>
+        <item>Не једем рибу, морске плодове, живину, месо или било које производе животињског порекла, укључујући јаја, млека и меда</item>
+        <item>Ја сам вегетаријанац.</item>
+        <item>Не једем рибу, морске плодове, живину, месо или било које производе животињског порекла, не укључујући јаја, млека и меда.</item>
+        <item>Ја сам вегетаријанац.</item>
+        <item>Не једем рибу, морске плодове, живину, месо или било које производе животињског порекла, укључујући јаја, млека и меда, посебно, ја не једем са луком, белим луком, празилук, бели лук, црни лук</item>
+        <item>srpski језик</item>
+    </string-array>
+
+    <string-array name="阿尔巴尼亚语">
+        <item>Unë jam një vegan. </item>
+        <item>Unë nuk ha peshk, ushqim deti, pulave, mish ose ndonjë produkt të kafshëve, duke përfshirë vezë, qumështit dhe mjaltit. </item>
+        <item>Unë jam një vegjetarian.</item>
+        <item>Unë nuk ha peshk, ushqim deti, pulave, mish ose ndonjë produkt kafshëve, të përfshirë vezë, qumështit dhe mjaltit.</item>
+        <item>Unë jam një vegjetarian.</item>
+        <item>Unë nuk ha peshk, ushqim deti, pulave, mish ose ndonjë produkt të kafshëve, duke përfshirë vezë, qumështit dhe mjalti, në mënyrë të veçantë, unë nuk ha me qepë, hudhër, presh, hudhër, qepë</item>
+        <item>shqiptar</item>
+    </string-array>
+
+    <string-array name="马其顿语">
+        <item>Јас сум вегетаријанец. </item>
+        <item>Јас не јадат риба, морска храна, живина, месо или било производи од животинско потекло, вклучувајќи јајца, млечни производи и мед.</item>
+        <item>Јас сум вегетаријанец.</item>
+        <item>Јас не јадат риба, морска храна, живина, месо или било производи од животинско потекло, не вклучувајќи јајца, млечни производи и мед.</item>
+        <item>Јас сум вегетаријанец.</item>
+        <item>Јас не јадат риба, морска храна, живина, месо или било производи од животинско потекло, вклучувајќи јајца, млеко и мед, особено, не јадам со кромид, лук, праз, лук, кромид</item>
+        <item>Македонски</item>
+    </string-array>
+
+    <string-array name="克罗地亚语">
+        <item>Ja sam vegan.</item>
+        <item> Ne jedem ribu, plodove mora, perad, meso ili bilo koje životinjske proizvode, uključujući i jaja, mliječnih proizvoda i meda. </item>
+        <item>Ja sam vegetarijanac.</item>
+        <item>Ne jedem ribu, plodove mora, perad, meso ili bilo koje životinjske proizvode, ne uključujući jaja, mliječnih proizvoda i meda.</item>
+        <item>Ja sam vegetarijanac.</item>
+        <item>Ne jedem ribu, plodove mora, perad, meso ili bilo koje životinjske proizvode, uključujući i jaja, mliječni proizvodi i meda, a osobito ne jede s lukom, češnjakom, lukom, češnjakom, lukom</item>
+        <item>hrvatski</item>
+    </string-array>
+
+    <string-array name="波斯尼亚语">
+        <item>Ja sam vegan. </item>
+        <item>Ja ne jedem ribu, morske plodove, perad, meso ili bilo životinjske proizvode, uključujući i jaja, mliječni proizvodi i med</item>
+        <item>Ja sam vegetarijanac.</item>
+        <item>Ja ne jedem ribu, morske plodove, perad, meso ili bilo životinjskih proizvoda, ne uključujući jaja, mliječni proizvodi i med.</item>
+        <item>Ja sam vegetarijanac.</item>
+        <item>Ja ne jedem ribu, morske plodove, perad, meso ili bilo životinjske proizvode, uključujući i jaja, mliječni proizvodi i med, a posebno ne jedem sa lukom, češnjakom, praziluk, češnjak, luk</item>
+        <item>bosanski</item>
+    </string-array>
+
+    <string-array name="波斯语">
+        <item>منیک گیاه خوارخالصاست.</item>
+        <item>منماهی،غذاهای دریایی، مرغ، گوشت و یاهر گونه محصولات حیوانی، از جملهتخم مرغ، لبنیاتو عسلمصرف نمی کنند.</item>
+        <item>من گیاهخوارم.</item>
+        <item>من ماهی، غذاهای دریایی، مرغ، گوشت و یا هر گونه محصولات حیوانی، از جمله تخم مرغ، لبنیات و عسل نمی خوردن نیست.</item>
+        <item>من گیاهخوارم.</item>
+        <item>من ماهی، غذاهای دریایی، مرغ، گوشت و یا هر گونه محصولات حیوانی، از جمله تخم مرغ، لبنیات و عسل مصرف نمی کنند، به طور خاص، من با پیاز، سیر، تره فرنگی، سیر، پیاز خوردن نیست</item>
+        <item>فارسی</item>
+    </string-array>
+
+    <string-array name="希伯来语">
+        <item>אני טבעוני</item>
+        <item>. אני לא אוכלת דגים, פירות ים, עוף, בשר או כל מוצרים מן החי, כולל ביצים, חלב ודבש.</item>
+        <item>אני צמחוני</item>
+        <item>אני לא אוכלת דגים, פירות ים, עוף, בשר או כל מוצרים מן החי, לא כולל ביצים, חלב ודבש.</item>
+        <item>אני צמחוני</item>
+        <item>אני לא אוכל דגים, פרותי ים, עוף, בשר או כל מוצרים מן חי, כולל ביצים, חלב ודבש, בפרט, אני לא אוכל עם בצל, שום, כרישה, שום, בצל</item>
+        <item>עברית </item>
+    </string-array>
+
+    <string-array name="土耳其语">
+        <item>Ben bir vegan.</item>
+        <item> Balık, deniz ürünleri, kümes hayvanları, et veya yumurta, süt ürünleri ve bal dahil hiçbir hayvansal ürün, yemem. </item>
+        <item>Ben vejeteryanım</item>
+        <item>Balık, deniz ürünleri, kümes hayvanları, et veya yumurta, süt ürünleri ve bal dahil değil hiçbir hayvansal ürün, yemem.</item>
+        <item>Ben vejeteryanım</item>
+        <item>Ben, balık, deniz ürünleri, kümes hayvanları, et veya yumurta, süt ürünleri ve bal dahil hiçbir hayvansal ürün, yemek yok, özellikle de ben soğan, sarımsak, pırasa, sarımsak, soğan ile yemem</item>
+        <item>Türk dili</item>
+    </string-array>
+
+    <string-array name="希腊语">
+        <item>Είμαι χορτοφάγος. </item>
+        <item>Δεν τρώω ψάρι, θαλασσινά, πουλερικά, κρέας ή οποιαδήποτε ζωικά προϊόντα, συμπεριλαμβανομένων των αυγών, τα γαλακτοκομικά και μέλι. </item>
+        <item>Είμαι χορτοφάγος.</item>
+        <item>Δεν τρώω ψάρι, θαλασσινά, πουλερικά, κρέας ή οποιαδήποτε ζωικά προϊόντα, δεν περιλαμβάνει αυγά, γαλακτοκομικά και μέλι.</item>
+        <item>Είμαι χορτοφάγος.</item>
+        <item>Δεν τρώω ψάρι, θαλασσινά, πουλερικά, κρέας ή οποιαδήποτε ζωικά προϊόντα, συμπεριλαμβανομένων των αυγών, τα γαλακτοκομικά και το μέλι, ιδίως, δεν τρώω με το κρεμμύδι, το σκόρδο, το πράσο, το σκόρδο, το κρεμμύδι</item>
+        <item>ελληνικά</item>
+    </string-array>
+
+    <string-array name="格鲁吉亚语">
+        <item>მე ვარ vegan. </item>
+        <item>მე არ ჭამა თევზი, ზღვის პროდუქტები, ფრინველის, ხორცის ან ცხოველური წარმოშობის პროდუქტების, მათ შორის, კვერცხი, რძის და თაფლი.</item>
+        <item>მე ვარ ვეგეტარიანული.</item>
+        <item>მე არ ჭამა თევზი, ზღვის პროდუქტები, ფრინველის, ხორცის ან ცხოველური წარმოშობის პროდუქტების, არ მათ შორის კვერცხი, რძის და თაფლი.</item>
+        <item>მე ვარ ვეგეტარიანული.</item>
+        <item>მე არ ჭამა თევზი, ზღვის პროდუქტები, ფრინველის, ხორცის ან ცხოველური წარმოშობის პროდუქტების, მათ შორის, კვერცხი, რძის და თაფლის, კერძოდ, მე არ ჭამა ხახვი, ნიორი, პრასი, ნიორი, ხახვი</item>
+        <item>ქართული</item>
+    </string-array>
+
+    <string-array name="亚美尼亚语">
+        <item>Ես Vegan. </item>
+        <item>Ես չեմ ուտում ձուկ, ծովամթերք, թռչնամիս, միս կամ որեւէ Անասնաբուծական արտադրանքներ, այդ թվում ձու, կաթնամթերք եւ մեղրի. ,</item>
+        <item>Ես բուսակեր եմ:</item>
+        <item>Ես չեմ ուտում ձուկ, ծովամթերք, թռչնամիս, միս կամ որեւէ Անասնաբուծական արտադրանքներ, ոչ այդ թվում `ձու, կաթնամթերք եւ մեղրի.</item>
+        <item>Ես բուսակեր եմ:</item>
+        <item>Ես չեմ ուտում ձուկ, ծովամթերք, թռչնամիս, միս կամ որեւէ Անասնաբուծական արտադրանքներ, այդ թվում ձու, կաթնամթերք եւ մեղրի, մասնավորապես, ես չեմ ուտում սոխի, սխտորի, պրաս, սխտոր, սոխ</item>
+        <item>Հայերեն</item>
+    </string-array>
+
+    <string-array name="阿塞拜疆语">
+        <item>Mən vegan edirəm.</item>
+        <item> Mən balıq, dəniz məhsulları, quş əti, ət və ya yumurta, süd və bal, o cümlədən hər hansı bir heyvan məhsulları, yemək yoxdur. </item>
+        <item>Mən bir vegetarian deyiləm.</item>
+        <item>Mən balıq, dəniz məhsulları, quş əti, ət və ya yumurta, süd və bal, o cümlədən hər hansı bir heyvan məhsulları yemək yoxdur.</item>
+        <item>Mən bir vegetarian deyiləm.</item>
+        <item>Mən balıq, dəniz məhsulları, quş əti, ət və ya yumurta, süd və bal, o cümlədən hər hansı bir heyvan məhsulları yemək deyil, xüsusilə, mən soğan, sarımsaq, pırasa, sarımsaq, soğan ilə yemək yoxdur</item>
+        <item>Azərbaycan dili</item>
+    </string-array>
+
+    <string-array name="汉语">
+        <item>我是一位纯素者。</item>
+        <item>我不吃鱼，海鲜，家禽，肉类或任何动物制品，包括鸡蛋，奶制品和蜂蜜。</item>
+        <item>我是一名素食者。</item>
+        <item>我不吃鱼，海鲜，家禽，肉类或任何动物制品，不包括鸡蛋，奶制品和蜂蜜。</item>
+        <item>我是一名素食者。</item>
+        <item>我不吃鱼，海鲜，家禽，肉类或任何动物制品，包括鸡蛋，奶制品和蜂蜜，特别的，我也不吃含葱、大蒜、韭菜、小蒜、洋葱</item>
+        <item>汉语</item>
+    </string-array>
+
+    <string-array name="韩语">
+        <item>나는 채식주의 자입니다. </item>
+        <item>나는 생선, 해산물, 가금류, 육류 또는 계란, 유제품, 꿀을 포함한 모든 동물 제품을 먹지 않는다</item>
+        <item>나는 채식주의 자입니다. </item>
+        <item>나는 생선, 해산물, 가금류, 육류 또는 계란, 유제품과 꿀이 포함되지 않은 동물 제품을 먹지 않는다.</item>
+        <item>나는 채식주의 자입니다. </item>
+        <item>나는, 생선, 해산물, 가금류, 육류 또는 계란, 유제품, 꿀을 포함한 모든 동물 제품을 먹지 않는다 특히, 나는 양파, 마늘, 부추, 마늘, 양파를 먹지 않는다</item>
+        <item>한국어</item>
+    </string-array>
+
+    <string-array name="日语">
+        <item>私はビーガンです。</item>
+        <item>私は魚、魚介類、鶏肉、肉や卵、乳製品、蜂蜜を含む任意の動物製品を、食べてはいけません</item>
+        <item>私はベジタリアンです。</item>
+        <item>私は魚、魚介類、鶏肉、肉や卵、乳製品、蜂蜜を含まない任意の動物製品を、食べてはいけません。</item>
+        <item>私はベジタリアンです。</item>
+        <item>私は、魚、魚介類、鶏肉、肉や卵、乳製品、蜂蜜を含む任意の動物製品を、食べない、特に私はタマネギ、ニンニク、ネギ、ニンニク、タマネギを食べてはいけません</item>
+        <item>日本の</item>
+    </string-array>
+
+    <string-array name="德语">
+        <item>Ich bin ein Veganer. </item>
+        <item>Ich esse kein Fisch, Meeresfrüchte, Geflügel, Fleisch oder jegliche tierische Produkte, einschließlich Eier, Milchprodukte und Honig</item>
+        <item>Ich bin Vegetarier. </item>
+        <item>Ich esse keinen Fisch, Meeresfrüchte, Geflügel, Fleisch oder jegliche tierischen Produkte, ohne Eier, Milchprodukte und Honig.</item>
+        <item>Ich bin Vegetarier. </item>
+        <item>Ich esse keinen Fisch, Meeresfrüchte, Geflügel, Fleisch oder jegliche tierischen Produkte, einschließlich Eiern, Milchprodukte und Honig, insbesondere, ich esse nicht mit Zwiebeln, Knoblauch, Lauch, Knoblauch, Zwiebel</item>
+        <item>Deutsch</item>
+    </string-array>
+
+    <string-array name="蒙古语">
+        <item>Би веган байна.</item>
+        <item> Би загас, далайн хоол, шувууны аж ахуй, мах, ямар ч амьтны бүтээгдэхүүн, өндөг, сүү, зөгийн бал зэрэг идэж болохгүй. </item>
+        <item>Би цагаан хоолтон байна. </item>
+        <item>Би загас, далайн хоол, шувууны аж ахуй, мах, ямар ч амьтны бүтээгдэхүүн, өндөг, сүү, зөгийн бал, түүний дотор биш идэж болохгүй.</item>
+        <item>Би цагаан хоолтон байна. </item>
+        <item>Би, загас, далайн хоол, шувууны аж ахуй, мах, ямар ч амьтны бүтээгдэхүүн, өндөг, сүү, зөгийн бал зэрэг идэж болохгүй, ялангуяа, би сонгино, сармис, таана, сармис, сонгино нь идэж болохгүй вэ</item>
+        <item>Монгол улсын</item>
+    </string-array>
+
+    <string-array name="越南语">
+        <item>Tôi là một người ăn chay. </item>
+        <item>Tôi không ăn cá, hải sản, thịt gia cầm, thịt hoặc bất kỳ sản phẩm động vật, bao gồm trứng, sữa và mật ong.</item>
+        <item>Tôi là một người ăn chay.</item>
+        <item> Tôi không ăn cá, hải sản, thịt gia cầm, thịt hoặc bất kỳ sản phẩm động vật, không bao gồm trứng, sữa và mật ong.</item>
+        <item>Tôi là một người ăn chay.</item>
+        <item>Tôi không ăn cá, hải sản, thịt gia cầm, thịt hoặc bất kỳ sản phẩm động vật, bao gồm trứng, sữa và mật ong, đặc biệt, tôi không ăn chung với hành tây, tỏi, tỏi tây, tỏi, hành tây</item>
+        <item>Việt</item>
+    </string-array>
+
+    <string-array name="老挝语">
+        <item>ຂ້າພະເຈົ້າຜັກໄດ້. </item>
+        <item>ຂ້າພະເຈົ້າບໍ່ກິນປາ, ອາຫານທະເລ, ສັດປີກ, ຊີ້ນຫຼືຜະລິດຕະພັນສັດໃດໆ, ລວມທັງໄຂ່, ນົມແລະນໍ້າເຜິ້ງ. </item>
+        <item>ຂ້າພະເຈົ້າ vegetarian ເປັນ. </item>
+        <item>ຂ້າພະເຈົ້າບໍ່ກິນປາ, ອາຫານທະເລ, ສັດປີກ, ຊີ້ນຫຼືຜະລິດຕະພັນສັດໃດໆ, ບໍ່ລວມທັງໄຂ່, ນົມແລະນໍ້າເຜິ້ງ.</item>
+        <item>ຂ້າພະເຈົ້າ vegetarian ເປັນ. </item>
+        <item>ຂ້າພະເຈົ້າບໍ່ກິນປາ, ອາຫານທະເລ, ສັດປີກ, ຊີ້ນຫຼືຜະລິດຕະພັນສັດໃດໆ, ລວມທັງໄຂ່, ນົມແລະ້ໍາເຜີ້ງ, ໂດຍສະເພາະ, ຂ້າພະເຈົ້າບໍ່ກິນອາຫານທີ່ມີຜັກບົ່ວ, ຜັກທຽມ, ກະທຽມຫອມ, ຜັກທຽມ, ຜັກບົ່ວ</item>
+        <item>ລາວ</item>
+    </string-array>
+
+    <string-array name="高棉语">
+        <item>ខ្ញុំជាបន្លែសុទ្ធមួយ។</item>
+        <item>ខ្ញុំមិនញ៉ាំត្រី, អាហារសមុទ្រ, មាន់សាច់ឬផលិតផលសត្វណាមួយរួមទាំងការស៊ុត, ទឹកដោះគោនិងទឹកឃ្មុំ។</item>
+        <item>ខ្ញុំជាអ្នកញ៉ាំបួស។</item>
+        <item>ខ្ញុំមិនញ៉ាំត្រី, អាហារសមុទ្រ, មាន់សាច់ឬផលិតផលសត្វណាមួយមិនត្រូវបានរួមបញ្ចូលទាំងការស៊ុត, ទឹកដោះគោនិងទឹកឃ្មុំ។</item>
+        <item>ខ្ញុំជាអ្នកញ៉ាំបួស។</item>
+        <item>ខ្ញុំមិនញ៉ាំត្រី, អាហារសមុទ្រ, មាន់សាច់ឬផលិតផលសត្វណាមួយរួមទាំងការស៊ុត, ទឹកដោះគោនិងទឹកឃ្មុំជាពិសេសខ្ញុំមិនបរិភោគជាមួយគំនិត, ខ្ទឹម, ជា leek, ខ្ទឹមស, គំនិត</item>
+        <item>ភាសាខ្មែរ</item>
+    </string-array>
+
+    <string-array name="泰语">
+        <item>ฉันมังสวิรัติ</item>
+        <item>ฉันไม่กินปลาอาหารทะเล, สัตว์ปีก, เนื้อสัตว์หรือผลิตภัณฑ์จากสัตว์ใด ๆ รวมทั้งไข่นมและน้ำผึ้ง</item>
+        <item>ฉันมังสวิรัติ</item>
+        <item>ฉันไม่กินปลาอาหารทะเล, สัตว์ปีก, เนื้อสัตว์หรือผลิตภัณฑ์จากสัตว์ใด ๆ ที่ไม่รวมถึงไข่นมและน้ำผึ้ง</item>
+        <item>ฉันมังสวิรัติ</item>
+        <item>ฉันไม่กินปลาอาหารทะเล, สัตว์ปีก, เนื้อสัตว์หรือผลิตภัณฑ์จากสัตว์ใด ๆ รวมทั้งไข่นมและน้ำผึ้งโดยเฉพาะอย่างยิ่งผมไม่กินกับหัวหอม, กระเทียม, หอม, กระเทียม, หัวหอม</item>
+        <item>ไทย</item>
+    </string-array>
+
+    <string-array name="马来语">
+        <item>Saya vegan. </item>
+        <item>Saya tidak makan ikan, makanan laut, ayam, daging atau mana-mana produk haiwan, termasuk telur, tenusu dan madu.</item>
+        <item>Saya vegetarian. </item>
+        <item>Saya tidak makan ikan, makanan laut, ayam, daging atau mana-mana produk haiwan, tidak termasuk telur, tenusu dan madu.</item>
+        <item>Saya vegetarian. </item>
+        <item>Saya tidak makan ikan, makanan laut, ayam, daging atau mana-mana produk haiwan, termasuk telur, tenusu dan madu, khususnya, saya tidak makan dengan bawang, bawang putih, bawang, bawang putih, bawang</item>
+        <item>Melayu</item>
+    </string-array>
+
+    <string-array name="尼泊尔语">
+        <item>म एक शाकाहारी हुँ।</item>
+        <item>म माछा, समुद्री भोजन, कुखुरा, मासु वा अन्डा, दुग्ध र मह सहित कुनै पनि पशु उत्पादन, खाने छैन।</item>
+        <item>म एक शाकाहारी हुँ।</item>
+        <item>म माछा, समुद्री भोजन, कुखुरा, मासु वा सहित छैन, अन्डा, दुग्ध र मह कुनै पनि पशु उत्पादन, खाने छैन।</item>
+        <item>म एक शाकाहारी हुँ।</item>
+        <item>म माछा, समुद्री भोजन, कुखुरा, मासु वा अन्डा, दुग्ध र मह सहित कुनै पनि पशु उत्पादन, खाने छैन, विशेष, म प्याज, लसुन, Leek, लसुन, प्याज संग खान छैन</item>
+        <item></item>
+    </string-array>
+
+    <string-array name="孟加拉语">
+        <item>আমি একটি ভেজান নই।</item>
+        <item>আমি মাছ, সীফুড, মুরগির মাংস বা ডিম, দুগ্ধ এবং মধু সহ যেকোন পশু পণ্য, খাই না।</item>
+        <item>আমি একটি নিরামিষ নই।</item>
+        <item>আমি মাছ, সীফুড, মুরগির মাংস বা কোনো প্রাণী পণ্য সহ না ডিম, দুগ্ধ এবং মধু খাই না।</item>
+        <item>আমি একটি নিরামিষ নই।</item>
+        <item>আমি মাছ, সীফুড, মুরগির মাংস বা ডিম, দুগ্ধ এবং মধু সহ যেকোন পশু পণ্য, খাই না, বিশেষ করে, আমি পিঁয়াজ, রসুন, পেঁয়াজ, রসুন, পেঁয়াজ সঙ্গে খাই না</item>
+        <item>বাংলা</item>
+    </string-array>
+
+    <string-array name="僧伽罗语">
+        <item>මම සත්ත්ව ද්රව්ය වලින් තොර වෙමි.</item>
+        <item>මට බිත්තර, කිරි සහ මී පැණි ඇතුළු මත්ස්ය, මුහුදු ආහාර, කුකුල් මස්, මස් හෝ සත්ව නිෂ්පාදන, කන්නේ නෑ.</item>
+        <item>මම නිර්මාංශ වෙමි.</item>
+        <item>මම මාළු, මුහුදු ආහාර, කුකුල් මස්, මස් හෝ සත්ව නිෂ්පාදන, බිත්තර, කිරි සහ මී පැණි ඇතුළු නැහැ කන්නේ නෑ.</item>
+        <item>මම නිර්මාංශ වෙමි.</item>
+        <item>මම මාළු ආහාරයට නැහැ, මුහුදු ආහාර, කුකුල් මස්, මස් හෝ සත්ව නිෂ්පාදන, බිත්තර, කිරි සහ මී පැණි ඇතුළු, විශේෂයෙන්ම, මම ලූනු සමග කන්න එපා, සුදුළූණු, ලීක්ස්, සුදුළූණු, ලූනු</item>
+        <item>සිංහල</item>
+    </string-array>
+
+    <string-array name="乌兹别克语">
+        <item>Men vegan. </item>
+        <item>Men baliq, dengiz mahsulotlari, parrandachilik, go\'sht yoki tuxum, sut va asal, shu jumladan, har qanday hayvon mahsulotlari, ovqat yo\'q.</item>
+        <item>Men vegetarian emasman.</item>
+        <item>Men baliq, dengiz mahsulotlari, parrandachilik, go\'sht yoki tuxum, sut va asal, shu jumladan, har qanday hayvon mahsulotlari, ovqat yo\'q.</item>
+        <item>Men vegetarian emasman.</item>
+        <item>Men, baliq, dengiz mahsulotlari, parrandachilik, go\'sht yoki tuxum, sut va asal, shu jumladan, har qanday hayvon mahsulotlari, ovqat yo\'q, xususan, men piyoz, sarimsoq, pirasa, sarimsoq, piyoz bilan ovqat yemaydilar</item>
+        <item>O\' zbekiston</item>
+    </string-array>
+
+    <string-array name="芬兰语">
+        <item>Olen vegaani.</item>
+        <item> En syö kalaa, äyriäisiä, siipikarjan, lihaa tai eläinperäisiä tuotteita, kuten munat, maito ja hunaja. </item>
+        <item>Olen kasvissyöjä.</item>
+        <item>En syö kalaa, äyriäisiä, siipikarjan, lihan tai muiden eläinperäisten tuotteiden, ei munia, maitotuotteita ja hunajaa.</item>
+        <item>Olen kasvissyöjä.</item>
+        <item>En syö kalaa, äyriäisiä, siipikarjan, lihaa tai eläinperäisiä tuotteita, kuten munat, maito ja hunaja, erityisesti en syö sipulia, valkosipulia, purjo, valkosipuli, sipuli</item>
+        <item>suomi</item>
+    </string-array>
+
+    <string-array name="瑞典语">
+        <item>Jag är vegan. </item>
+        <item>Jag äter inte fisk, skaldjur, fågel, kött eller några djurprodukter , inklusive ägg, mejeriprodukter och honung.</item>
+        <item>Jag är vegetarian.</item>
+        <item>Jag äter inte fisk, skaldjur, fågel, kött eller några djurprodukter , exklusive ägg, mejeriprodukter och honung.</item>
+        <item>Jag är vegetarian.</item>
+        <item>Jag äter inte fisk, skaldjur, fågel, kött eller några djurprodukter , inklusive ägg, mejeriprodukter och honung, i synnerhet jag inte äta med lök, vitlök, purjolök, vitlök, lök</item>
+        <item>svenska</item>
+    </string-array>
+
+    <string-array name="挪威语">
+        <item>Jeg er en veganer. </item>
+        <item> Jeg kan ikke spise fisk, sjømat, fjærkre, kjøtt eller andre animalske produkter, inkludert egg, melkeprodukter og honning.</item>
+        <item>Jeg er vegetarianer.</item>
+        <item>Jeg kan ikke spise fisk, sjømat, fjærkre, kjøtt eller andre animalske produkter, ikke inkludert egg, melkeprodukter og honning.</item>
+        <item>Jeg er vegetarianer.</item>
+        <item>Jeg kan ikke spise fisk, sjømat, fjærkre, kjøtt eller andre animalske produkter, inkludert egg, melkeprodukter og honning, i særdeleshet, jeg kan ikke spise med løk, hvitløk, purre, hvitløk, løk</item>
+        <item>Norsk</item>
+    </string-array>
+
+    <string-array name="冰岛语">
+        <item>Ég er vegan. </item>
+        <item>Ég borða ekki fisk, fisk, alifugla, kjöt eða einhver dýraafurðir, þar á meðal egg, mjólkurvörur og hunangi.</item>
+        <item>Ég er grænmetisæta.</item>
+        <item>Ég borða ekki fisk, fisk, alifugla, kjöt eða einhver dýraafurðir, ekki þar á meðal egg, mjólkurvörur og hunangi.</item>
+        <item>Ég er grænmetisæta.</item>
+        <item>Ég borða ekki fisk, fisk, alifugla, kjöt eða einhver dýraafurðir, þar á meðal egg, mjólkurvörur og hunangi, einkum, ég borða ekki með lauk, hvítlauk, blaðlauk, hvítlauk, lauk</item>
+        <item>íslenska</item>
+    </string-array>
+
+    <string-array name="丹麦语">
+        <item>Jeg er en veganer.</item>
+        <item> Jeg spiser ikke fisk, skaldyr, fjerkræ, kød eller nogen animalske produkter, herunder æg, mejeriprodukter og honning.</item>
+        <item>Jeg er en vegetar.</item>
+        <item>Jeg spiser ikke fisk, skaldyr, fjerkræ, kød eller nogen animalske produkter, undtagen æg, mejeriprodukter og honning.</item>
+        <item>Jeg er en vegetar.</item>
+        <item>Jeg spiser ikke fisk, skaldyr, fjerkræ, kød eller nogen animalske produkter, herunder æg, mejeriprodukter og honning, i særdeleshed, kan jeg ikke spise med løg, hvidløg, porre, hvidløg, løg</item>
+        <item>dansk</item>
+    </string-array>
+
+    <string-array name="卢森堡语">
+        <item>Ech eng vegan.</item>
+        <item> Ech do iessen net Fësch, Seafood, Gefligel, Fleesch oder ouni Déiereprodukter, dorënner Eeër, Mëllechprodukter an Hunneg.</item>
+        <item>Ech eng vegetaresch.</item>
+        <item> Ech do iessen net Fësch, Seafood, Gefligel, Fleesch oder ouni Déiereprodukter, net dorënner Eeër, Mëllechprodukter an Hunneg.</item>
+        <item>Ech eng vegetaresch.</item>
+        <item>Ech do iessen net Fësch, Seafood, Gefligel, Fleesch oder ouni Déiereprodukter, dorënner Eeër, Mëllechprodukter an Hunneg, besonnesch, ech iessen net mat Ënn, Knuewelek, Poretten, Knuewelek, Ënn</item>
+        <item>Lëtzebuergesch</item>
+    </string-array>
+
+    <string-array name="意大利语">
+        <item>Io sono un vegano. </item>
+        <item>Io non mangio pesce, frutti di mare, pollame, carne o prodotti di origine animale, compresi uova, latte e miele.</item>
+        <item>Io sono un vegetariano.</item>
+        <item> Io non mangio pesce, frutti di mare, pollame, carne o prodotti di origine animale, non compresi uova, latte e miele.</item>
+        <item>Io sono un vegetariano.</item>
+        <item>Io non mangio pesce, frutti di mare, pollame, carne o prodotti di origine animale, compresi uova, latte e miele, in particolare, non mangio con la cipolla, l\'aglio, il porro, aglio, cipolla</item>
+        <item>italiana</item>
+    </string-array>
+
+    <string-array name="马耳他语">
+        <item>I am a vegan. </item>
+        <item>I ma jieklu ħut, frott tal-baħar, tjur, laħam jew xi prodotti tal-annimali, inkluż il-bajd, ħalib u għasel.</item>
+        <item>I am a veġetarjana.</item>
+        <item> I ma jieklu ħut, frott tal-baħar, tjur, laħam jew xi prodotti mill-annimali, li ma jinkludix bajd, ħalib u għasel.</item>
+        <item>I am a veġetarjana.</item>
+        <item>I ma jieklu ħut, frott tal-baħar, tjur, laħam jew xi prodotti tal-annimali, inkluż il-bajd, ħalib u għasel, b\'mod partikolari, jien ma jieklu ma \'basla, tewm, kurrat, tewm, basla</item>
+        <item>Malti</item>
+    </string-array>
+
+    <string-array name="乌尔都语">
+        <item>میں نے ایک ویگن ہوں.</item>
+        <item>میں نے ایک ویگن ہوں. مجھے مچھلی، سمندری غذا، پولٹری، گوشت یا بشمول انڈے، دودھ اور شہد کی کوئی بھی جانوروں کی مصنوعات، نہیں کھاتے ہیں....</item>
+        <item>میں نے ایک سبزی ہوں.</item>
+        <item>مجھے مچھلی، سمندری غذا، پولٹری، گوشت یا کسی جانور کی مصنوعات، بشمول نہیں انڈے، دودھ اور شہد کھا نہیں کرتے.</item>
+        <item>میں نے ایک سبزی ہوں.</item>
+        <item>میں، مچھلی، سمندری غذا، پولٹری، گوشت یا بشمول انڈے، دودھ اور شہد کی کوئی بھی جانوروں کی مصنوعات، نہیں کھاتے خاص طور پر، میں پیاز، لہسن، leek کا، لہسن، پیاز کے ساتھ نہیں کھاتے کرتے</item>
+        <item>اردو زبان</item>
+    </string-array>
+
+
+</resources>

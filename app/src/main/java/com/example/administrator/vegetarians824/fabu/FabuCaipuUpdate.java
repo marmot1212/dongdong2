@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.entry.Yongliao;
 import com.example.administrator.vegetarians824.entry.Zuofa;
@@ -506,7 +507,7 @@ public class FabuCaipuUpdate extends AppCompatActivity {
     }
 
     public void sendpost(){
-        StringPostRequest spr=new StringPostRequest("https://www.isuhuo.com/plainLiving/Androidapi/Addapi/edit_dish", new Response.Listener<String>() {
+        StringPostRequest spr=new StringPostRequest(URLMannager.EditDish, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
                 finish();
@@ -606,5 +607,16 @@ public class FabuCaipuUpdate extends AppCompatActivity {
             }
         }
         return false;
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

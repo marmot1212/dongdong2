@@ -19,10 +19,12 @@
             ptr:ptrDrawable="@mipmap/update_xlist"
             ptr:ptrHeaderTextColor="#a2a2a2"
             android:divider="@null"
-        android:background="#fff"
-        android:id="@+id/subfrag_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            android:background="#fff"
+            android:id="@+id/subfrag_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            ptr:ptrShowIndicator="false">
     </com.handmark.pulltorefresh.library.PullToRefreshListView>
         <TextView
             android:layout_marginTop="150dp"

@@ -58,6 +58,8 @@ public class JKshuguoDetial extends AppCompatActivity {
     private Boolean mScaling = false;
 
     private DisplayMetrics metric;
+
+    private String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +76,8 @@ public class JKshuguoDetial extends AppCompatActivity {
         list_ima.add(getResources().getDrawable(R.mipmap.vegy));
         ima=(ImageView)findViewById(R.id.shuguo_detial_imag);
         scrollView=(ScrollView)findViewById(R.id.shuguo_scroll);
+        Intent intent=getIntent();
+        id=intent.getStringExtra("id");
         getData();
         LinearLayout fanhui=(LinearLayout)findViewById(R.id.shuguo_detial_fanhui);
         fanhui.setOnClickListener(new View.OnClickListener() {
@@ -86,8 +90,6 @@ public class JKshuguoDetial extends AppCompatActivity {
         setScroll();
     }
     public void getData(){
-        final Intent intent=getIntent();
-        String id=intent.getStringExtra("id");
         //Log.d("=============ss",URLMannager.ShuGuo_Detial + id);
         StringRequest request=new StringRequest(URLMannager.ShuGuo_Detial + id, new Response.Listener<String>() {
             @Override
@@ -150,30 +152,53 @@ public class JKshuguoDetial extends AppCompatActivity {
                         if(jaa.length()>0)
                         {
                             for (int j = 0; j < jaa.length(); j++) {
-                                JSONObject joo = jaa.getJSONObject(j);
-                                View vv = getLayoutInflater().inflate(R.layout.caipu_relative_item, null);
-                                TextView tv1 = (TextView) vv.findViewById(R.id.relative_item_title);
-                                TextView tv2 = (TextView) vv.findViewById(R.id.relative_item_content);
-                                tv1.setText(joo.getString("title"));
-                                tv2.setText(joo.getString("content"));
-                                ImageView imas = (ImageView) vv.findViewById(R.id.relative_item_ima);
-                                com.nostra13.universalimageloader.core.ImageLoader loaders = ImageLoaderUtils.getInstance(JKshuguoDetial.this);
-                                DisplayImageOptions optionss = ImageLoaderUtils.getOpt();
-                                loaders.displayImage(URLMannager.Imag_URL + "" + joo.getString("pic"), imas, optionss);
-                                final String cpid = joo.getString("id");
-                                vv.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        Intent intent1 = new Intent(JKshuguoDetial.this, CaipuDetail.class);
-                                        intent1.putExtra("id", cpid);
-                                        JKshuguoDetial.this.startActivity(intent1);
-                                    }
-                                });
-                                line.addView(vv);
+                                if(j<6) {
+                                    JSONObject joo = jaa.getJSONObject(j);
+                                    View vv = getLayoutInflater().inflate(R.layout.caipu_relative_item, null);
+                                    TextView tv1 = (TextView) vv.findViewById(R.id.relative_item_title);
+                                    TextView tv2 = (TextView) vv.findViewById(R.id.relative_item_content);
+                                    tv1.setText(joo.getString("title"));
+                                    tv2.setText(joo.getString("content"));
+                                    ImageView imas = (ImageView) vv.findViewById(R.id.relative_item_ima);
+                                    com.nostra13.universalimageloader.core.ImageLoader loaders = ImageLoaderUtils.getInstance(JKshuguoDetial.this);
+                                    DisplayImageOptions optionss = ImageLoaderUtils.getOpt();
+                                    loaders.displayImage(URLMannager.Imag_URL + "" + joo.getString("pic"), imas, optionss);
+                                    final String cpid = joo.getString("id");
+                                    vv.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            Intent intent1 = new Intent(JKshuguoDetial.this, CaipuDetail.class);
+                                            intent1.putExtra("id", cpid);
+                                            JKshuguoDetial.this.startActivity(intent1);
+                                        }
+                                    });
+                                    line.addView(vv);
+                                }else {
+                                    TextView tv=new TextView(getBaseContext());
+                                    tv.setText("查看更多");
+                                    tv.setTextSize(12);
+                                    tv.setTextColor(0xffa0a0a0);
+                                    ViewGroup.LayoutParams params=new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,100);
+                                    tv.setLayoutParams(params);
+                                    tv.setGravity(Gravity.CENTER);
+                                    tv.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            Intent intent2=new Intent(JKshuguoDetial.this,JKshuguoDetialMore.class);
+                                            intent2.putExtra("url",URLMannager.ShuGuo_Detial + id);
+                                            JKshuguoDetial.this.startActivity(intent2);
+                                        }
+                                    });
+                                    line.addView(tv);
+                                    break;
+                                }
+
                             }
+
                             listView.addFooterView(view);
                         }
                     }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

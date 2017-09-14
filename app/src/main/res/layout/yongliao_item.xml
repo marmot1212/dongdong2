@@ -23,10 +23,5 @@
             android:text="数量"
             android:layout_alignParentRight="true" />
     </RelativeLayout>
-    <View
-        android:layout_marginLeft="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#c2c2c2">
-    </View>
+
 </LinearLayout>

@@ -320,6 +320,29 @@ public class EmojiUtil {
         }
         comment.setText(sb);
     }
+    public static void handlerEmojiText3(TextView comment, String content, Context context) throws IOException {
+        SpannableStringBuilder sb = new SpannableStringBuilder(content);
+        String regex = "\\[(\\S+?)\\]";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(content);
+        Iterator<Emoji> iterator;
+        Emoji emoji = null;
+        while (m.find()) {
+            iterator = emojiList.iterator();
+            String tempText = m.group();
+            while (iterator.hasNext()) {
+                emoji = iterator.next();
+                if (tempText.equals(emoji.getContent())) {
+                    //转换为Span并设置Span的大小
+                    sb.setSpan(new MyIm(context, decodeSampledBitmapFromResource(context.getResources(), emoji.getImageUri()
+                            , dip2px(context, 20), dip2px(context, 20))),
+                            m.start(), m.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    break;
+                }
+            }
+        }
+        comment.setText(sb);
+    }
     public static void handlerEmojiText2(EditText comment, String content, Context context) throws IOException {
         SpannableStringBuilder sb = new SpannableStringBuilder(content);
         String regex = "\\[(\\S+?)\\]";

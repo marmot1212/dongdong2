@@ -1,6 +1,7 @@
 package com.example.administrator.vegetarians824.fragment;
 
 
+import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -59,6 +60,7 @@ import com.amap.api.services.geocoder.RegeocodeResult;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.adapter.CantingListAdapter;
 import com.example.administrator.vegetarians824.dongdong.CantingDetail;
@@ -244,12 +246,15 @@ public class MapFragment extends Fragment implements LocationSource,AMapLocation
     public void onResume() {
         super.onResume();
         mapView.onResume();
+
+        StatService.onResume(this);
     }
     @Override
     public void onPause() {
         super.onPause();
         mapView.onPause();
         deactivate();
+        StatService.onPause(this);
     }
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -316,6 +321,7 @@ public class MapFragment extends Fragment implements LocationSource,AMapLocation
                 amapLocation.getProvince();// 省信息
                 amapLocation.getCity();// 城市信息
                 current = amapLocation.getCity(); // 保存当前城市
+                Log.d("======country",current);
                 amapLocation.getDistrict();// 城区信息
                 amapLocation.getStreet();// 街道信息
                 amapLocation.getStreetNum();// 街道门牌号信息
@@ -325,8 +331,12 @@ public class MapFragment extends Fragment implements LocationSource,AMapLocation
                 // 设置缩放级别
                 aMap.moveCamera(CameraUpdateFactory.zoomTo(12));
             } else {
-                String errText = "定位失败," + amapLocation.getErrorCode()+ ": " + amapLocation.getErrorInfo();
-                Log.e("AmapErr",errText);
+                if(amapLocation != null && amapLocation.getErrorCode() == 12){
+                    Toast.makeText(getContext(),"请手动获取定位权限",Toast.LENGTH_SHORT).show();
+                    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+                }else {
+                    Toast.makeText(getContext(),"无定位权限",Toast.LENGTH_SHORT).show();
+                }
             }
         }
         latLng_jw = new LatLng_jw();// 接受初始化定位的经纬度数据，再传给http方法
@@ -347,9 +357,12 @@ public class MapFragment extends Fragment implements LocationSource,AMapLocation
                                 // TODO 确定按钮
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    String mcity=BaseApplication.app.getMyLociation().getMyCity();
+                                    String mcity;
+                                    if(BaseApplication.app.getMyLociation().getMyCity()!=null) {
+                                        mcity = BaseApplication.app.getMyLociation().getMyCity();
+
                                     city.setText(mcity);
-                                    if(mcity.equals("北京市")||mcity.equals("上海市")||mcity.equals("香港")||mcity.equals("台湾"))
+                                    if(mcity.equals("北京市")||mcity.equals("上海市")||mcity.equals("香港")||mcity.equals("台湾")||mcity.equals("广州市")||mcity.equals("深圳市"))
                                     {
                                         find.setImageResource(R.drawable.ditu_userfind);
                                     }
@@ -360,6 +373,7 @@ public class MapFragment extends Fragment implements LocationSource,AMapLocation
                                     aMap.clear();
                                     DingWeiMarker();
                                     line.setVisibility(View.INVISIBLE);
+                                    }
                                 }
                             }).setNegativeButton("否", new DialogInterface.OnClickListener() {
                         // TODO 取消按钮
@@ -373,7 +387,7 @@ public class MapFragment extends Fragment implements LocationSource,AMapLocation
             }
         });
         city.setText(current);
-        if(current.equals("北京市")||current.equals("上海市")||current.equals("香港")||current.equals("台湾"))
+        if(current.equals("北京市")||current.equals("上海市")||current.equals("香港")||current.equals("台湾")||current.equals("广州市")||current.equals("深圳市"))
         {
             find.setImageResource(R.drawable.ditu_userfind);
             HttpRequest(1,latLng_jw,null,"","");
@@ -448,12 +462,21 @@ public class MapFragment extends Fragment implements LocationSource,AMapLocation
             }else if(where.equals("2")){
                 amarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.sumarker4));
             }
+            //荤餐厅
+            if(where.equals("00")){
+                amarker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_yezi2));
+            }
         }
+
         //把要修改的marker传给静态marker
         if(marker.getTitle()!=null) {
             amarker = marker;
             int x = Integer.valueOf(marker.getTitle().trim());
             where=list_cantingInfo.get(x).getType();
+            //荤餐厅
+            if(list_cantingInfo.get(x).getVege_status().equals("2")){
+                where="00";
+            }
         }else {
             amarker=null;
         }
@@ -463,6 +486,7 @@ public class MapFragment extends Fragment implements LocationSource,AMapLocation
             // Log.d("=========mark",marker.getTitle().trim());
             marker.setIcon(BitmapDescriptorFactory
                     .fromResource(R.drawable.sumarker3));
+
         }
 
         // 将地图移动到定位点
@@ -474,16 +498,31 @@ public class MapFragment extends Fragment implements LocationSource,AMapLocation
         View view=LayoutInflater.from(getContext()).inflate(R.layout.canting_item_pop,null);
         listView.setSelection(i);
 
+        //荤餐厅
+        if(marker.getTitle()!=null) {
+            if(list_cantingInfo.get(i).getVege_status().equals("2")) {
+                marker.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_yezi));
+            }
+        }
+
         //显示详情
         TextView name=(TextView) view.findViewById(R.id.canting_item_namep);
         name.setText(list_cantingInfo.get(i).getTitle());
+        //荤餐厅
+        if(list_cantingInfo.get(i).getVege_status().equals("2")){
+            name.setTextColor(0xffff5e5e);
+        }
         TextView jiage=(TextView)view.findViewById(R.id.canting_item_jiagep);
         jiage.setText("¥"+list_cantingInfo.get(i).getUnit_pric());
         TextView juli=(TextView) view.findViewById(R.id.canting_item_julip);
         juli.setText("距您"+list_cantingInfo.get(i).getDistance()+"米");
         TextView content=(TextView)view.findViewById(R.id.canting_item_neirongp);
         content.setText(list_cantingInfo.get(i).getContent());
-
+        //荤餐厅
+        if(list_cantingInfo.get(i).getVege_status().equals("2")){
+            content.setText("已加入素食餐厅友好餐厅计划（点击发现素食）");
+            content.setTextColor(0xff51b30c);
+        }
         ImageView imageView=(ImageView) view.findViewById(R.id.canting_item_imageViewp);
         com.nostra13.universalimageloader.core.ImageLoader loader= ImageLoaderUtils.getInstance(getContext());
         DisplayImageOptions options=ImageLoaderUtils.getOpt();
@@ -548,7 +587,6 @@ public class MapFragment extends Fragment implements LocationSource,AMapLocation
 
         return true;
     }
-
     //返回结果处理
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -573,7 +611,7 @@ public class MapFragment extends Fragment implements LocationSource,AMapLocation
                     city.setText(c);
                     CityQiehuan(c, c);
                     showRecommendation(c);
-                    if(c.equals("北京市")||c.equals("上海市")||c.equals("香港")||c.equals("台湾"))
+                    if(c.equals("北京市")||c.equals("上海市")||c.equals("香港")||c.equals("台湾")||c.equals("广州市")||c.equals("深圳市")||c.equals("香港特别行政区"))
                     {
                         find.setImageResource(R.drawable.ditu_userfind);
                     }
@@ -625,6 +663,8 @@ public class MapFragment extends Fragment implements LocationSource,AMapLocation
                             }
                         });
                     }
+                }else {
+                    inputs.setText("");
                 }
                 break;
         }
@@ -657,12 +697,14 @@ public class MapFragment extends Fragment implements LocationSource,AMapLocation
                                 if(result.getRegeocodeAddress().getCity().isEmpty()){
                                     acity=result.getRegeocodeAddress().getProvince();
                                 }else {
-                                    acity= result.getRegeocodeAddress().getCity().toString();
+                                    acity= result.getRegeocodeAddress().getCity();
                                 }
                                 Log.d("===========city",acity);
                                 switch (acity){
-                                    case "香港特別行政區": acity="香港";break;
-                                    case "澳門特別行政區":acity="澳门";break;
+                                    case "香港特別行政區": acity="香港特别行政区";break;
+                                    case "澳門特別行政區":acity="澳门特别行政区";break;
+                                    case "香港特別行政区": acity="香港特别行政区";break;
+                                    case "澳門特別行政区":acity="澳门特别行政区";break;
                                     case "台湾省":acity="台湾";break;
                                     default:break;
                                 }
@@ -672,7 +714,7 @@ public class MapFragment extends Fragment implements LocationSource,AMapLocation
                                     Toast.makeText(getContext(),"暂未找到屏幕所在地区",Toast.LENGTH_SHORT).show();
                                 }else {
                                     if (acity.equals(city.getText())) {
-                                        if (acity.equals("北京市") || acity.equals("上海市") || acity.equals("香港") || acity.equals("台湾")) {
+                                        if (acity.equals("北京市") || acity.equals("上海市") || acity.equals("香港") || acity.equals("台湾")|| acity.equals("广州市")|| acity.equals("深圳市")|| acity.equals("香港特别行政区")) {
                                             final LatLng_jw my = new LatLng_jw();
                                             my.setLatitude(BaseApplication.app.getMyLociation().getLatitude());
                                             my.setLongitude(BaseApplication.app.getMyLociation().getLongitude());
@@ -792,9 +834,9 @@ public class MapFragment extends Fragment implements LocationSource,AMapLocation
         switch (type){
             //首次进入数据
             case 1:url=URLMannager.Mishi_Canting+"longitude/"
-                    + myjw.getLongitude().toString()
+                    + myjw.getLongitude()
                     + "/latitude/"
-                    + myjw.getLatitude().toString();
+                    + myjw.getLatitude();
                 break;
             //全部
             case 2:StringBuffer sb=new StringBuffer();
@@ -839,6 +881,7 @@ public class MapFragment extends Fragment implements LocationSource,AMapLocation
     //json解析
     public void jsonArrays(String s){
         try {
+            Log.d("===============ss",s);
             builder= new LatLngBounds.Builder();
             list_cantingInfo=new ArrayList<>();
             list_jd=new ArrayList<>();
@@ -873,7 +916,7 @@ public class MapFragment extends Fragment implements LocationSource,AMapLocation
                     cantingInfo.user_head_img_th = array1_2.getString("user_head_img_th");
                 cantingInfo.username = array1_2.getString("username");
                 cantingInfo.distance = array1_2.getString("distance");
-
+                cantingInfo.vege_status=array1_2.getString("vege_status");
                 if(type==1&&cantingInfo.getType().equals("1")) {
                     list_cantingInfo.add(cantingInfo);
                     addMarkersToMap(cantingInfo, y);
@@ -901,9 +944,9 @@ public class MapFragment extends Fragment implements LocationSource,AMapLocation
 
             }
             initList();
+
             bounds=builder.build();
             aMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, 50));
-
             if(list_cantingInfo.size()>0) {
                 line.setVisibility(View.VISIBLE);
                 msg.setVisibility(View.INVISIBLE);
@@ -915,7 +958,7 @@ public class MapFragment extends Fragment implements LocationSource,AMapLocation
             if(list_cantingInfo.size()==0){
                 Toast.makeText(getContext(), "未找到相关餐厅信息", Toast.LENGTH_SHORT).show();// 定位中心周边没有数据
                 line.setVisibility(View.INVISIBLE);
-                if(!city.getText().equals("北京市")&&!city.getText().equals("上海市")&&!city.getText().equals("香港")&&!city.getText().equals("台湾")){
+                if(!city.getText().equals("北京市")&&!city.getText().equals("上海市")&&!city.getText().equals("香港")&&!city.getText().equals("台湾")&&!city.getText().equals("广州市")&&!city.getText().equals("深圳市")){
                     msg.setVisibility(View.VISIBLE);
                     msgline.setVisibility(View.VISIBLE);
                     msgtext.setText("暂无本地信息收录，欢迎上传");
@@ -954,6 +997,10 @@ public class MapFragment extends Fragment implements LocationSource,AMapLocation
             case "6":markerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.sumarker1));break;
             case "2":markerOption.icon(BitmapDescriptorFactory.fromResource(R.drawable.sumarker4));break;
             default:break;
+        }
+
+        if(cantingInfo.getVege_status().equals("2")){
+            markerOption.icon(BitmapDescriptorFactory.fromResource(R.mipmap.icon_yezi2));
         }
 
         markerOption.title("" + id);// 给marker添加一个自定义的标记，通过title属性传一个int值
@@ -1180,7 +1227,7 @@ public class MapFragment extends Fragment implements LocationSource,AMapLocation
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         city.setText(mcity);
-                        if(mcity.equals("北京市")||mcity.equals("上海市")||mcity.equals("香港")||mcity.equals("台湾"))
+                        if(mcity.equals("北京市")||mcity.equals("上海市")||mcity.equals("香港")||mcity.equals("台湾")||mcity.equals("广州市")||mcity.equals("深圳市"))
                         {
                             find.setImageResource(R.drawable.ditu_userfind);
                         }
@@ -1293,7 +1340,7 @@ public class MapFragment extends Fragment implements LocationSource,AMapLocation
     }
 
     public void showRecommendation(String city){
-        StringRequest request=new StringRequest("https://www.isuhuo.com/plainLiving/index.php/androidapi/map/city_restaurant/city/"+city, new Response.Listener<String>() {
+        StringRequest request=new StringRequest("http://www.isuhuo.com/plainLiving/index.php/androidapi/map/city_restaurant/city/"+city, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
                 try {

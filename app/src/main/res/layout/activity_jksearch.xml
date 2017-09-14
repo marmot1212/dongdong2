@@ -17,13 +17,11 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="30dp"
-            android:background="@drawable/button_bg3">
+            android:background="@drawable/button_bg6">
             <ImageView
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_margin="8dp"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
                 android:src="@mipmap/findgray"/>
             <EditText
                 android:imeOptions="actionSearch"
@@ -39,7 +37,6 @@
         </LinearLayout>
         <TextView
             android:id="@+id/jksearch_fanhui"
-            android:textSize="16sp"
             android:textColor="#fff"
             android:layout_weight="0"
             android:layout_width="60dp"

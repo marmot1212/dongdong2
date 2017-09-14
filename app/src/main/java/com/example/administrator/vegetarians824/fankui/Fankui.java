@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.entry.FanKui;
 import com.example.administrator.vegetarians824.login.Login;
@@ -76,5 +77,17 @@ public class Fankui extends AppCompatActivity {
         spr.putValue("uid",BaseApplication.app.getUser().getId());
         spr.putValue("content",content);
         SlingleVolleyRequestQueue.getInstance(Fankui.this).addToRequestQueue(spr);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

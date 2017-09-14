@@ -11,12 +11,21 @@ public class Province {
 
 	private String name;
 	private List<ProvinceCity> provinceCity;//省份内的城市
-	
+	private boolean isExpand=false;
 	public Province(String name, List<ProvinceCity> provinceCity) {
 		super();
 		this.name = name;
 		this.provinceCity = provinceCity;
 	}
+
+	public boolean isExpand() {
+		return isExpand;
+	}
+
+	public void setExpand(boolean expand) {
+		isExpand = expand;
+	}
+
 	public Province() {
 		super();
 	}

@@ -46,7 +46,6 @@
                 android:id="@+id/canting_item_name"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
-                android:text="素食餐厅"
                 android:textColor="#2c2c2c"
                 android:textSize="14sp" />
             </LinearLayout>
@@ -55,20 +54,22 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:id="@+id/canting_item_jiageline"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="人均"
                     android:textSize="12sp"/>
 
                 <TextView
                     android:id="@+id/canting_item_jiage"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
-                    android:layout_weight="1"
                     android:text="0"
                     android:textSize="12sp"
                     android:textColor="#FF011D" />
@@ -78,15 +79,15 @@
                     android:layout_height="15dp"
                     android:layout_marginLeft="7dp"
                     android:background="#000" />
-
+                </LinearLayout>
                 <TextView
                     android:id="@+id/canting_item_juli"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="6dp"
-                    android:layout_weight="1"
                     android:text="距您"
                     android:textSize="12sp"/>
+
             </LinearLayout>
 
             <TextView

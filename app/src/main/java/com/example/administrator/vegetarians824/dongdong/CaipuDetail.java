@@ -19,12 +19,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.adapter.YongliaoAdapter;
 import com.example.administrator.vegetarians824.adapter.ZuofaAdapter;
@@ -76,6 +78,10 @@ public class CaipuDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_caipu_detail);
+        //StatusBarUtil.setTranslucent(this);
+        FrameLayout fram=(FrameLayout)findViewById(R.id.caipu_fram);
+        StatusBarUtil.setTranslucentForImageView(this,fram);
+        
         yl_list=new ArrayList<>();
         zf_list=new ArrayList<>();
         Intent intent=getIntent();
@@ -104,8 +110,14 @@ public class CaipuDetail extends AppCompatActivity {
     }
     public void myJson(String s){
         try {
+            Log.d("=========cpss",s);
             JSONObject js=new JSONObject(s);
             JSONObject js1=js.getJSONObject("Result");
+            int commentcount=Integer.valueOf(js1.getString("total"));
+            if(commentcount>0){
+                TextView count=(TextView)findViewById(R.id.caipu_pinglunnum);
+                count.setText(commentcount+"");
+            }
             JSONObject js2=js1.getJSONObject("dish");
             type=js2.getString("type");
             title=js2.getString("title");
@@ -123,8 +135,7 @@ public class CaipuDetail extends AppCompatActivity {
             }else
                 if(js2.getString("reminded").equals("")) {
                 LinearLayout ll = (LinearLayout) findViewById(R.id.caipu_line);
-                TextView l1 = (TextView) findViewById(R.id.caipu_line1);
-                ll.removeView(l1);
+                   ll.removeAllViews();
             }
 
             TextView tv1=(TextView)findViewById(R.id.caipu_name);
@@ -147,8 +158,9 @@ public class CaipuDetail extends AppCompatActivity {
             DisplayImageOptions options=ImageLoaderUtils.getOpt();
             loader.displayImage(URLMannager.Imag_URL+""+pic,pic1,options);
             loader.displayImage(URLMannager.Imag_URL+""+upic,pic2,options);
-            FrameLayout fram=(FrameLayout)findViewById(R.id.caipu_fram);
-            StatusBarUtil.setTranslucentForImageView(CaipuDetail.this,fram);
+            //RelativeLayout fram=(RelativeLayout)findViewById(R.id.caipu_fram);
+
+           // StatusBarUtil.setTranslucentForImageView(CaipuDetail.this,fram);
 
             pic2.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -174,7 +186,7 @@ public class CaipuDetail extends AppCompatActivity {
 
 
             JSONArray ja2=js2.getJSONArray("step");
-            Log.d("============step",ja2.toString());
+           // Log.d("============step",ja2.toString());
             for(int j=0;j<ja2.length();j++){
                 JSONObject jaa2=ja2.getJSONObject(j);
                 Zuofa zf=new Zuofa();
@@ -254,8 +266,6 @@ public class CaipuDetail extends AppCompatActivity {
         qq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlatformConfig.setQQZone("1105683168", "U2MDcVrp5vlfA3Xc");
-
                 String url=URLMannager.ShareDish+id;
                 UMImage image = new UMImage(CaipuDetail.this,URLMannager.Imag_URL+pic);
 
@@ -288,7 +298,6 @@ public class CaipuDetail extends AppCompatActivity {
         zone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlatformConfig.setQQZone("1105683168", "U2MDcVrp5vlfA3Xc");
                 String url=URLMannager.ShareDish+id;
                 UMImage image = new UMImage(CaipuDetail.this,URLMannager.Imag_URL+pic);
 
@@ -320,7 +329,6 @@ public class CaipuDetail extends AppCompatActivity {
         weixin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PlatformConfig.setWeixin("wxfa8558a0ee056f0c", "cf0c56f350578c651320a2b94675b379");
                 String url=URLMannager.ShareDish+id;
                 UMImage image = new UMImage(CaipuDetail.this,URLMannager.Imag_URL+pic);
 
@@ -453,7 +461,7 @@ public class CaipuDetail extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(metric);
         ViewGroup.LayoutParams lp =pic1.getLayoutParams();
         lp.width = metric.widthPixels;
-        lp.height = metric.widthPixels * 9 / 16;
+        lp.height = metric.widthPixels * 12/ 16;
         pic1.setLayoutParams(lp);
         scrollView.setOnTouchListener(new View.OnTouchListener() {
             @SuppressLint({ "ClickableViewAccessibility", "NewApi" })
@@ -482,7 +490,7 @@ public class CaipuDetail extends AppCompatActivity {
                         // 处理放大
                         mScaling = true;
                         lp.width = metric.widthPixels + distance;
-                        lp.height = (metric.widthPixels + distance) * 9 / 16;
+                        lp.height = (metric.widthPixels + distance) * 12 / 16;
                         pic1.setLayoutParams(lp);
                         return true; // 返回true表示已经完成触摸事件，不再处理
                 }
@@ -498,7 +506,7 @@ public class CaipuDetail extends AppCompatActivity {
         final float w = pic1.getLayoutParams().width;// 图片当前宽度
         final float h = pic1.getLayoutParams().height;// 图片当前高度
         final float newW = metric.widthPixels;// 图片原宽度
-        final float newH = metric.widthPixels * 9 / 16;// 图片原高度
+        final float newH = metric.widthPixels * 12/ 16;// 图片原高度
 
         // 设置动画
         ValueAnimator anim = ObjectAnimator.ofFloat(0.0F, 1.0F).setDuration(200);
@@ -514,5 +522,16 @@ public class CaipuDetail extends AppCompatActivity {
         });
         anim.start();
 
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        StatService.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        StatService.onPause(this);
     }
 }

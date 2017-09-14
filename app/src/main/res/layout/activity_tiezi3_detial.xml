@@ -25,7 +25,9 @@
             android:dividerPadding="20dp"
             android:scrollbars="none"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            ptr:ptrShowIndicator="false">
         </com.handmark.pulltorefresh.library.PullToRefreshListView>
         <LinearLayout
             android:layout_width="match_parent"
