@@ -37,6 +37,11 @@ public class JKyuansu extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * TODO 整理成一个点击事件方法，switch(view.getId())+MFGT跳转
+     * @param view
+     */
     public void danbaizhi(View view){
         Intent intent=new Intent(JKyuansu.this,JKYuansuDetail.class);
         intent.putExtra("what","蛋白质");
