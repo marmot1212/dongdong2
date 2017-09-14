@@ -1,6 +1,5 @@
 package com.example.administrator.vegetarians824.dongdong;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,7 +7,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -22,7 +20,6 @@ import com.example.administrator.vegetarians824.adapter.CantingListAdapter;
 import com.example.administrator.vegetarians824.entry.CantingInfo;
 import com.example.administrator.vegetarians824.mannager.URLMannager;
 import com.example.administrator.vegetarians824.myapplications.BaseApplication;
-import com.example.administrator.vegetarians824.util.SensorManagerHelper;
 import com.example.administrator.vegetarians824.util.SlingleVolleyRequestQueue;
 import com.example.administrator.vegetarians824.util.StatusBarUtil;
 
@@ -43,7 +40,7 @@ public class JKfujin extends AppCompatActivity {
         StatusBarUtil.setColorDiff(this,0xff00aff0);
         initoperate();
         list_info=new ArrayList<>();
-        list=(ListView)findViewById(R.id.fujin_list);
+        list=(ListView)findViewById(R.id.nearby_list);
         if(BaseApplication.app.getMyLociation()!=null){
             Log.d("===========aa","aa");
             initdata();
