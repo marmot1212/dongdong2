@@ -30,6 +30,17 @@ public class CoutryData {
                     "伊拉克","伊朗","以色列","意大利","印度","印度尼西亚","英国","约旦","越南","赞比亚",
                     "乍得","智利","中非","中国"};
 
+    public String[] getCountryEnName() {
+        return CountryEnName;
+    }
+
+    public void setCountryEnName(String[] countryEnName) {
+        CountryEnName = countryEnName;
+    }
+
+    private String [] CountryEnName=new String[]{
+            "Albania","Algeria","Argentina","United Arab Emirates","Oman","Azerbaijan","Egypt","Ireland","Estonia","Angola","Antigua and Barbuda","Austria","Australia","Barbados","Papua New Guinea","The Bahamas","Pakistan","Paraguay","Palestine","Bahrain","Panama","Brazil","Belarus","Bermuda","Bulgaria","Northern Mariana Islands","Benin","Belgium","Iceland","Poland","Bosnia and Herzegovina","Bolivia","Belize","Botswana","Bhutan","Burkina Faso","Burundi","North Korea","Equatorial Guinea","Denmark","Germany","East Timor","Togo","Dominican Republic","Russia","Ecuador","Eritrea","France","French Polynesia","French Guiana","Philippines","Finland","Cape Verde","Gambia","Republic of the Congo","Democratic Republic of the Congo","Colombia","Costa Rica","Greenland","Georgia","Cuba","Guahan","Guyana","Kazakhstan","Haiti","South Korea","Netherlands Antilles","Honduras","Djibouti","Kyrgyzstan","Guinea","Guinea Bissau","Canada","Ghana","Gabon","Cambodia","Czech Republic","Zimbabwe","Cameroon","Qatar","Cayman Islands","Comoros","Kosovo","Ivory Coast","Kuwait","Croatia","Kenya","The Cook Islands","Latvia","Lesotho","Laos","Lebanon","Lithuania","Liberia","Libya","Liechtenstein","Reunion Island","Luxembourg","Rwanda","Madagascar","Madeira Islands","Maldives","Malta","Malawi","Malaysia","Mali","Macedonia","Mauritius","Mauritania","United States of America","American Samoa","Mongolia","Bangladesh","Peru","Myanmar","Moldova","Morocco","Monaco","Mozambique","Mexico","Namibia","South Africa","South Sudan","Nepal","Nicaragua","Niger","Nigeria","Niue","Norway","Pitcairn Islands","Portugal","Japan","Sweden","Switzerland","El Salvador","Republic of Serbia","Sierra Leone","Senegal","Cyprus","Seychelles","Saudi Arabia","Sao Tome and Principe","Saint Helena","Saint Kitts and Nevis","Saint Lucia","San Marino","Saint Vincent and the Grenadines","Sri Lanka","Slovakia","Swaziland","Sudan","Somalia","Tajikistan","Thailand","United Republic of Tanzania","The Turks and Caicos Islands","Trinidad and Tobago","Tunisia","Turkey","Tokelau","Wallis et Futuna","Guatemala","Venezuela","Brunei","Uganda","Ukraine","Uruguay","Uzbekistan","Spain","Western Sahara","Greece","Singapore","New Caledonia","New Zealand","Austria","Syria","Jamaica","Armenia","Azores","Yemen","Iraq","Iran","Israel","Italy","India","Indonesia","United Kingdom","Jordan","Vietnam","Zambia","Chad","Chile","Central African Republic","China",
+    };
 
     private int[][] CountryLanguage = new int[][]{
             //1-20
@@ -89,7 +100,7 @@ public class CoutryData {
             {R.array.西班牙语,},
             {R.array.阿拉伯语,},
             {R.array.法语,},
-           // {R.array.法罗语,},
+            // {R.array.法罗语,},
             {R.array.法语,},
             {R.array.法语},
             {R.array.英语,},
@@ -264,11 +275,11 @@ public class CoutryData {
             {       //A-Z排序
                     //a
                     {"阿尔巴尼亚","阿尔及利亚","阿根廷","阿拉伯联合酋长国","阿曼","阿塞拜疆","埃及","爱尔兰",
-                    "爱沙尼亚","安哥拉","安提瓜和巴布达","奥地利","澳大利亚"},
+                            "爱沙尼亚","安哥拉","安提瓜和巴布达","奥地利","澳大利亚"},
                     //b
                     {"巴巴多斯","巴布亚新几内亚","巴哈马","巴基斯坦",
-                    "巴拉圭","巴勒斯坦","巴林","巴拿马","巴西","白俄罗斯","百慕大","保加利亚","北马里亚纳","贝宁",
-                    "比利时","冰岛","波兰","波斯尼亚和黑塞哥维那","玻利维亚","伯利兹","博茨瓦纳","不丹","布基纳法索","布隆迪"},
+                            "巴拉圭","巴勒斯坦","巴林","巴拿马","巴西","白俄罗斯","百慕大","保加利亚","北马里亚纳","贝宁",
+                            "比利时","冰岛","波兰","波斯尼亚和黑塞哥维那","玻利维亚","伯利兹","博茨瓦纳","不丹","布基纳法索","布隆迪"},
                     //c
                     {"朝鲜","赤道几内亚"},
                     //d
@@ -289,14 +300,14 @@ public class CoutryData {
                     {"喀麦隆","卡塔尔","开曼群岛","科摩罗","科索沃","科特迪瓦", "科威特","克罗地亚","肯尼亚","库克群岛"},
                     //l
                     {"拉脱维亚","莱索托","老挝","黎巴嫩","立陶宛","利比里亚",
-                    "利比亚","列支敦士登","留尼旺","卢森堡","卢旺达"},
+                            "利比亚","列支敦士登","留尼旺","卢森堡","卢旺达"},
                     //m
                     {"马达加斯加","马德拉群岛","马尔代夫","马耳他",
-                    "马拉维","马来西亚","马里","马其顿","毛里求斯","毛里塔尼亚","美国","美属萨摩亚","蒙古","孟加拉国",
-                    "秘鲁","缅甸","摩尔多瓦","摩洛哥","摩纳哥","莫桑比克","墨西哥"},
+                            "马拉维","马来西亚","马里","马其顿","毛里求斯","毛里塔尼亚","美国","美属萨摩亚","蒙古","孟加拉国",
+                            "秘鲁","缅甸","摩尔多瓦","摩洛哥","摩纳哥","莫桑比克","墨西哥"},
                     //n
                     {"纳米比亚","南非","南苏丹",
-                    "尼泊尔","尼加拉瓜","尼日尔","尼日利亚","纽埃","挪威"},
+                            "尼泊尔","尼加拉瓜","尼日尔","尼日利亚","纽埃","挪威"},
                     //o
 
                     //p
@@ -307,8 +318,8 @@ public class CoutryData {
                     {"日本","瑞典", "瑞士"},
                     //s
                     {"萨尔瓦多","塞尔维亚","塞拉利昂","塞内加尔","塞浦路斯","塞舌尔","沙特阿拉伯","圣多美和普林西比","圣赫勒拿",
-                    "圣基茨和尼维斯","圣卢西亚","圣马力诺","圣文森特和格林纳丁斯","斯里兰卡","斯洛伐克","斯威士兰","苏丹",
-                    "索马里"},
+                            "圣基茨和尼维斯","圣卢西亚","圣马力诺","圣文森特和格林纳丁斯","斯里兰卡","斯洛伐克","斯威士兰","苏丹",
+                            "索马里"},
                     //t
                     {"塔吉克斯坦","泰国","坦桑尼亚","特克斯和凯科斯群岛","特立尼达和多巴哥","突尼斯","土耳其","托克劳"},
                     //u
@@ -357,4 +368,6 @@ public class CoutryData {
     public void setCountryLanguage(int[][] countryLanguage) {
         CountryLanguage = countryLanguage;
     }
+
+
 }

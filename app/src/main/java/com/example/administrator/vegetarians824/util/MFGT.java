@@ -1,11 +1,14 @@
 package com.example.administrator.vegetarians824.util;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
 import com.example.administrator.vegetarians824.MapActivity;
 import com.example.administrator.vegetarians824.R;
+import com.example.administrator.vegetarians824.veganpass.CheckLanguage;
+import com.example.administrator.vegetarians824.veganpass.PassportHome;
 
 
 /**
@@ -35,5 +38,13 @@ public class MFGT {
 
     public static void gotoMapActivity(Activity activity) {
         startActivity(activity, MapActivity.class);
+    }
+
+    public static void gotoPassportHome(Activity activity) {
+        startActivity(activity, PassportHome.class);
+    }
+
+    public static void gotoCheckLanguage(Context context) {
+        startActivity((Activity)context,CheckLanguage.class);
     }
 }

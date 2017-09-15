@@ -713,7 +713,11 @@
             android:screenOrientation="portrait" />
         <activity android:name=".video.CaipuGet" />
         <activity android:name=".mine.MyCollect2" />
-        <activity android:name=".dongdong.CantingDetail2"></activity>
+        <activity android:name=".veganpass.PreferencePage"/>
+        <activity android:name=".veganpass.CheckLanguage"/>
+        <activity android:name=".veganpass.Setting"/>
+        <activity android:name=".veganpass.PassportHome"/>
+
     </application>
 
 </manifest>

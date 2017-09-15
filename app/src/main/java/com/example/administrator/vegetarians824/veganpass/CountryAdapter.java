@@ -18,10 +18,18 @@ import java.util.List;
 public class CountryAdapter extends BaseAdapter {
     private List<Country> countrylist;
     private Context context;
+    private String en_cn;
     public CountryAdapter(List<Country> countrylist,Context context){
         this.countrylist=countrylist;
         this.context=context;
     }
+
+    public CountryAdapter(List<Country> countrylist,Context context,String cn_en){
+        this.countrylist=countrylist;
+        this.context=context;
+        this.en_cn=cn_en;
+    }
+
     @Override
     public int getCount() {
         return countrylist.size();
