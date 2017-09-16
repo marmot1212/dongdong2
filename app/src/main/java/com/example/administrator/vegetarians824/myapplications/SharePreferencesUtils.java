@@ -12,6 +12,7 @@ public class SharePreferencesUtils {
     private static final String SHARE_PREFERENCE_NAME = "com.dongdong.vegetarians";
     private static final String LANGUAGE_TYPE = "language_type";
     private static final String PHONE_ID = "phone_id";
+    private static final String VEGETARIAN_TYPE = "vegetarian_type";
 
     static SharePreferencesUtils instance;
     SharedPreferences sharedPreferences;
@@ -46,8 +47,16 @@ public class SharePreferencesUtils {
         return sharedPreferences.getString(PHONE_ID,null);
     }
 
+    public void setVegetarianType(String vegetarianType){
+        editor.putString(VEGETARIAN_TYPE,vegetarianType).commit();
+    }
+
+    public String getVegetarianType(){
+        return sharedPreferences.getString(VEGETARIAN_TYPE,null);
+    }
+
     public void removeUser(){
-        editor.remove(LANGUAGE_TYPE).remove(PHONE_ID).commit(); // 链式调用
+        editor.remove(LANGUAGE_TYPE).remove(PHONE_ID).remove(VEGETARIAN_TYPE).commit(); // 链式调用
     }
 
 }

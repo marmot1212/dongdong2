@@ -29,10 +29,8 @@ public class CheckLanguage extends AppCompatActivity {
     FrameLayout mFrame;
 
 
-    //    private TextView bt1, bt2;
     private SharedPreferences pre;
     public static CheckLanguage instance;
-//    private FrameLayout mainlayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +81,8 @@ public class CheckLanguage extends AppCompatActivity {
                 editor.apply();
 
                 SharePreferencesUtils.getInstance().setLanguageType(languageType);
-                MFGT.gotoPreferencePage(CheckLanguage.this);
+                MFGT.gotoPreferencePage(CheckLanguage.this); // 没有finish()可能还需要返回！！！
+
             }
         });
     }
