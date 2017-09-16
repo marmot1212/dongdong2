@@ -9,6 +9,7 @@ import com.example.administrator.vegetarians824.MapActivity;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.veganpass.CheckLanguage;
 import com.example.administrator.vegetarians824.veganpass.PassportHome;
+import com.example.administrator.vegetarians824.veganpass.PreferencePage;
 
 
 /**
@@ -46,5 +47,9 @@ public class MFGT {
 
     public static void gotoCheckLanguage(Context context) {
         startActivity((Activity)context,CheckLanguage.class);
+    }
+
+    public static void gotoPreferencePage(Activity activity) {
+        startActivity(activity, PreferencePage.class);
     }
 }

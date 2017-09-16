@@ -8,22 +8,24 @@ import android.content.SharedPreferences;
  * Created by clawpo on 2017/3/21.
  */
 
-public class SharePrefrenceUtils {
+public class SharePreferencesUtils {
     private static final String SHARE_PREFERENCE_NAME = "com.dongdong.vegetarians";
     private static final String LANGUAGE_TYPE = "language_type";
-    static SharePrefrenceUtils instance;
+    private static final String PHONE_ID = "phone_id";
+
+    static SharePreferencesUtils instance;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
-    public SharePrefrenceUtils() {
+    public SharePreferencesUtils() {
         sharedPreferences = BaseApplication.getApp().
                 getSharedPreferences(SHARE_PREFERENCE_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
     }
 
-    public static SharePrefrenceUtils getInstance(){
+    public static SharePreferencesUtils getInstance(){
         if (instance==null){
-            instance = new SharePrefrenceUtils();
+            instance = new SharePreferencesUtils();
         }
         return instance;
     }
@@ -36,8 +38,16 @@ public class SharePrefrenceUtils {
         return sharedPreferences.getString(LANGUAGE_TYPE,null);
     }
 
+    public void setPhoneId(String phoneId){
+        editor.putString(PHONE_ID,phoneId).commit();
+    }
+
+    public String getPhoneId(){
+        return sharedPreferences.getString(PHONE_ID,null);
+    }
+
     public void removeUser(){
-        editor.remove(LANGUAGE_TYPE).commit();
+        editor.remove(LANGUAGE_TYPE).remove(PHONE_ID).commit(); // 链式调用
     }
 
 }
