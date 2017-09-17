@@ -6,6 +6,7 @@ import android.content.Intent;
 
 import com.example.administrator.vegetarians824.MapActivity;
 import com.example.administrator.vegetarians824.R;
+import com.example.administrator.vegetarians824.dongdong.JKYuansuDetail;
 import com.example.administrator.vegetarians824.homePage.toolbox.nutridata.NutriData;
 import com.example.administrator.vegetarians824.homePage.toolbox.nutridata.NutriDataDetails;
 import com.example.administrator.vegetarians824.homePage.toolbox.nutridata.NutriQuery;
@@ -64,7 +65,7 @@ public class MFGT {
     }
 
     public static void gotoNutriDataDetails(Activity activity, String key, String value) {
-        Intent intent = new Intent(activity, NutriDataDetails.class);
+        Intent intent = new Intent(activity, JKYuansuDetail.class);
         intent.putExtra(key, value);
         startActivity(activity, intent);
     }

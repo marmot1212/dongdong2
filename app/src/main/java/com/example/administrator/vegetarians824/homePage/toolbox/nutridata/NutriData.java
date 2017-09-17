@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.util.MFGT;
+import com.example.administrator.vegetarians824.util.StatusBarUtil;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -23,7 +24,8 @@ public class NutriData extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nutri_data);
         ButterKnife.bind(this);
-//        StatusBarUtil.setColorDiff(this,0xff00aff0);
+        // 修改状态栏的背景颜色
+        StatusBarUtil.setColorDiff(this,0xff00aff0);
     }
 
     @OnClick({R.id.backArea, R.id.btn_nutuiData})

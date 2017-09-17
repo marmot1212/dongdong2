@@ -8,10 +8,22 @@
     tools:context="com.example.administrator.vegetarians824.homePage.toolbox.nutridata.NutriDataDetails"
     android:orientation="vertical"
     >
-    <TextView
+    <include layout="@layout/layout_common_header"/>
+    <com.example.administrator.vegetarians824.myView.UserDefineScrollView
+        android:fadingEdge="none"
+        android:focusable="false"
+        android:overScrollMode="never"
+        android:scrollbars="none"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="我是营养元素详情界面"
-        />
+        android:layout_height="match_parent"
+        android:id="@+id/nutriElementDetailsScroll"
+        >
+        <LinearLayout
+            android:id="@+id/ll_element_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+        </LinearLayout>
+    </com.example.administrator.vegetarians824.myView.UserDefineScrollView>
+
 </LinearLayout>

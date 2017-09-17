@@ -49,11 +49,12 @@ public class UserDefineScrollView extends ScrollView {
 		super.fling(velocityY/6);
 	}
 
-	@Override
+		@Override
 	protected void onFinishInflate() {
-		if (getChildCount()> 0) {
-			contentView = getChildAt(0);
-		}
+			super.onFinishInflate();
+			if (getChildCount() > 0) {
+				contentView = getChildAt(0);
+			}
 	}
 
 	@Override
