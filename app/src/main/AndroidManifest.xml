@@ -241,9 +241,9 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
-        <service
-            android:name="com.sina.weibo.sdk.net.DownloadService"
-            android:exported="false" />
+        <!--<service-->
+            <!--android:name="com.sina.weibo.sdk.net.DownloadService"-->
+            <!--android:exported="false" />-->
 
         <activity
             android:name=".dongdong.AWord"

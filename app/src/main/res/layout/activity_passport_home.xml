@@ -4,7 +4,7 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context="com.example.administrator.vegetarians824.veganpass.PassportHome"
-             android:id="@+id/home_rootview"
+             android:id="@+id/frameLayout_port_home"
     >
 
     <FrameLayout
@@ -14,7 +14,7 @@
         android:padding="16dp">
         <FrameLayout
             android:background="#fff"
-            android:id="@+id/home_content"
+            android:id="@+id/frame_passport_content"
             android:visibility="invisible"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -24,7 +24,7 @@
     </FrameLayout>
 
     <FrameLayout
-        android:id="@+id/home_bartop"
+        android:id="@+id/passport_menubar_top"
         android:background="#00AFF0"
         android:layout_width="match_parent"
         android:layout_height="64dp">
@@ -94,11 +94,12 @@
     </FrameLayout>
     <LinearLayout
         android:visibility="invisible"
-        android:id="@+id/home_localfailed"
+        android:id="@+id/home_locate_failed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        >
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

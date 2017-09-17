@@ -6,6 +6,8 @@ import android.net.NetworkInfo;
 
 /**
  * 判断是否连接上网络的一个工具类
+ *静态方法，需要提供一个参数Context
+ * 返回值为boolean：若intInfo为空，返回false；不为空，返回netInfo.isConnected()
  * @author zxh
  *
  */

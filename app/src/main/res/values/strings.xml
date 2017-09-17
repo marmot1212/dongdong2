@@ -93,6 +93,6 @@
     <string name="main__btn_delete">删除</string>
     <string name="main__btn_move">移动</string>
     <string name="main__btn_rename">重命名</string>
-    <string name="passport_page_title">我是一名素食者。</string>
-    <string name="passport_page_content">我不吃鱼，海鲜，家禽，肉类或任何动物制品，包括鸡蛋，奶制品和蜂蜜，特别的，我也不吃含葱、大蒜、韭菜、小蒜、洋葱。</string>
+    <string name="passport_page_title">【测试】我是一名素食者。</string>
+    <string name="passport_page_content">【测试】我不吃鱼，海鲜，家禽，肉类或任何动物制品，包括鸡蛋，奶制品和蜂蜜，特别的，我也不吃含葱、大蒜、韭菜、小蒜、洋葱。</string>
 </resources>

@@ -21,7 +21,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -40,7 +39,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,12 +65,21 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class PassportHome extends AppCompatActivity {
+    @Bind(R.id.favour_leader)
+    ImageView m_favour_leader;
     private FrameLayout content;
+    /**
+     * dialog工具类
+     */
     private LoadingDialog loadingDialog;//加载显示框
+
     private FrameLayout bartop;
     private LinearLayout barbottom;
-//    private LinearLayout barcenter;
+    //    private LinearLayout barcenter;
     private Long up = 0L, down = 0L;
     private boolean netflag = false;
     private String type;
@@ -83,7 +90,6 @@ public class PassportHome extends AppCompatActivity {
     private LinearLayout listview2;
     private String mycountry, mylanguage;//选中的国家
     private TextView mycountrytv;//国家
-    private List<Country> list,list_en;
     private CountryAdapter adapter;
     private CoutryData data;
     private TextView title, contents;
@@ -91,12 +97,18 @@ public class PassportHome extends AppCompatActivity {
     private int[] id;//语言资源索引数组
     private int language_num = 0;//当前语言编号
     private GestureDetector gestureDetector;
+    private List<Country> list, list_en;
     private List<Letters> list2;
     private List<TextView> tvlist;
+    /**
+     * 小手提示图标，
+     * tip1: 快速单击，顶部菜单
+     * tip2: 滑动，右侧划出
+     */
     private ImageView tip1, tip2;
-//    private SeekBar seekbar;
+    //    private SeekBar seekbar; // 字体大小调节工具，进度条模式
     private float x, y;
-    private FrameLayout rootview;
+    private FrameLayout rootview; // activity_passport_home.xml整个布局
     private ImageButton floats;
     private TextView favour;
     public static boolean hasedit = false;
@@ -106,30 +118,29 @@ public class PassportHome extends AppCompatActivity {
     private LocationManager locationManager;
     private String locationProvider;
     private String en_ch;
-    private ImageView favour_leader;
-    private boolean nopreference=true;
+//    private ImageView favour_leader;
+    private boolean nopreference = true;
     private TextView jumpurl;
-    private String url="";
-    private CustomToast customToast;
-    private CustomToast2 customToast2;
+    private String url = "";
+    private CustomToast customToast; // Toast信息：定位成功
+    private CustomToast2 customToast2; // Toast提示信息：国家：xx 信息已翻译至当地语言
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //禁止屏幕休眠或锁屏
-       // getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        // getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_passport_home);
+        ButterKnife.bind(this);
         StatusBarUtil.setColorDiff(this, 0x8e000000);
-        list = new ArrayList<>();
-        list2 = new ArrayList<>();
-        tvlist = new ArrayList<>();
-        customToast=new CustomToast();
-        customToast2=new CustomToast2();
+
         initData();
+
         initView();
         initMenu();
-        if(en_ch.equals("cn")) {
+        if (en_ch.equals("cn")) {
             loadingDialog.setMessage("连接网络...");
-        }else {
+        } else {
             loadingDialog.setMessage("loading...");
         }
         loadingDialog.show();
@@ -139,40 +150,39 @@ public class PassportHome extends AppCompatActivity {
     }
 
     public void initView() {
-        favour_leader=(ImageView)findViewById(R.id.favour_leader);
-        if(en_ch.equals("cn")){
-            favour_leader.setImageResource(R.drawable.leader_cn);
-        }else {
+        if (en_ch.equals("cn")) {
+            m_favour_leader.setImageResource(R.drawable.leader_cn);
+        } else {
 //            favour_leader.setImageResource(R.drawable.leader_en);
         }
-        rootview = (FrameLayout) findViewById(R.id.home_rootview);
-        content = (FrameLayout) findViewById(R.id.home_content);
-        localfailed = (LinearLayout) findViewById(R.id.home_localfailed);
+        rootview = (FrameLayout) findViewById(R.id.frameLayout_port_home);
+        content = (FrameLayout) findViewById(R.id.frame_passport_content);
+        localfailed = (LinearLayout) findViewById(R.id.home_locate_failed);
         mycountrytv = (TextView) findViewById(R.id.home_country);
         title = (TextView) findViewById(R.id.home_title);
         contents = (TextView) findViewById(R.id.home_contents);
-        bartop = (FrameLayout) findViewById(R.id.home_bartop);
+        bartop = (FrameLayout) findViewById(R.id.passport_menubar_top);
         barbottom = (LinearLayout) findViewById(R.id.home_barbottom);
 //        barcenter = (LinearLayout) findViewById(R.id.home_barcenter);
         loadingDialog = new LoadingDialog(this);
         tip1 = (ImageView) findViewById(R.id.tips_click);
         tip2 = (ImageView) findViewById(R.id.tips_move);
-        if(en_ch.equals("en")){
+        if (en_ch.equals("en")) {
 //            tip1.setImageResource(R.mipmap.click2);
 //            tip2.setImageResource(R.mipmap.slide2);
         }
 //        seekbar = (SeekBar) findViewById(R.id.home_seekbar);
         floats = (ImageButton) findViewById(R.id.home_floats);
         favour = (TextView) findViewById(R.id.home_favour);
-        if(en_ch.equals("en")){
+        if (en_ch.equals("en")) {
             favour.setText("Setting");
-        }else {
+        } else {
             favour.setText("设置");
         }
         if (!pre.getBoolean("isfirstedit", true)) {
             floats.setVisibility(View.VISIBLE);
         }
-        jumpurl=(TextView)findViewById(R.id.jump_url);
+        jumpurl = (TextView) findViewById(R.id.jump_url);
 
         initPopFavour();
         //设置国家
@@ -199,9 +209,9 @@ public class PassportHome extends AppCompatActivity {
         });
 
         TextView feedback = (TextView) findViewById(R.id.home_fedback);
-        if(en_ch.equals("en")){
+        if (en_ch.equals("en")) {
             feedback.setText("Feedback");
-        }else {
+        } else {
             feedback.setText("反馈");
         }
         feedback.setOnClickListener(new View.OnClickListener() {
@@ -251,7 +261,7 @@ public class PassportHome extends AppCompatActivity {
                         rootview.setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
                         bartop.setVisibility(View.VISIBLE);
                         //barbottom.setVisibility(View.VISIBLE);
-                        if(!pre.getBoolean("isfirstedit", true)&&(!nopreference)) {
+                        if (!pre.getBoolean("isfirstedit", true) && (!nopreference)) {
                             floats.setVisibility(View.VISIBLE);
                         }
 //                        barcenter.setVisibility(View.VISIBLE);
@@ -330,6 +340,14 @@ public class PassportHome extends AppCompatActivity {
 
     //获取本地存储的数据 初始化数据类
     public void initData() {
+        // 初始化数据类
+        list = new ArrayList<>();
+        list2 = new ArrayList<>();
+        tvlist = new ArrayList<>();
+        customToast = new CustomToast();
+        customToast2 = new CustomToast2();
+
+        // 实例化用户手势检测工具类：GestureDetector实例gestureDetector
         gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
@@ -359,7 +377,7 @@ public class PassportHome extends AppCompatActivity {
         pre = getSharedPreferences("data", Context.MODE_PRIVATE);
         type = pre.getString("type", "");
         code = pre.getString("phoneid", "");
-        en_ch=pre.getString("languagetype","");
+        en_ch = pre.getString("languagetype", "");
         data = new CoutryData();
         for (int i = 0; i < data.getCountryName().length; i++) {
             Country c = new Country();
@@ -368,18 +386,18 @@ public class PassportHome extends AppCompatActivity {
             list.add(c);
         }
         String ss[] = {"A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "P", "R", "S", "T", "V", "X", "Y", "Z"};
-        String sss[] = {"A", "B", "C", "D", "E", "F", "G", "H","I","J", "K", "L", "M", "N","O", "P","Q", "R", "S", "T","U", "V", "W","X", "Y", "Z"};
-        if(en_ch.equals("en")){
-            Collections.sort(list,new LetterComparator() );
+        String sss[] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
+        if (en_ch.equals("en")) {
+            Collections.sort(list, new LetterComparator());
         }
-        if(en_ch.equals("cn")) {
+        if (en_ch.equals("cn")) {
             for (int i = 0; i < ss.length; i++) {
                 Letters l = new Letters();
                 l.setName(ss[i]);
                 l.setIschoose(false);
                 list2.add(l);
             }
-        }else {
+        } else {
             for (int i = 0; i < sss.length; i++) {
                 Letters l = new Letters();
                 l.setName(sss[i]);
@@ -411,9 +429,9 @@ public class PassportHome extends AppCompatActivity {
             } else {
                 //无网络
                 loadingDialog.dismiss();
-                if(en_ch.equals("cn")) {
+                if (en_ch.equals("cn")) {
                     Toast.makeText(getBaseContext(), "请检查网络", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     Toast.makeText(getBaseContext(), "Disconnect", Toast.LENGTH_SHORT).show();
                 }
                 loadfail();
@@ -422,9 +440,9 @@ public class PassportHome extends AppCompatActivity {
     }
 
     public void location() {
-        if(en_ch.equals("cn")) {
+        if (en_ch.equals("cn")) {
             loadingDialog.setMessage("定位中...");
-        }else {
+        } else {
             loadingDialog.setMessage("positioning...");
         }
         loadingDialog.show();
@@ -444,9 +462,9 @@ public class PassportHome extends AppCompatActivity {
                 //如果是Network
                 locationProvider = LocationManager.NETWORK_PROVIDER;
             } else {
-                if(en_ch.equals("cn")) {
+                if (en_ch.equals("cn")) {
                     Toast.makeText(this, "没有可用的位置提供器", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     Toast.makeText(this, "no localtion service", Toast.LENGTH_SHORT).show();
                 }
                 loadingDialog.dismiss();
@@ -457,17 +475,17 @@ public class PassportHome extends AppCompatActivity {
             loadingDialog.dismiss();
             Location location = locationManager.getLastKnownLocation(locationProvider);
             if (location != null) {
-                if(en_ch.equals("cn")) {
+                if (en_ch.equals("cn")) {
                     customToast.showToast(getBaseContext(), "定位成功");
-                }else {
+                } else {
                     customToast.showToast(getBaseContext(), "Success");
                 }
                 getCountry(location);
 
             } else {
-                if(en_ch.equals("cn")) {
+                if (en_ch.equals("cn")) {
                     Toast.makeText(this, "获取不到地理位置", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     Toast.makeText(this, "has not found location", Toast.LENGTH_SHORT).show();
                 }
                 loadfail();
@@ -493,23 +511,23 @@ public class PassportHome extends AppCompatActivity {
                             editor.putString("country", mycountry);
                             editor.apply();//提交数据
                             load();
-                            if(en_ch.equals("cn")) {
+                            if (en_ch.equals("cn")) {
                                 customToast2.showToast(getBaseContext(), "国家: " + mycountry, "信息已翻译至当地语言");
-                            }else {
-                                for(int i=0;i<list.size();i++){
-                                    if(list.get(i).getName().equals(mycountry)){
-                                        String enname=list.get(i).getEnglish_name();
+                            } else {
+                                for (int i = 0; i < list.size(); i++) {
+                                    if (list.get(i).getName().equals(mycountry)) {
+                                        String enname = list.get(i).getEnglish_name();
                                         customToast2.showToast(getBaseContext(), "Country: " + enname, "The information translated into local language");
                                     }
                                 }
                             }
-                            if(country.equals("中国")){
+                            if (country.equals("中国")) {
                                 initJump();
                             }
                         } else {
-                            if(en_ch.equals("cn")) {
+                            if (en_ch.equals("cn")) {
                                 Toast.makeText(getBaseContext(), "无法解析所在国家", Toast.LENGTH_SHORT).show();
-                            }else {
+                            } else {
                                 Toast.makeText(getBaseContext(), "The nation can't be found", Toast.LENGTH_SHORT).show();
                             }
                             loadfail();
@@ -530,11 +548,11 @@ public class PassportHome extends AppCompatActivity {
 
     public void load() {
         content.setVisibility(View.VISIBLE);
-        if(en_ch.equals("cn")) {
+        if (en_ch.equals("cn")) {
             mycountrytv.setText(mycountry);
-        }else {
-            for(int i=0;i<list.size();i++){
-                if(list.get(i).getName().equals(mycountry)){
+        } else {
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getName().equals(mycountry)) {
                     mycountrytv.setText(list.get(i).getEnglish_name());
                 }
             }
@@ -546,23 +564,26 @@ public class PassportHome extends AppCompatActivity {
         loadContent(language_num);
     }
 
+    /**
+     *
+     */
     public void loadfail() {
         localfailed.setVisibility(View.VISIBLE);
         Button bt1 = (Button) findViewById(R.id.home_op1);
         Button bt2 = (Button) findViewById(R.id.home_op2);
-        if(en_ch.equals("cn")){
+        if (en_ch.equals("cn")) {
             bt1.setText("重新获取");
             bt2.setText("手动获取");
-        }else {
+        } else {
             bt1.setText("resume");
             bt2.setText("manual");
         }
         bt1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(en_ch.equals("cn")){
+                if (en_ch.equals("cn")) {
                     loadingDialog.setMessage("连接网络...");
-                }else {
+                } else {
                     loadingDialog.setMessage("Loading...");
                 }
                 loadingDialog.show();
@@ -585,14 +606,14 @@ public class PassportHome extends AppCompatActivity {
         //slidingMenu.setBehindWidth(450);//侧边栏出来宽度
         slidingMenu.setBehindOffset(120);
         View view = getLayoutInflater().inflate(R.layout.vertical_menu, null);
-        TextView hot1=(TextView) view.findViewById(R.id.hot_tv1);
-        TextView hot2=(TextView) view.findViewById(R.id.hot_tv2);
-        TextView hot3=(TextView) view.findViewById(R.id.hot_tv3);
-        TextView hot4=(TextView) view.findViewById(R.id.hot_tv4);
-        TextView hot5=(TextView) view.findViewById(R.id.hot_tv5);
-        TextView hot6=(TextView) view.findViewById(R.id.hot_tv6);
-        TextView hottitle=(TextView)view.findViewById(R.id.hottitle);
-        if(en_ch.equals("cn")){
+        TextView hot1 = (TextView) view.findViewById(R.id.hot_tv1);
+        TextView hot2 = (TextView) view.findViewById(R.id.hot_tv2);
+        TextView hot3 = (TextView) view.findViewById(R.id.hot_tv3);
+        TextView hot4 = (TextView) view.findViewById(R.id.hot_tv4);
+        TextView hot5 = (TextView) view.findViewById(R.id.hot_tv5);
+        TextView hot6 = (TextView) view.findViewById(R.id.hot_tv6);
+        TextView hottitle = (TextView) view.findViewById(R.id.hottitle);
+        if (en_ch.equals("cn")) {
             hottitle.setText("热门语言");
             hot1.setText("英语");
             hot2.setText("法语");
@@ -600,7 +621,7 @@ public class PassportHome extends AppCompatActivity {
             hot4.setText("德语");
             hot5.setText("日语");
             hot6.setText("韩语");
-        }else {
+        } else {
             hottitle.setText("Popular Language");
             hot1.setText("English");
             hot2.setText("French");
@@ -617,9 +638,9 @@ public class PassportHome extends AppCompatActivity {
                 language_num = 0;
                 load();
                 slidingMenu.showContent();
-                if(en_ch.equals("en")) {
+                if (en_ch.equals("en")) {
                     customToast2.showToast(getBaseContext(), "Country: " + "United Kingdom", "The information translated into local language");
-                }else {
+                } else {
                     customToast2.showToast(getBaseContext(), "国家: " + "英国", "信息已翻译至当地语言");
                 }
                 jumpurl.setVisibility(View.INVISIBLE);
@@ -633,9 +654,9 @@ public class PassportHome extends AppCompatActivity {
                 language_num = 0;
                 load();
                 slidingMenu.showContent();
-                if(en_ch.equals("en")) {
+                if (en_ch.equals("en")) {
                     customToast2.showToast(getBaseContext(), "Country: " + "France", "The information translated into local language");
-                }else {
+                } else {
                     customToast2.showToast(getBaseContext(), "国家: " + "法国", "信息已翻译至当地语言");
                 }
                 jumpurl.setVisibility(View.INVISIBLE);
@@ -649,9 +670,9 @@ public class PassportHome extends AppCompatActivity {
                 language_num = 0;
                 load();
                 slidingMenu.showContent();
-                if(en_ch.equals("en")) {
+                if (en_ch.equals("en")) {
                     customToast2.showToast(getBaseContext(), "Country: " + "Spain", "The information translated into local language");
-                }else {
+                } else {
                     customToast2.showToast(getBaseContext(), "国家: " + "西班牙", "信息已翻译至当地语言");
                 }
                 jumpurl.setVisibility(View.INVISIBLE);
@@ -665,9 +686,9 @@ public class PassportHome extends AppCompatActivity {
                 language_num = 0;
                 load();
                 slidingMenu.showContent();
-                if(en_ch.equals("en")) {
+                if (en_ch.equals("en")) {
                     customToast2.showToast(getBaseContext(), "Country: " + "Germany", "The information translated into local language");
-                }else {
+                } else {
                     customToast2.showToast(getBaseContext(), "国家: " + "德国", "信息已翻译至当地语言");
                 }
                 jumpurl.setVisibility(View.INVISIBLE);
@@ -681,9 +702,9 @@ public class PassportHome extends AppCompatActivity {
                 language_num = 0;
                 load();
                 slidingMenu.showContent();
-                if(en_ch.equals("en")) {
+                if (en_ch.equals("en")) {
                     customToast2.showToast(getBaseContext(), "Country: " + "Japan", "The information translated into local language");
-                }else {
+                } else {
                     customToast2.showToast(getBaseContext(), "国家: " + "日本", "信息已翻译至当地语言");
                 }
                 jumpurl.setVisibility(View.INVISIBLE);
@@ -697,9 +718,9 @@ public class PassportHome extends AppCompatActivity {
                 language_num = 0;
                 load();
                 slidingMenu.showContent();
-                if(en_ch.equals("en")) {
+                if (en_ch.equals("en")) {
                     customToast2.showToast(getBaseContext(), "Country: " + "South Korea", "The information translated into local language");
-                }else {
+                } else {
                     customToast2.showToast(getBaseContext(), "国家: " + "韩国", "信息已翻译至当地语言");
                 }
                 jumpurl.setVisibility(View.INVISIBLE);
@@ -714,14 +735,14 @@ public class PassportHome extends AppCompatActivity {
                 language_num = 0;
                 load();
                 slidingMenu.showContent();
-                if(en_ch.equals("en")) {
+                if (en_ch.equals("en")) {
                     customToast2.showToast(getBaseContext(), "Country: " + list.get(i).getEnglish_name(), "The information translated into local language");
-                }else {
+                } else {
                     customToast2.showToast(getBaseContext(), "国家: " + list.get(i).getName(), "信息已翻译至当地语言");
                 }
-                if(!mycountry.equals("中国")){
+                if (!mycountry.equals("中国")) {
                     jumpurl.setVisibility(View.INVISIBLE);
-                }else {
+                } else {
                     //jumpurl.setVisibility(View.VISIBLE);
                     initJump();
                 }
@@ -751,7 +772,7 @@ public class PassportHome extends AppCompatActivity {
             tv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(en_ch.equals("cn")) {
+                    if (en_ch.equals("cn")) {
                         String s[][] = data.getCountryNameA2Z();
                         String cc = s[x][0];
                         for (int z = 0; z < list.size(); z++) {
@@ -764,9 +785,9 @@ public class PassportHome extends AppCompatActivity {
                             tvlist.get(o).setTextColor(0xffffffff);
                         }
                         tv.setTextColor(0xffff0000);
-                    }else {
+                    } else {
                         for (int z = 0; z < list.size(); z++) {
-                            String fisrtletter=list.get(z).getEnglish_name().substring(0,1);
+                            String fisrtletter = list.get(z).getEnglish_name().substring(0, 1);
                             if (tv.getText().toString().equals(fisrtletter)) {
                                 listview.setSelection(z);
                                 break;
@@ -793,7 +814,7 @@ public class PassportHome extends AppCompatActivity {
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if(en_ch.equals("cn")) {
+                if (en_ch.equals("cn")) {
                     String s[][] = data.getCountryNameA2Z();
                     String country = list.get(firstVisibleItem).getName();
                     char l = 'A';
@@ -810,10 +831,10 @@ public class PassportHome extends AppCompatActivity {
                             }
                         }
                     }
-                }else {
-                    String fisrst=list.get(firstVisibleItem).getEnglish_name().substring(0,1);
-                    for(int i=0;i<tvlist.size();i++){
-                        if(fisrst.equals(tvlist.get(i).getText().toString())){
+                } else {
+                    String fisrst = list.get(firstVisibleItem).getEnglish_name().substring(0, 1);
+                    for (int i = 0; i < tvlist.size(); i++) {
+                        if (fisrst.equals(tvlist.get(i).getText().toString())) {
                             for (int o = 0; o < tvlist.size(); o++) {
                                 tvlist.get(o).setTextColor(0xffffffff);
                             }
@@ -849,7 +870,7 @@ public class PassportHome extends AppCompatActivity {
     }
 
     public void getCountryList() {
-        adapter = new CountryAdapter(list, PassportHome.this,en_ch);
+        adapter = new CountryAdapter(list, PassportHome.this, en_ch);
         listview.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -880,9 +901,9 @@ public class PassportHome extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     language_num = flags;
-                    if(en_ch.equals("cn")) {
+                    if (en_ch.equals("cn")) {
                         customToast.showToast(getBaseContext(), language_name);
-                    }else {
+                    } else {
                         customToast.showToast(getBaseContext(), english_name);
                     }
                     HashMap<String, String> hashMap = new HashMap<>();
@@ -1081,7 +1102,7 @@ public class PassportHome extends AppCompatActivity {
                             sb1.append(ja1.getString(i)).append(" ");
                         }
                         preference1.setText(sb1.toString());
-                        if(ja1.length()==0){
+                        if (ja1.length() == 0) {
                             title1.setText("");
                         }
                         JSONObject jo2 = ja.getJSONObject(1);
@@ -1092,7 +1113,7 @@ public class PassportHome extends AppCompatActivity {
                             sb2.append(ja2.getString(i)).append(" ");
                         }
                         preference2.setText(sb2.toString());
-                        if(ja2.length()==0){
+                        if (ja2.length() == 0) {
                             title2.setText("");
                         }
                         JSONObject jo3 = ja.getJSONObject(2);
@@ -1103,11 +1124,11 @@ public class PassportHome extends AppCompatActivity {
                             sb3.append(ja3.getString(i)).append(" ");
                         }
                         preference3.setText(sb3.toString());
-                        if(ja3.length()==0){
+                        if (ja3.length() == 0) {
                             title3.setText("");
                         }
-                        if((ja1.length()>0)||(ja2.length()>0)||(ja3.length()>0)){
-                            nopreference=false;
+                        if ((ja1.length() > 0) || (ja2.length() > 0) || (ja3.length() > 0)) {
+                            nopreference = false;
                         }
                     }
                 } catch (JSONException e) {
@@ -1122,7 +1143,7 @@ public class PassportHome extends AppCompatActivity {
         });
         spr.putValue("code", code);
         spr.putValue("language_id", language_id);
-        spr.putValue("languages",en_ch);
+        spr.putValue("languages", en_ch);
         SlingleVolleyRequestQueue.getInstance(getBaseContext()).addToRequestQueue(spr);
     }
 
@@ -1144,7 +1165,7 @@ public class PassportHome extends AppCompatActivity {
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     loadfail();
                     Toast.makeText(getBaseContext(), "请手动获取定位权限", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     Location location = locationManager.getLastKnownLocation(locationProvider);
                     if (location != null) {
                         customToast.showToast(getBaseContext(), "定位成功");
@@ -1170,9 +1191,9 @@ public class PassportHome extends AppCompatActivity {
     }
 
     @Override
-    protected void onRestart()  {
+    protected void onRestart() {
         super.onRestart();
-        Log.d("========restart","aa");
+        Log.d("========restart", "aa");
         if (slidingMenu.isMenuShowing()) {
             slidingMenu.toggle();
         }
@@ -1186,21 +1207,21 @@ public class PassportHome extends AppCompatActivity {
         getLanguageId();
         if ((hasedit && pre.getBoolean("isfirstedit", true))) {
 
-                favour_leader.setVisibility(View.VISIBLE);
-                favour_leader.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        favour_leader.setVisibility(View.GONE);
-                        new Handler().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                startBeizerAnimation();
-                                hasedit = false;
-                                floats.setVisibility(View.VISIBLE);
-                            }
-                        }, 600);
-                    }
-                });
+            m_favour_leader.setVisibility(View.VISIBLE);
+            m_favour_leader.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    m_favour_leader.setVisibility(View.GONE);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            startBeizerAnimation();
+                            hasedit = false;
+                            floats.setVisibility(View.VISIBLE);
+                        }
+                    }, 600);
+                }
+            });
 
             SharedPreferences.Editor editor = pre.edit();
             editor.putBoolean("isfirstedit", false);
@@ -1209,20 +1230,20 @@ public class PassportHome extends AppCompatActivity {
 
     }
 
-    public void initJump(){
+    public void initJump() {
         jumpurl.setVisibility(View.VISIBLE);
-        if(en_ch.equals("cn")){
+        if (en_ch.equals("cn")) {
             jumpurl.setText("发现素食的美好（附近素食铺）>>");
-            url= "https://www.isuhuo.com/plainliving/wxapi/index/index/languages/cn";
+            url = "https://www.isuhuo.com/plainliving/wxapi/index/index/languages/cn";
 
-        }else {
+        } else {
             jumpurl.setText("To find the beauty of vegetarian diet (vegetarian shop nearby).");
-            url= "https://www.isuhuo.com/plainliving/wxapi/index/index/languages/en";
+            url = "https://www.isuhuo.com/plainliving/wxapi/index/index/languages/en";
         }
         jumpurl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Uri uri=Uri.parse(url);
+                Uri uri = Uri.parse(url);
                 Intent it = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(it);
             }
