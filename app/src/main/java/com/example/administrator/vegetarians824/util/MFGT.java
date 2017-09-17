@@ -3,10 +3,12 @@ package com.example.administrator.vegetarians824.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.view.View;
 
 import com.example.administrator.vegetarians824.MapActivity;
 import com.example.administrator.vegetarians824.R;
+import com.example.administrator.vegetarians824.homePage.toolbox.nutridata.NutriData;
+import com.example.administrator.vegetarians824.homePage.toolbox.nutridata.NutriDataDetails;
+import com.example.administrator.vegetarians824.homePage.toolbox.nutridata.NutriQuery;
 import com.example.administrator.vegetarians824.veganpass.CheckLanguage;
 import com.example.administrator.vegetarians824.veganpass.PassportHome;
 import com.example.administrator.vegetarians824.veganpass.PreferencePage;
@@ -51,5 +53,19 @@ public class MFGT {
 
     public static void gotoPreferencePage(Activity activity) {
         startActivity(activity, PreferencePage.class);
+    }
+
+    public static void gotoNutriQuery(Activity activity) {
+        startActivity(activity, NutriQuery.class);
+    }
+
+    public static void gotoNutriData(Context context) {
+        startActivity((Activity)context, NutriData.class);
+    }
+
+    public static void gotoNutriDataDetails(Activity activity, String key, String value) {
+        Intent intent = new Intent(activity, NutriDataDetails.class);
+        intent.putExtra(key, value);
+        startActivity(activity, intent);
     }
 }
