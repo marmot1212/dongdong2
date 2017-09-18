@@ -57,9 +57,9 @@ dependencies {
     //    根据需要支持去拓展，在jjdxm-ijkplayer中默认加入了armv7a的了
     compile project(':jjdxm-ijkplayer')
     // 添加黄油刀依赖
+    //    compile 'com.android.support:support-v4:25.3.1'
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
-//    compile 'com.android.support:support-v4:25.3.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'

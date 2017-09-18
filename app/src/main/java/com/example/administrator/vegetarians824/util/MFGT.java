@@ -7,6 +7,7 @@ import android.content.Intent;
 import com.example.administrator.vegetarians824.MapActivity;
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.dongdong.JKYuansuDetail;
+import com.example.administrator.vegetarians824.homePage.personalProfile.MyContribute;
 import com.example.administrator.vegetarians824.homePage.toolbox.nutridata.NutriData;
 import com.example.administrator.vegetarians824.homePage.toolbox.nutridata.NutriDataDetails;
 import com.example.administrator.vegetarians824.homePage.toolbox.nutridata.NutriQuery;
@@ -68,5 +69,9 @@ public class MFGT {
         Intent intent = new Intent(activity, JKYuansuDetail.class);
         intent.putExtra(key, value);
         startActivity(activity, intent);
+    }
+
+    public static void gotoMyContribute(Context context) {
+        startActivity((Activity)context, MyContribute.class);
     }
 }

@@ -721,6 +721,8 @@
         <activity android:name=".homePage.toolbox.nutridata.NutriData"/>
         <activity android:name=".homePage.toolbox.nutridata.NutriDataDetails"/>
         <activity android:name=".homePage.toolbox.passport.FavourPicList"/>
+        <activity android:name=".homePage.personalProfile.MyContribute">
+        </activity>
     </application>
 
 </manifest>
