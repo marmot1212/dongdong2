@@ -2,11 +2,13 @@ package com.example.administrator.vegetarians824.homePage.personalProfile;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.administrator.vegetarians824.R;
 import com.example.administrator.vegetarians824.util.MFGT;
@@ -17,6 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MyContribute extends AppCompatActivity {
+    private static final String TAG = "MyContribute";
     @Bind(R.id.tv_title)
     TextView mTvTitle;
     @Bind(R.id.tv_tip1)
@@ -52,6 +55,7 @@ public class MyContribute extends AppCompatActivity {
     private int mMoney1, mMoney2, mMoney3;
     private boolean isMoney; // 打赏APP、团队为true，推广素食为false
     private String mUnit;
+    private int mNumber = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +113,9 @@ public class MyContribute extends AppCompatActivity {
         mContributeToVegetarianism.setBackgroundResource(R.drawable.contribute_long_item_normal);
     }
 
-    /**     下面是确认捐款金额部分的代码      */
+    /**
+     * 下面是确认捐款金额部分的代码
+     */
 
     private void initDataForFrame2() {
         switch (index) {
@@ -155,13 +161,73 @@ public class MyContribute extends AppCompatActivity {
             mEvNum.setHint("请输入赞助人数");
             mLLayoutCount.setVisibility(View.VISIBLE);
         }
-        mTvTip1.setText(mMoney1+mUnit);
-        mTvTip2.setText(mMoney2+mUnit);
-        mTvTip3.setText(mMoney3+mUnit);
+        mTvTip1.setText(mMoney1 + mUnit);
+        mTvTip2.setText(mMoney2 + mUnit);
+        mTvTip3.setText(mMoney3 + mUnit);
+        // 推广素食 请客 赞助总计
+        mTvCountResult.setText("20 元");
     }
 
     @OnClick({R.id.btn_pay_confirm, R.id.iv_close})
-    public void onViewClicked() {
+    public void onViewClicked2(View v) {
+        switch (v.getId()) {
+            case R.id.iv_close:
+                initViewAndeDataForPay();
+                break;
+            case R.id.btn_pay_confirm:
+                if (mNumber == 0) {
+                    Toast.makeText(this, "请选择支付金额", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                Toast.makeText(this, "即将捐助"+mNumber+"元，多谢！", Toast.LENGTH_LONG).show();
+                Log.e(TAG, "固定选项的捐助金额 mNumber = "+ mNumber);
+                Log.e(TAG, "固定选项的捐助金额 mNumber = "+ mNumber);
+                Log.e(TAG, "固定选项的捐助金额 mNumber = "+ mNumber);
+                initViewAndeDataForPay();
+                break;
+        }
+
+    }
+
+    @OnClick({R.id.tv_tip1, R.id.tv_tip2, R.id.tv_tip3})
+    public void onPayClicked(View view) {
+        initViewAndeDataForPay();
+        switch (view.getId()) {
+            case R.id.tv_tip1:
+                if (isMoney) {
+                    mNumber = mMoney1;
+                } else {
+                    mNumber = mMoney1*20;
+                }
+                mTvTip1.setBackgroundResource(R.drawable.contribute_long_item_checked);
+                break;
+            case R.id.tv_tip2:
+                if (isMoney) {
+                    mNumber = mMoney2;
+                } else {
+                    mNumber = mMoney2*20;
+                }
+                mTvTip2.setBackgroundResource(R.drawable.contribute_long_item_checked);
+                break;
+            case R.id.tv_tip3:
+                if (isMoney) {
+                    mNumber = mMoney3;
+                } else {
+                    mNumber = mMoney3*20;
+                }
+                mTvTip3.setBackgroundResource(R.drawable.contribute_long_item_checked);
+                break;
+        }
+    }
+
+    private void initViewAndeDataForPay() {
+        mTvTip1.setBackgroundResource(R.drawable.menu_item_normal);
+        mTvTip2.setBackgroundResource(R.drawable.menu_item_normal);
+        mTvTip3.setBackgroundResource(R.drawable.menu_item_normal);
+
         mFLayoutContribute.setVisibility(View.GONE);
+        mLLayoutCount.setVisibility(View.GONE);
+
+        mNumber = 0;
     }
 }
