@@ -9,7 +9,8 @@
     <dimen name="spacing_tiny">4dp</dimen>
 
     <!--    左右的margin-->
-    <dimen name="margin_horizontal_large_X">28dp</dimen>
+    <dimen name="margin_horizontal_large_XX">28dp</dimen>
+    <dimen name="margin_horizontal_large_X">22dp</dimen>
     <dimen name="margin_horizontal_large">15dp</dimen>
     <dimen name="margin_horizontal_normal">12dp</dimen>
     <dimen name="margin_horizontal_small">10dp</dimen>
@@ -39,4 +40,5 @@
     <dimen name="text_normal">16sp</dimen>
     <dimen name="text_middle">18sp</dimen>
     <dimen name="text_title_01">22sp</dimen>
+    <dimen name="text_title_02">25sp</dimen>
 </resources>

@@ -74,4 +74,6 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    // 微信分享、登录、收藏、支付等功能需要的依赖
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
 }
