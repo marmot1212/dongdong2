@@ -47,6 +47,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.baidu.mobstat.StatService;
 import com.example.administrator.vegetarians824.R;
+import com.example.administrator.vegetarians824.homePage.toolbox.passport.FavourPicList;
 import com.example.administrator.vegetarians824.myView.UserDefineScrollView;
 import com.example.administrator.vegetarians824.util.ConnectionNetUtils;
 import com.example.administrator.vegetarians824.util.SlingleVolleyRequestQueue;
@@ -353,7 +354,7 @@ public class PassportHome extends AppCompatActivity {
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                 if (e2.getRawX() - e1.getRawX() < -80) {
                     customToast.cancel();
-                    Intent intent = new Intent(getBaseContext(), FavourList.class);
+                    Intent intent = new Intent(getBaseContext(), FavourPicList.class);
                     ActivityOptionsCompat activityOptionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(PassportHome.this);
                     startActivity(intent, activityOptionsCompat.toBundle());
                     return true;

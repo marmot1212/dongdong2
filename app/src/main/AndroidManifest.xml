@@ -719,7 +719,8 @@
         <activity android:name=".veganpass.PassportHome"/>
         <activity android:name=".homePage.toolbox.nutridata.NutriQuery"/>
         <activity android:name=".homePage.toolbox.nutridata.NutriData"/>
-        <activity android:name=".homePage.toolbox.nutridata.NutriDataDetails"></activity>
+        <activity android:name=".homePage.toolbox.nutridata.NutriDataDetails"/>
+        <activity android:name=".homePage.toolbox.passport.FavourPicList"/>
     </application>
 
 </manifest>
