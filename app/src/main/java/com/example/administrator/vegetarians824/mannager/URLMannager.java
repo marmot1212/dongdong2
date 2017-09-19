@@ -4,6 +4,9 @@ package com.example.administrator.vegetarians824.mannager;
  * Created by Administrator on 2016-08-26.
  */
 public class URLMannager {
+    public static final String PAY_FOR_APPRECIATE = "http://www.isuhuo.com/plainLiving/Androidapi/Pay/payForAppreciate";
+
+    private static final String PAY_LOG = "http://www.isuhuo.com/plainLiving/Androidapi/Pay/Paylog";
 
     public static final String Huodong_URL="http://www.isuhuo.com/plainLiving/androidapi/activity/activity_list";
 
