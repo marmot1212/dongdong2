@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -89,6 +90,7 @@ public class MyContribute extends AppCompatActivity {
                 MFGT.finish(this);
                 break;
             case R.id.btn_contribute_confirm:
+                Log.e(TAG, "确认 index是否正确 = "+index);
                 initDataForFrame2();
                 mFLayoutContribute.setVisibility(View.VISIBLE);
                 break;
@@ -103,14 +105,17 @@ public class MyContribute extends AppCompatActivity {
             case R.id.contribute_toApp:
                 mContributeToApp.setBackgroundResource(R.drawable.contribute_long_item_checked);
                 index = 1;
+                Log.e(TAG, "单击赏App，index = "+ index);
                 break;
             case R.id.contribute_toTeam:
                 mContributeToTeam.setBackgroundResource(R.drawable.contribute_long_item_checked);
                 index = 2;
+                Log.e(TAG, "单击 赞助团队， index = " + index);
                 break;
             case R.id.contribute_toVegetarianism:
                 mContributeToVegetarianism.setBackgroundResource(R.drawable.contribute_long_item_checked);
                 index = 3;
+                Log.e(TAG, "单击 推广素食， index = "+ index);
                 break;
         }
     }
@@ -172,9 +177,13 @@ public class MyContribute extends AppCompatActivity {
         mTvTip1.setText(mMoney1 + mUnit);
         mTvTip2.setText(mMoney2 + mUnit);
         mTvTip3.setText(mMoney3 + mUnit);
-        // 推广素食 请客 赞助总计
-        mTvCountResult.setText("20 元");
-//        initEditViewListener();
+        // 推广素食 请客 赞助总计--总数重置为0
+        onCountNumber(" ");
+    }
+
+    private void onCountNumber(String num) {
+        mTvCountResult.setText(num+" 元");
+        Log.e(TAG, "素食推广， 捐助合计 num = "+num);
     }
 
     private void initEditViewListener() {
@@ -193,11 +202,14 @@ public class MyContribute extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 // 输入文本停止后的执行方法
-                mInput = Integer.parseInt(s.toString());
+                if (s != null) {
+                    mInput = Integer.parseInt(s.toString());
+                }
                 if (isMoney) {
                     mNumber = mInput;
                 } else {
                     mNumber = mInput * 20;
+                    onCountNumber(mNumber+""); // 编辑输入数字显示捐助总额
                 }
 
                 Toast.makeText(MyContribute.this, "键盘输入结果，即将捐款" + mInput + "元", Toast.LENGTH_LONG).show();
@@ -250,6 +262,10 @@ public class MyContribute extends AppCompatActivity {
 
     }
 
+    /**
+     * 单击固定人数，素食推广界面显示捐助统计
+     * @param view
+     */
     @OnClick({R.id.tv_tip1, R.id.tv_tip2, R.id.tv_tip3})
     public void onPayClicked(View view) {
         initViewAndDataForPay();
@@ -259,6 +275,7 @@ public class MyContribute extends AppCompatActivity {
                     mNumber = mMoney1;
                 } else {
                     mNumber = mMoney1 * 20;
+                    onCountNumber(mNumber+"");
                 }
                 mTvTip1.setBackgroundResource(R.drawable.contribute_long_item_checked);
                 break;
@@ -267,6 +284,7 @@ public class MyContribute extends AppCompatActivity {
                     mNumber = mMoney2;
                 } else {
                     mNumber = mMoney2 * 20;
+                    onCountNumber(mNumber+"");
                 }
                 mTvTip2.setBackgroundResource(R.drawable.contribute_long_item_checked);
                 break;
@@ -275,10 +293,12 @@ public class MyContribute extends AppCompatActivity {
                     mNumber = mMoney3;
                 } else {
                     mNumber = mMoney3 * 20;
+                    onCountNumber(mNumber+"");
                 }
                 mTvTip3.setBackgroundResource(R.drawable.contribute_long_item_checked);
                 break;
         }
+
     }
 
     private void initViewAndDataForPay() {
