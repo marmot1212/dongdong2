@@ -1,9 +1,15 @@
 package com.example.administrator.vegetarians824.homePage.personalProfile;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -56,6 +62,8 @@ public class MyContribute extends AppCompatActivity {
     private boolean isMoney; // 打赏APP、团队为true，推广素食为false
     private String mUnit;
     private int mNumber = 0;
+
+    private int mInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,24 +174,77 @@ public class MyContribute extends AppCompatActivity {
         mTvTip3.setText(mMoney3 + mUnit);
         // 推广素食 请客 赞助总计
         mTvCountResult.setText("20 元");
+//        initEditViewListener();
+    }
+
+    private void initEditViewListener() {
+        mEvNum.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                mEvNum.setCursorVisible(true);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // 输入文本发生变化执行
+                initViewAndDataForPay();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // 输入文本停止后的执行方法
+                mInput = Integer.parseInt(s.toString());
+                if (isMoney) {
+                    mNumber = mInput;
+                } else {
+                    mNumber = mInput * 20;
+                }
+
+                Toast.makeText(MyContribute.this, "键盘输入结果，即将捐款" + mInput + "元", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        mEvNum.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {//点击软键盘完成控件时触发的行为,关闭光标并且关闭软键盘
+                }
+                mEvNum.setCursorVisible(false); // 关闭光标
+                InputMethodManager im = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                im.hideSoftInputFromWindow(getCurrentFocus().getApplicationWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                return true; // 消耗掉该行为
+            }
+        });
+        mEvNum.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // 获取焦点显示光标
+                mEvNum.setCursorVisible(true);
+                return false;
+            }
+        });
+
     }
 
     @OnClick({R.id.btn_pay_confirm, R.id.iv_close})
     public void onViewClicked2(View v) {
         switch (v.getId()) {
             case R.id.iv_close:
-                initViewAndeDataForPay();
+                initViewAndDataForPay();
+                mFLayoutContribute.setVisibility(View.GONE);
+                mLLayoutCount.setVisibility(View.GONE);
+                mEvNum.setText("");
                 break;
             case R.id.btn_pay_confirm:
                 if (mNumber == 0) {
                     Toast.makeText(this, "请选择支付金额", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                Toast.makeText(this, "即将捐助"+mNumber+"元，多谢！", Toast.LENGTH_LONG).show();
-                Log.e(TAG, "固定选项的捐助金额 mNumber = "+ mNumber);
-                Log.e(TAG, "固定选项的捐助金额 mNumber = "+ mNumber);
-                Log.e(TAG, "固定选项的捐助金额 mNumber = "+ mNumber);
-                initViewAndeDataForPay();
+                Toast.makeText(this, "即将捐助" + mNumber + "元，多谢！", Toast.LENGTH_LONG).show();
+                initViewAndDataForPay();
+                mFLayoutContribute.setVisibility(View.GONE);
+                mLLayoutCount.setVisibility(View.GONE);
+                mEvNum.setText("");
                 break;
         }
 
@@ -191,13 +252,13 @@ public class MyContribute extends AppCompatActivity {
 
     @OnClick({R.id.tv_tip1, R.id.tv_tip2, R.id.tv_tip3})
     public void onPayClicked(View view) {
-        initViewAndeDataForPay();
+        initViewAndDataForPay();
         switch (view.getId()) {
             case R.id.tv_tip1:
                 if (isMoney) {
                     mNumber = mMoney1;
                 } else {
-                    mNumber = mMoney1*20;
+                    mNumber = mMoney1 * 20;
                 }
                 mTvTip1.setBackgroundResource(R.drawable.contribute_long_item_checked);
                 break;
@@ -205,7 +266,7 @@ public class MyContribute extends AppCompatActivity {
                 if (isMoney) {
                     mNumber = mMoney2;
                 } else {
-                    mNumber = mMoney2*20;
+                    mNumber = mMoney2 * 20;
                 }
                 mTvTip2.setBackgroundResource(R.drawable.contribute_long_item_checked);
                 break;
@@ -213,21 +274,24 @@ public class MyContribute extends AppCompatActivity {
                 if (isMoney) {
                     mNumber = mMoney3;
                 } else {
-                    mNumber = mMoney3*20;
+                    mNumber = mMoney3 * 20;
                 }
                 mTvTip3.setBackgroundResource(R.drawable.contribute_long_item_checked);
                 break;
         }
     }
 
-    private void initViewAndeDataForPay() {
+    private void initViewAndDataForPay() {
         mTvTip1.setBackgroundResource(R.drawable.menu_item_normal);
         mTvTip2.setBackgroundResource(R.drawable.menu_item_normal);
         mTvTip3.setBackgroundResource(R.drawable.menu_item_normal);
-
-        mFLayoutContribute.setVisibility(View.GONE);
-        mLLayoutCount.setVisibility(View.GONE);
-
         mNumber = 0;
+    }
+
+
+    @OnClick(R.id.ev_num)
+    public void onInputNumber() {
+        initEditViewListener();
+        initViewAndDataForPay();
     }
 }

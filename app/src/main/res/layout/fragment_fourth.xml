@@ -258,30 +258,35 @@
                     android:layout_height="wrap_content"
                     android:text="积分排行榜"/>
             </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/my_contribute"
-                android:background="#fff"
-                android:layout_marginTop="15dp"
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="40dp">
-                <TextView
-                    android:layout_marginLeft="20dp"
-                    android:layout_gravity="center"
-                    android:textSize="16sp"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="我的打赏"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/next"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="@dimen/margin_end_view"
-                    />
-            </LinearLayout>
+                android:layout_height="1dp"
+                android:background="#f2f2f2">
+            </View>
+
+
+            <!--<LinearLayout-->
+                <!--android:id="@+id/my_contribute"-->
+                <!--android:background="#fff"-->
+                <!--android:layout_marginTop="15dp"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="40dp">-->
+                <!--<TextView-->
+                    <!--android:layout_marginLeft="20dp"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:textSize="16sp"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:text="我的打赏"/>-->
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:src="@drawable/next"-->
+                    <!--android:layout_gravity="center_vertical"-->
+                    <!--android:layout_marginEnd="@dimen/margin_end_view"-->
+                    <!--/>-->
+            <!--</LinearLayout>-->
             <LinearLayout
                 android:id="@+id/my_fabu"
                 android:background="#fff"

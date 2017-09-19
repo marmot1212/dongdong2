@@ -232,6 +232,8 @@
                     android:maxLines="1"
                     android:maxLength="20"
                     android:inputType="number"
+                    android:clickable="true"
+                    android:cursorVisible="false"
                     />
                 <TextView
                     android:id="@+id/tv_moneyOrPerson"

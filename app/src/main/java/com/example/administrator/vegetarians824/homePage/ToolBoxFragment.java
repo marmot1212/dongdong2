@@ -39,7 +39,7 @@ public class ToolBoxFragment extends Fragment {
         ButterKnife.unbind(this);
     }
 
-    @OnClick({R.id.tool_passport, R.id.tool_invitation, R.id.tool_nutriData})
+    @OnClick({R.id.tool_passport, R.id.tool_invitation, R.id.tool_nutriData, R.id.contribute_temp})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tool_nutriData:
@@ -49,6 +49,9 @@ public class ToolBoxFragment extends Fragment {
                 MFGT.gotoCheckLanguage(getContext());
                 break;
             case R.id.tool_invitation:
+                break;
+            case R.id.contribute_temp:
+                MFGT.gotoMyContribute(getContext());
                 break;
         }
     }

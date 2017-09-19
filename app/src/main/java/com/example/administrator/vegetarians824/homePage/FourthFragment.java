@@ -88,10 +88,6 @@ public class FourthFragment extends Fragment {
         return v;
     }
 
-    @OnClick(R.id.my_contribute)
-    public void onClickMyContribute() {
-        MFGT.gotoMyContribute(getContext());
-    }
 
     @Override
     public void onResume() {
@@ -364,6 +360,9 @@ public class FourthFragment extends Fragment {
         Log.d("=========ss", "onStart");
         super.onStart();
         user = BaseApplication.app.getUser();
+//        user = new User();
+        // 设置为登录 TODO 待删除
+        user.setIslogin(true);
         if (user != null && user.islogin())
             getInfo();
 

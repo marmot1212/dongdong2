@@ -298,13 +298,31 @@
             android:background="@color/line_color_01">
         </View>
 
+        <LinearLayout
+            android:id="@+id/contribute_temp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/tool_invitation"/>
+            <TextView
+                android:layout_marginTop="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="捐助"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/line_color_01">
+        </View>
+
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/line_color_01"
-        >
-    </View>
 
 
 
