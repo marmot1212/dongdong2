@@ -17,15 +17,36 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.example.administrator.vegetarians824.I;
 import com.example.administrator.vegetarians824.R;
+import com.example.administrator.vegetarians824.mannager.URLMannager;
 import com.example.administrator.vegetarians824.util.MFGT;
+import com.example.administrator.vegetarians824.util.SlingleVolleyRequestQueue;
 import com.example.administrator.vegetarians824.util.StatusBarUtil;
+import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MyContribute extends AppCompatActivity {
+    //微信注册api，声明
+    IWXAPI api ;
+
     private static final String TAG = "MyContribute";
     @Bind(R.id.tv_title)
     TextView mTvTitle;
@@ -74,6 +95,7 @@ public class MyContribute extends AppCompatActivity {
         // 修改状态栏的背景颜色
         StatusBarUtil.setColorDiff(this, 0xff00aff0);
 
+        api = WXAPIFactory.createWXAPI(this, I.APP_ID);
         initView();
 
 
@@ -239,7 +261,7 @@ public class MyContribute extends AppCompatActivity {
     }
 
     @OnClick({R.id.btn_pay_confirm, R.id.iv_close})
-    public void onViewClicked2(View v) {
+    public void onPayClick(View v) {
         switch (v.getId()) {
             case R.id.iv_close:
                 initViewAndDataForPay();
@@ -253,10 +275,82 @@ public class MyContribute extends AppCompatActivity {
                     break;
                 }
                 Toast.makeText(this, "即将捐助" + mNumber + "元，多谢！", Toast.LENGTH_LONG).show();
+                // 向咚咚服务器发送请求
+                // 微信支付
+                StringRequest request = new StringRequest(Request.Method.POST, URLMannager.PAY_FOR_APPRECIATE, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        api = WXAPIFactory.createWXAPI(MyContribute.this, I.APP_ID);
+                        if (api != null) {
+                            // Payreq
+                            PayReq req = new PayReq();
+
+
+                            Log.e(TAG, s.toString());
+                            try {
+                                JSONObject jsonObject = new JSONObject(s);
+                                if (jsonObject.getString("Code")=="1") {
+                                    Log.e(TAG, "jsonObject.getString\"Message\" = "+jsonObject.getString("Message"));
+                                    JSONObject data = jsonObject.getJSONObject("Result");
+                                    Log.e(TAG, data.toString());
+
+
+                                    req.appId        =      data.getString("appid");
+                                    req.partnerId    =      data.getString("partnerid");
+                                    req.prepayId     =      data.getString("prepayid");
+                                    req.packageValue =      data.getString("package");
+                                    req.nonceStr     =      data.getString("noncestr");
+                                    req.timeStamp    =      data.getString("timestamp");
+                                    req.sign         =      data.getString("sign");
+
+                                    Log.e(TAG, "req.appId = "+req.appId +"\n"
+                                            +"req.partnerId = "+req.partnerId +"\n"
+                                            +"req.prepayId = "+req.prepayId  +"\n"
+                                            +"req.packageValue = "+req.packageValue +"\n"
+                                            +"req.nonceStr = "+req.nonceStr +"\n"
+                                            +"req.timeStamp = "+req.timeStamp +"\n"
+                                            +"req.sign = "+req.sign +"\n"
+                                    );
+                                    Toast.makeText(MyContribute.this, "正常调起支付.......", Toast.LENGTH_SHORT).show();
+                                    api.sendReq(req);
+
+
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+
+
+
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+
+                    }
+                }) {
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+
+                        Map<String, String> map = new HashMap<>();
+                        map.put("money", "1");
+                        return map;
+                    }
+                };
+                SlingleVolleyRequestQueue.getInstance(this).addToRequestQueue(request);
+
+
+
                 initViewAndDataForPay();
                 mFLayoutContribute.setVisibility(View.GONE);
                 mLLayoutCount.setVisibility(View.GONE);
                 mEvNum.setText("");
+
+
+
                 break;
         }
 

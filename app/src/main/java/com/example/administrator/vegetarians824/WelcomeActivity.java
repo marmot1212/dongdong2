@@ -1,15 +1,12 @@
 package com.example.administrator.vegetarians824;
-import android.*;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.location.Location;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.animation.Animation;
@@ -20,16 +17,20 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.baidu.android.pushservice.PushConstants;
-import com.baidu.android.pushservice.PushManager;
 import com.example.administrator.vegetarians824.entry.MyLociation;
 import com.example.administrator.vegetarians824.entry.User;
 import com.example.administrator.vegetarians824.myapplications.BaseApplication;
 import com.example.administrator.vegetarians824.util.CheckPermission;
 import com.example.administrator.vegetarians824.util.ConnectionNetUtils;
 import com.example.administrator.vegetarians824.util.StatusBarUtil;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 public class WelcomeActivity extends AppCompatActivity {
+    // 微信支付，启动页|onCreate()注册到微信——api.registerApp
+    private IWXAPI api;
+
+
     private LinearLayout mLayout;
     private Animation mAlphaAnimation;
     private android.support.v7.app.AlertDialog.Builder builder;
@@ -43,6 +44,12 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         StatusBarUtil.setTranslucent(WelcomeActivity.this);
+
+        api = WXAPIFactory.createWXAPI(this, I.APP_ID,false);
+        api.registerApp(I.APP_ID);
+
+
+
         //进来先定个位，激活gps
         mLocationListener=new AMapLocationListener() {
             @Override
